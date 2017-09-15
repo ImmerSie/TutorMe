@@ -28,7 +28,7 @@
         %>
 
         
-          <jsp:useBean id="studentApp" class="Applications.StudentApplication" scope="application">
+    <jsp:useBean id="studentApp" class="Applications.StudentApplication" scope="application">
         <jsp:setProperty name="studentApp" property="filePath" value="<%=filePath%>"/>
     </jsp:useBean>
     
@@ -45,8 +45,9 @@
         %>
 
         <% if (student != null) {
-                session.setAttribute("student", student); 
-        }else if(tutor != null) {
+                session.setAttribute("student", student);  %>
+                <p>Login successful. Click <a href="main.jsp">here </a>to get to the main page.</p>
+        <% }else if(tutor != null) {
              session.setAttribute("tutor", tutor); %>
             <p>Login successful. Click <a href="main.jsp">here </a>to get to the main page.</p>
         <% } else { %>

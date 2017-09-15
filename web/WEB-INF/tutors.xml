@@ -31,7 +31,7 @@ and open the template in the editor.
         <password>blahblah</password>
         <birthday>January 2</birthday>
         <userType>Tutor</userType>
-        <subject>WSD</subject>
+        <subject>SEP</subject>
         <status>Available</status>
     </tutor>
 </tutors>

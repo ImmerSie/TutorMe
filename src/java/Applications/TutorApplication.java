@@ -10,15 +10,17 @@ package Applications;
  * @author Mango
  */
 
+import Models.Tutor;
 import Models.Tutors;
 import java.io.*;
+import java.util.ArrayList;
 import javax.xml.bind.*;
 
 
 public class TutorApplication implements Serializable{
     
     
-     private String filePath2;
+    private String filePath2;
     private Tutors tutors;
     
      public TutorApplication() {}
@@ -67,6 +69,16 @@ public class TutorApplication implements Serializable{
 
     public Tutors getTutors() {
         return tutors;
+    }
+    
+    public ArrayList<Tutor> getTutorBySubject(String subject){
+        ArrayList<Tutor> tutorList = new ArrayList<Tutor>();
+        for(Tutor t : this.tutors.getList()){
+            if(t.getSubject().equals(subject)){
+                tutorList.add(t);
+            }
+        }
+        return tutorList;
     }
 
     public void setTutors(Tutors tutors) {
