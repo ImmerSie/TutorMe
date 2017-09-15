@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<students>
+    <student>
+        <name>Sarah</name>
+        <email>sarah@gmail.com</email>
+        <password>blahblah</password>
+        <birthday>January 2</birthday>
+        <userType>Student</userType>
+    </student>
+    <student>
+        <name>Simran</name>
+        <email>simran@gmail.com</email>
+        <password>blahblah</password>
+        <birthday>January 2</birthday>
+        <userType>Student</userType>
+    </student>
+    <student>
+        <name>Euro</name>
+        <email>yuen@gmail.com</email>
+        <password>blahblah</password>
+        <birthday>January 5</birthday>
+        <userType>Student</userType>
+    </student>
+</students>
