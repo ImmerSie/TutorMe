@@ -17,6 +17,8 @@ import javax.xml.bind.annotation.*;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Booking implements Serializable {
     @XmlElement
+    private int bookingID;
+    @XmlElement
     private String tutorName;
     @XmlElement
     private String tutorEmail;
@@ -33,13 +35,22 @@ public class Booking implements Serializable {
         
     }
 
-    public Booking(String tutorName, String tutorEmail, String subject, String studentName, String sudentEmail, String status) {
+    public Booking(int bookingID, String tutorName, String tutorEmail, String subject, String studentName, String studentEmail, String status) {
+        this.bookingID = bookingID;
         this.tutorName = tutorName;
         this.tutorEmail = tutorEmail;
         this.subject = subject;
         this.studentName = studentName;
-        this.studentEmail = sudentEmail;
+        this.studentEmail = studentEmail;
         this.status = status;
+    }
+
+    public int getBookingID() {
+        return bookingID;
+    }
+
+    public void setBookingID(int bookingID) {
+        this.bookingID = bookingID;
     }
     
     
@@ -76,11 +87,11 @@ public class Booking implements Serializable {
         this.studentName = studentName;
     }
 
-    public String getSudentEmail() {
+    public String getStudentEmail() {
         return studentEmail;
     }
 
-    public void setSudentEmail(String studentEmail) {
+    public void setStudentEmail(String studentEmail) {
         this.studentEmail = studentEmail;
     }
 

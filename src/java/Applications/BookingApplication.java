@@ -5,6 +5,7 @@
  */
 package Applications;
 
+import Models.Booking;
 import Models.Bookings;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -65,8 +66,52 @@ public class BookingApplication {
     public Bookings getBookings() {
         return bookings;
     }
+    
+    public Booking getBookingByID(int id){
+        for(Booking b : bookings.getList()){
+            if(b.getBookingID() == id){
+                return b;
+            }
+        }
+        return null;
+    }
+    
+    public Bookings getBookingsByStudents(String student){
+        Bookings studentBookings = new Bookings();
+        for(Booking b : bookings.getList()){
+            if(b.getStudentName() == student){
+                studentBookings.getList().add(b);
+            }
+        }
+        return studentBookings;
+    }
+    
+    public Bookings getBookingsByStudent(String student){
+        Bookings studentBookings = new Bookings();
+        for(Booking b : bookings.getList()){
+            if(b.getStudentName().equals(student)){
+                studentBookings.getList().add(b);
+            }
+        }
+        return studentBookings;
+    }
+    
+    public Bookings getBookingsByTutor(String tutor){
+        Bookings tutorBookings = new Bookings();
+        for(Booking b : bookings.getList()){
+            if(b.getTutorName().equals(tutor)){
+                tutorBookings.getList().add(b);
+            }
+        }
+        return tutorBookings;
+    }
 
     public void setBookings(Bookings bookings) {
         this.bookings = bookings;
+    }
+    
+    public int getNewBookingID(){
+        Booking b = getBookings().getList().get(getBookings().getList().size() - 1);
+        return b.getBookingID() + 1;
     }
 }

@@ -8,6 +8,7 @@ and open the template in the editor.
 
 <bookings>
     <booking>
+        <bookingID>1</bookingID>
         <tutorName>Ryan</tutorName>
         <tutorEmail>ryan@gmail.com</tutorEmail>
         <subject>WSD</subject>
@@ -15,4 +16,14 @@ and open the template in the editor.
         <studentEmail>firstEmail@yahoo.com</studentEmail>
         <status>active</status>
     </booking>
+    <booking>
+        <bookingID>2</bookingID>
+        <tutorName>Luke</tutorName>
+        <tutorEmail>luke@gmail.com</tutorEmail>
+        <subject>SEP</subject>
+        <studentName>Simran</studentName>
+        <studentEmail>simran@gmail.com</studentEmail>
+        <status>active</status>
+    </booking>
 </bookings>
+

@@ -71,6 +71,15 @@ public class TutorApplication implements Serializable{
         return tutors;
     }
     
+    public Tutor getTutorFromID(String name){
+        for(Tutor t : getTutors().getList()){
+            if(t.getName().equals(name)){
+                return t;
+            }
+        }
+        return null;
+    }
+    
     public ArrayList<Tutor> getTutorBySubject(String subject){
         ArrayList<Tutor> tutorList = new ArrayList<Tutor>();
         for(Tutor t : this.tutors.getList()){

@@ -24,14 +24,15 @@
             Tutor tutor = (Tutor) session.getAttribute("tutor");
             if(student != null || tutor != null){
                 String name = request.getParameter("name");
-                
-            %><h1>Main Page</h1>
+                %>
+                <h1>Main Page</h1>
                 <% if(student == null){
                     %><p>Welcome, <%= tutor.getName() %>!</p>
-                    
+                    <a href="booking.jsp">Bookings</a>
                 <% }
                 else{
                     %><p>Welcome, <%= student.getName() %>!</p>
+                    <a href="booking.jsp">Bookings</a>
                     <form action="main.jsp" method="POST">
                         <select name="Subject" id="subjectList">
                             <option value="WSD">WSD</option>
