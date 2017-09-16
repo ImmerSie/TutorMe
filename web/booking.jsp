@@ -15,7 +15,10 @@
     </head>
     <body>
         <h1>Booking Page</h1>
-        <% String filePath = application.getRealPath("WEB-INF/bookings.xml"); %>
+        <% String filePath = application.getRealPath("WEB-INF/bookings.xml");
+           String tutorid = request.getParameter("tutorid");
+        %>
+        <h1><%= tutorid %></h1>
         <jsp:useBean id="bookingApp" class="Applications.BookingApplication" scope="application">
             <jsp:setProperty name="bookingApp" property="filePath" value="<%=filePath%>"/>
         </jsp:useBean>

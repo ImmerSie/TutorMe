@@ -32,6 +32,7 @@
                 <% }
                 else{
                     %><p>Welcome, <%= student.getName() %>!</p>
+                    <form action="main.jsp" method="POST">
                         <select name="Subject" id="subjectList">
                             <option value="WSD">WSD</option>
                             <option value="USP">USP</option>
@@ -40,12 +41,15 @@
                             <option value="MobileApp">MobileApp</option>
  
                         </select>
-                        <button onClick="searchSubject()">Search</button>
+                        <input type="submit" value="Search" name="Search">
+                    </form>
                     <%
-                        String parameter = request.getParameter("subject");
-                        if(parameter != null){
-                            %><p>Subject <%= parameter %> is searched!</p><%
-                            ArrayList<Tutor> tutors = tutorApp.getTutorBySubject(parameter);
+                        //String parameter = request.getParameter("subject");
+                        String subject = request.getParameter("Subject");
+                        //if(parameter != null){
+                        if(subject != null){
+                            %><p>Subject <%= subject %> is searched!</p><%
+                            ArrayList<Tutor> tutors = tutorApp.getTutorBySubject(subject);
                             %>
                             <!--<form action="booking.jsp" method="GET">-->
                                 <table>
@@ -64,6 +68,7 @@
                                                 <td><%= t.getSubject() %></td>
                                                 <td><%= t.getStatus() %></td>
                                                 <td><input type="submit" value="Book" name="Book"></td>
+                                                <input type="hidden" name="tutorid" id="tutorid" value="<%= t.getName() %>">
                                             </form>
                                         </tr>
                                     <% }
