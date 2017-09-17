@@ -40,12 +40,6 @@
 
 
     <body>
-
-
-
-      
-
-
         <%if (userType.equals("student")) {     
              if (students.getUser(email) == null) {%>
 
@@ -59,6 +53,7 @@
 
         <%
             Student student = new Student (name, email, password, birthday, userType);
+            session.setAttribute("tutor", null);
             session.setAttribute("student", student);
             students.addUser(student);
             studentApp.updateXML(students, filePath);
@@ -78,7 +73,9 @@
                <p> Click<a href="main.jsp"> here</a> to go to your main page. </p>
         
         <%
-            Tutor tutor = new Tutor (name, email, password, birthday, userType, subject);
+            String status = "Available";
+            Tutor tutor = new Tutor (name, email, password, birthday, userType, subject, status);
+            session.setAttribute("student", null);
             session.setAttribute("tutor", tutor);
             tutors.addUser(tutor);
             tutorApp.updateXML(tutors, filePath2);

@@ -26,7 +26,6 @@
         <jsp:useBean id="tutorApp" class="Applications.TutorApplication" scope="application">
             <jsp:setProperty name="tutorApp" property="filePath2" value="<%=filePath2%>"/>
         </jsp:useBean>
-        <h2>My Bookings</h2>
         <%
             Student student = (Student) session.getAttribute("student");
             Tutor tutor = (Tutor) session.getAttribute("tutor");
@@ -49,28 +48,33 @@
                 tutorApp.saveTutors();
             }
          %>
-        <a href="createBooking.jsp">Create Booking</a></br>
-        <h2>My Bookings</h2>
-        <table>
-            <thead>
-                <th>Tutor Name</th>
-                <th>Tutor Email</th>
-                <th>Subject</th>
-                <th>Student Name</th>
-                <th>Student Email</th>
-                <th>Status</th>
-            </thead>
-            <tbody>
-            <%  
-                Bookings bookings;
-                if(student != null){
-                    bookings = bookingApp.getBookingsByStudent(student.getName());
-                }
-                else{
-                    bookings = bookingApp.getBookingsByTutor(tutor.getName());
-                }
-                //Bookings bookings = bookingApp.getBookings();
-                for(Booking b : bookings.getList()){
+        <% if(student != null){
+            %><a href="createBooking.jsp">Create Booking</a></br><%          
+        } %>
+        <%  Bookings bookings;
+        if(student != null){
+            bookings = bookingApp.getBookingsByStudent(student.getName());
+        }
+        else{
+            bookings = bookingApp.getBookingsByTutor(tutor.getName());
+        }
+        if(bookings.getList().size() <= 0){ %>
+            <p>You currently don't have any bookings.</p>
+        <% }
+        else
+        { %>
+            <h2>My Bookings</h2>
+            <table>
+                <thead>
+                    <th>Tutor Name</th>
+                    <th>Tutor Email</th>
+                    <th>Subject</th>
+                    <th>Student Name</th>
+                    <th>Student Email</th>
+                    <th>Status</th>
+                </thead>
+                <tbody>
+                <% for(Booking b : bookings.getList()){
                     %> <form action="viewBooking.jsp" method="GET"><tr>
                     <td><%= b.getTutorName() %></td>
                     <td><%= b.getTutorEmail() %></td>
@@ -80,12 +84,11 @@
                     <td><%= b.getStatus() %></td>
                     <td><input type="submit" value="View" name="View"></td>
                     <td><input type="hidden" value="<%= b.getBookingID() %>" id="bookingID" name="bookingID"></td>
-                </tr></form>
-            <% }
-            %>
-            </tbody>
-        </table>
-            
+                    </tr></form>
+                    <% } %>
+                </tbody>
+            </table>
+        <% } %>
         <h2>All Bookings</h2>
         <table>
             <thead>

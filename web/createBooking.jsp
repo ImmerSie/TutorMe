@@ -39,28 +39,32 @@
         String subject = request.getParameter("Subject");
         if(subject != null){
             %><p>Subject <%= subject %> is searched!</p>
-            <%  ArrayList<Tutor> tutors = tutorApp.getTutorBySubject(subject); %>
-            <table>
-                <thead>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Subject</th>
-                    <th>Status</th>
-                </thead>
-                <tbody>
-                <% for(Tutor t : tutors){
-                    if(!t.getStatus().equals("Unavailable")){
-                    %> <tr>
-                            <form action="booking.jsp" method="GET">
-                                <td><%= t.getName() %></td>
-                                <td><%= t.getEmail() %></td>
-                                <td><%= t.getSubject() %></td>
-                                <td><%= t.getStatus() %></td>
-                                <td><input type="submit" value="Book" name="Book"></td>
-                                <input type="hidden" name="tutorid" id="tutorid" value="<%= t.getName() %>">
-                            </form>
-                        </tr>
-                    <% }
+            <%  ArrayList<Tutor> tutors = tutorApp.getTutorBySubject(subject); 
+            if(tutors.size() <= 0){
+                %><p>There are no tutors in this subject.</p>
+            <% } else { %>
+                <table>
+                    <thead>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Subject</th>
+                        <th>Status</th>
+                    </thead>
+                    <tbody>
+                    <% for(Tutor t : tutors){
+                        if(!t.getStatus().equals("Unavailable")){
+                        %> <tr>
+                                <form action="booking.jsp" method="GET">
+                                    <td><%= t.getName() %></td>
+                                    <td><%= t.getEmail() %></td>
+                                    <td><%= t.getSubject() %></td>
+                                    <td><%= t.getStatus() %></td>
+                                    <td><input type="submit" value="Book" name="Book"></td>
+                                    <input type="hidden" name="tutorid" id="tutorid" value="<%= t.getName() %>">
+                                </form>
+                            </tr>
+                        <% }
+                    } 
                 } %>
                 </tbody>
             </table>

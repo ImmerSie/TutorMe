@@ -47,7 +47,7 @@
                 </tr>
                 <tr> 
                     <td>Subject</td> 
-                    <td><select name="Subject">
+                    <td><select name="subject">
                             <option value="tutorsOnly">Tutors Only</option>
                             <option value="WSD">WSD</option>
                             <option value="USP">USP</option>

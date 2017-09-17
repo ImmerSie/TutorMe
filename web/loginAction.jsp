@@ -45,9 +45,11 @@
         %>
 
         <% if (student != null) {
+                session.setAttribute("tutor", null);
                 session.setAttribute("student", student);  %>
                 <p>Login successful. Click <a href="main.jsp">here </a>to get to the main page.</p>
         <% }else if(tutor != null) {
+            session.setAttribute("student", null);
              session.setAttribute("tutor", tutor); %>
             <p>Login successful. Click <a href="main.jsp">here </a>to get to the main page.</p>
         <% } else { %>

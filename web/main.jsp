@@ -26,7 +26,7 @@
                 String name = request.getParameter("name");
                 %>
                 <h1>Main Page</h1>
-                <% if(student == null){
+                <% if(tutor != null){
                     %><p>Welcome, <%= tutor.getName() %>!</p>
                     <a href="booking.jsp">Bookings</a>
                 <% }

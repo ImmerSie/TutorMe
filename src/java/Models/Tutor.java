@@ -34,13 +34,14 @@ public class Tutor implements Serializable{
 
     public Tutor(){}
 
-    public Tutor(String name, String email, String password, String birthday, String userType, String subject) {
+    public Tutor(String name, String email, String password, String birthday, String userType, String subject, String status) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.birthday = birthday;
         this.userType = userType;
         this.subject = subject;
+        this.status = status;
     }
 
     public String getName() {
