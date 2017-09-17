@@ -68,8 +68,11 @@
                                                 <td><%= t.getEmail() %></td>
                                                 <td><%= t.getSubject() %></td>
                                                 <td><%= t.getStatus() %></td>
-                                                <td><input type="submit" value="Book" name="Book"></td>
-                                                <input type="hidden" name="tutorid" id="tutorid" value="<%= t.getName() %>">
+                                                <% if(!t.getStatus().equals("Unavailable"))
+                                                { %>
+                                                    <td><input type="submit" value="Book" name="Book"></td>
+                                                    <input type="hidden" name="tutorid" id="tutorid" value="<%= t.getName() %>">
+                                                <% } %>
                                             </form>
                                         </tr>
                                     <% }

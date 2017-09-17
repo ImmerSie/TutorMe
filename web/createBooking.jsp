@@ -51,20 +51,22 @@
                         <th>Status</th>
                     </thead>
                     <tbody>
-                    <% for(Tutor t : tutors){
-                        if(!t.getStatus().equals("Unavailable")){
+                    <% for(Tutor t : tutors)
+                    {
                         %> <tr>
-                                <form action="booking.jsp" method="GET">
-                                    <td><%= t.getName() %></td>
-                                    <td><%= t.getEmail() %></td>
-                                    <td><%= t.getSubject() %></td>
-                                    <td><%= t.getStatus() %></td>
+                            <form action="booking.jsp" method="GET">
+                                <td><%= t.getName() %></td>
+                                <td><%= t.getEmail() %></td>
+                                <td><%= t.getSubject() %></td>
+                                <td><%= t.getStatus() %></td>
+                                <% if(!t.getStatus().equals("Unavailable"))
+                                { %>
                                     <td><input type="submit" value="Book" name="Book"></td>
                                     <input type="hidden" name="tutorid" id="tutorid" value="<%= t.getName() %>">
-                                </form>
-                            </tr>
-                        <% }
-                    } 
+                                <% } %>
+                            </form>
+                        </tr>
+                    <% } 
                 } %>
                 </tbody>
             </table>
