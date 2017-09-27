@@ -83,7 +83,7 @@ public class TutorApplication implements Serializable{
     public ArrayList<Tutor> getTutorBySubject(String subject){
         ArrayList<Tutor> tutorList = new ArrayList<Tutor>();
         for(Tutor t : this.tutors.getList()){
-            if(t.getSubject().equals(subject)){
+            if(t.getSubject().toLowerCase().equals(subject.toLowerCase())){
                 tutorList.add(t);
             }
         }

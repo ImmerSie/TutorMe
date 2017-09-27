@@ -7,9 +7,13 @@ package Applications;
 
 import Models.Booking;
 import Models.Bookings;
+import Models.Student;
+import Models.Tutor;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -113,5 +117,49 @@ public class BookingApplication {
     public int getNewBookingID(){
         Booking b = getBookings().getList().get(getBookings().getList().size() - 1);
         return b.getBookingID() + 1;
+    }
+    
+    public void createBooking(Tutor tutor, Student student){
+        int bookingID = getNewBookingID();
+        String tutName = tutor.getName();
+        String tutEmail = tutor.getEmail();
+        String subject = tutor.getSubject();
+        String stuName = student.getName();
+        String stuEmail = student.getEmail();
+        String status = "active";
+        Booking booking = new Booking(bookingID, tutName, tutEmail, subject, stuName, stuEmail, status);
+        tutor.setStatus("Unavailable");
+        getBookings().addBooking(booking);
+        try {
+            saveBookings();
+        } catch (JAXBException ex) {
+            Logger.getLogger(BookingApplication.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(BookingApplication.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void cancelBooking(int bookingId){
+        Booking booking = getBookingByID(bookingId);
+        booking.setStatus("canceled");
+        try {
+            saveBookings();
+        } catch (JAXBException ex) {
+            Logger.getLogger(BookingApplication.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(BookingApplication.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+    public void completeBooking(int bookingId){
+        Booking booking = getBookingByID(bookingId);
+        booking.setStatus("completed");
+        try {
+            saveBookings();
+        } catch (JAXBException ex) {
+            Logger.getLogger(BookingApplication.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(BookingApplication.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

@@ -34,17 +34,8 @@
                <h1><%= tutorid %></h1>
             <%
                 Tutor bookedTutor = tutorApp.getTutorFromID(tutorid);
-                int bookingID = bookingApp.getNewBookingID();
-                String tutName = tutorid;
-                String tutEmail = bookedTutor.getEmail();
-                String subject = bookedTutor.getSubject();
-                String stuName = student.getName();
-                String stuEmail = student.getEmail();
-                String status = "active";
-                Booking booking = new Booking(bookingID, tutName, tutEmail, subject, stuName, stuEmail, status);
-                bookedTutor.setStatus("Unavailable");
-                bookingApp.getBookings().addBooking(booking);
-                bookingApp.saveBookings();
+                
+                bookingApp.createBooking(bookedTutor, student);
                 tutorApp.saveTutors();
             }
          %>

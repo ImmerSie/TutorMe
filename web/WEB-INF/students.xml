@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 
 
-<students xsi:schemaLocation="students.xsd">
+<students xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="students.xsd">
     <student>
         <name>Sarah</name>
         <email>sarah@gmail.com</email>

@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 
 
-<bookings xsi:schemaLocation="bookings.xsd">
+<bookings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="bookings.xsd">
     <booking>
         <bookingID>1</bookingID>
         <tutorName>Ryan</tutorName>
