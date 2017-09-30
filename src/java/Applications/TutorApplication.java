@@ -71,7 +71,16 @@ public class TutorApplication implements Serializable{
         return tutors;
     }
     
-    public Tutor getTutorFromID(String name){
+    public Tutor getTutorFromEmail(String email){
+        for(Tutor t : getTutors().getList()){
+            if(t.getEmail().equals(email)){
+                return t;
+            }
+        }
+        return null;
+    }
+    
+     public Tutor getTutorFromID(String name){
         for(Tutor t : getTutors().getList()){
             if(t.getName().equals(name)){
                 return t;
@@ -90,6 +99,27 @@ public class TutorApplication implements Serializable{
         return tutorList;
     }
 
+    public Tutors getTutorsByStatus(String status){
+        Tutors tutors = new Tutors();
+        for(Tutor b : this.tutors.getList()){
+            if(b.getStatus().equals(status)){
+                tutors.getList().add(b);
+            }
+        }
+        return tutors;
+    }
+     
+     public Tutors getAvailableTutors(){
+        Tutors tutors = new Tutors();
+        for(Tutor b : this.tutors.getList()){
+            if(b.getStatus().equals("available")){
+                tutors.getList().add(b);
+            }
+        }
+        return tutors;
+    }
+     
+     
     public void setTutors(Tutors tutors) {
         this.tutors = tutors;
     }

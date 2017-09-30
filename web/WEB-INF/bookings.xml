@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 
 
-<bookings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="bookings.xsd">
+<bookings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:schemaLocation="bookings.xsd">
     <booking>
         <bookingID>1</bookingID>
         <tutorName>Ryan</tutorName>
@@ -24,6 +24,33 @@ and open the template in the editor.
         <studentName>Simran</studentName>
         <studentEmail>simran@gmail.com</studentEmail>
         <status>active</status>
+    </booking>
+    <booking>
+        <bookingID>3</bookingID>
+        <tutorName>Joe</tutorName>
+        <tutorEmail>joe@gmail.com</tutorEmail>
+        <subject>WSD</subject>
+        <studentName>YuEn</studentName>
+        <studentEmail>yuen@gmail.com</studentEmail>
+        <status>cancelled</status>
+    </booking>
+    <booking>
+        <bookingID>4</bookingID>
+        <tutorName>Ibanez</tutorName>
+        <tutorEmail>ibanez@gmail.com</tutorEmail>
+        <subject>SEP</subject>
+        <studentName>Gibson</studentName>
+        <studentEmail>gibson@gmail.com</studentEmail>
+        <status>completed</status>
+    </booking>
+    <booking>
+        <bookingID>5</bookingID>
+        <tutorName>Bender</tutorName>
+        <tutorEmail>bender@gmail.com</tutorEmail>
+        <subject>AppProg</subject>
+        <studentName>Yesman</studentName>
+        <studentEmail>yesman@gmail.com</studentEmail>
+        <status>completed</status>
     </booking>
 </bookings>
 
