@@ -11,6 +11,7 @@ package Applications;
  */
 
 import Models.Students;
+import Models.Student;
 import java.io.*;
 import javax.xml.bind.*;
 
@@ -65,6 +66,15 @@ public class StudentApplication implements Serializable{
 
     public void setStudents(Students students) {
         this.students = students;
+    }
+    
+     public Student getStudentByName(String name){
+        for(Student s : getStudents().getList()){
+            if(s.getName().equals(name)){
+                return s;
+            }
+        }
+        return null;
     }
 
 }

@@ -85,6 +85,7 @@
                         <%}}                     
                 }%>
                 <hr>
+                <p>Click <a href="account.jsp">here</a> to access your account details.</p>
                 <p>Click <a href="logout.jsp">here</a> to logout.</p>
             <% } else { %>
             <hr>

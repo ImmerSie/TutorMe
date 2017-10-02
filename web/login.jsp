@@ -75,14 +75,12 @@
                 
                 response.sendRedirect("main.jsp");
                 %>
-               <!--   <p>Login successful. Click <a href="main.jsp">here </a>to get to the main page.</p> -->
         <% }else if(tutor != null) {
             session.setAttribute("student", null);
              session.setAttribute("tutor", tutor); 
         response.sendRedirect("main.jsp");
         %>
              
-          <!--  <p>Login successful. Click <a href="main.jsp">here </a>to get to the main page.</p> -->
         <% } else { %>
             <p> Username or password is incorrect. Click <a href="login.jsp">here </a>to retry. </p>
             <p> Alternatively, click <a href="register.jsp">here</a> to register. </p>
