@@ -18,13 +18,13 @@
         
         </div>
         
-
+        <hr>
         <table width="100%" align="center">
             <tr>
-                <td align="right"><u><a href="register.jsp">Register</a></u></td>
+                <td align="center"><u><a href="register.jsp">Register</a></u></td>
             </tr> 
             <tr>
-                <td align="right" ><u><a href="login.jsp">Login</a></u></td>
+                <td align="center" ><u><a href="login.jsp">Login</a></u></td>
             </tr>   
         </table>
 

@@ -79,7 +79,7 @@
                     <% } %>
                 </tbody>
             </table>
-        <% } %>
+        <% } %>                                                
         <h2>All Bookings</h2>
         <table>
             <thead>
@@ -108,6 +108,7 @@
             %>
             </tbody>
         </table>
+            <hr>
         <a href="main.jsp">Return to Main</a>
     </body>
 </html>

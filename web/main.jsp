@@ -50,8 +50,10 @@
                         //if(parameter != null){
                         if(subject != null){
                             %><p>Subject <%= subject %> is searched!</p><%
-                            ArrayList<Tutor> tutors = tutorApp.getTutorBySubject(subject);
-                            %>
+                            ArrayList<Tutor> tutors = tutorApp.getTutorBySubject(subject);                            // Same code from createBooking.jsp  
+                            if(tutors.size() <= 0){%>                                        
+                              <h2>There are no tutors in this subject.</h2>
+                                     <% }else{ %>
                             <!--<form action="booking.jsp" method="GET">-->
                                 <table>
                                     <thead>
@@ -80,10 +82,12 @@
                                     </tbody>
                                 </table>
                             <!--</form>-->
-                        <%}                        
+                        <%}}                     
                 }%>
-                <p>Click <a href="login.jsp">here</a> to return to the login page.</p>
+                <hr>
+                <p>Click <a href="logout.jsp">here</a> to logout.</p>
             <% } else { %>
+            <hr>
                 <p>Incorrect login details. Click <a href="login.jsp">here</a> to return to the login page.</p>
             <% } %>
     </body>

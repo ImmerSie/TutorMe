@@ -41,7 +41,7 @@
             %><p>Subject <%= subject %> is searched!</p>
             <%  ArrayList<Tutor> tutors = tutorApp.getTutorBySubject(subject); 
             if(tutors.size() <= 0){
-                %><p>There are no tutors in this subject.</p>
+                %><h2>There are no tutors in this subject.</h2>
             <% } else { %>
                 <table>
                     <thead>
@@ -59,7 +59,7 @@
                                 <td><%= t.getEmail() %></td>
                                 <td><%= t.getSubject() %></td>
                                 <td><%= t.getStatus() %></td>
-                                <% if(!t.getStatus().equals("Unavailable"))
+                                <% if(!t.getStatus().equals("unavailable"))
                                 { %>
                                     <td><input type="submit" value="Book" name="Book"></td>
                                     <input type="hidden" name="tutorid" id="tutorid" value="<%= t.getName() %>">

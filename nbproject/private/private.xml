@@ -3,15 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/Mango/Documents/NetBeansProjects/TutorMe/web/index.jsp</file>
+            <file>file:/C:/Users/Mango/Documents/NetBeansProjects/TutorMe/web/main.jsp</file>
+            <file>file:/C:/Users/Mango/Documents/NetBeansProjects/TutorMe/web/booking.jsp</file>
             <file>file:/C:/Users/Mango/Documents/NetBeansProjects/TutorMe/src/java/Services/client/BookingClient.java</file>
-            <file>file:/C:/Users/Mango/Documents/NetBeansProjects/TutorMe/src/java/Services/BookingSOAP.java</file>
-            <file>file:/C:/Users/Mango/Documents/NetBeansProjects/TutorMe/src/java/Applications/TutorApplication.java</file>
-            <file>file:/C:/Users/Mango/Documents/NetBeansProjects/TutorMe/src/java/Services/BookingService.java</file>
-            <file>file:/C:/Users/Mango/Documents/NetBeansProjects/TutorMe/src/java/Models/Booking.java</file>
-            <file>file:/C:/Users/Mango/Documents/NetBeansProjects/TutorMe/src/java/Applications/BookingApplication.java</file>
-            <file>file:/C:/Users/Mango/Documents/NetBeansProjects/TutorMe/src/java/Models/Bookings.java</file>
-            <file>file:/C:/Users/Mango/Documents/NetBeansProjects/TutorMe/src/java/Services/TutorService.java</file>
-            <file>file:/C:/Users/Mango/Documents/NetBeansProjects/TutorMe/nbproject/build-impl.xml</file>
+            <file>file:/C:/Users/Mango/Documents/NetBeansProjects/TutorMe/web/login.jsp</file>
+            <file>file:/C:/Users/Mango/Documents/NetBeansProjects/TutorMe/web/logout.jsp</file>
+            <file>file:/C:/Users/Mango/Documents/NetBeansProjects/TutorMe/web/register.jsp</file>
+            <file>file:/C:/Users/Mango/Documents/NetBeansProjects/TutorMe/web/createBooking.jsp</file>
+            <file>file:/C:/Users/Mango/Documents/NetBeansProjects/TutorMe/web/WEB-INF/tutors.xml</file>
+            <file>file:/C:/Users/Mango/Documents/NetBeansProjects/TutorMe/web/welcome.jsp</file>
         </group>
     </open-files>
 </project-private>
