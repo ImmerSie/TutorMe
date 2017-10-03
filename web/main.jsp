@@ -28,7 +28,7 @@
                 <h1>Main Page</h1>
                 <% if(tutor != null){
                     %><p>Welcome, <%= tutor.getName() %>!</p>
-                    <a href="booking.jsp">Bookings</a>
+                    <a href="oldBookings.jsp">Bookings</a>
                 <% }
                 else{
                     %><p>Welcome, <%= student.getName() %>!</p>

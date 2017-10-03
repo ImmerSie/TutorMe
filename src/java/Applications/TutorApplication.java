@@ -73,7 +73,7 @@ public class TutorApplication implements Serializable{
     
     public Tutor getTutorFromID(String name){
         for(Tutor t : getTutors().getList()){
-            if(t.getName().equals(name)){
+            if(t.getName().toLowerCase().contains(name.toLowerCase())){
                 return t;
             }
         }
@@ -84,6 +84,16 @@ public class TutorApplication implements Serializable{
         ArrayList<Tutor> tutorList = new ArrayList<Tutor>();
         for(Tutor t : this.tutors.getList()){
             if(t.getSubject().toLowerCase().equals(subject.toLowerCase())){
+                tutorList.add(t);
+            }
+        }
+        return tutorList;
+    }
+    
+    public ArrayList<Tutor> getTutorByStatus(String status){
+        ArrayList<Tutor> tutorList = new ArrayList<Tutor>();
+        for(Tutor t : this.tutors.getList()){
+            if(t.getStatus().toLowerCase().equals(status.toLowerCase())){
                 tutorList.add(t);
             }
         }
