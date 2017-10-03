@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 
 
-<students xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="students.xsd">
+<students xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:schemaLocation="students.xsd">
     <student>
         <name>Sarah</name>
         <email>sarah@gmail.com</email>
@@ -26,6 +26,20 @@ and open the template in the editor.
         <email>yuen@gmail.com</email>
         <password>blahblah</password>
         <birthday>January 5</birthday>
+        <userType>Student</userType>
+    </student>
+    <student>
+        <name>Samanthar</name>
+        <email>samanthar@gmail.com</email>
+        <password>blahblah</password>
+        <birthday>January 6</birthday>
+        <userType>Student</userType>
+    </student>
+    <student>
+        <name>Leela</name>
+        <email>leela@gmail.com</email>
+        <password>blahblah</password>
+        <birthday>January 8</birthday>
         <userType>Student</userType>
     </student>
 </students>

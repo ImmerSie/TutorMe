@@ -100,6 +100,36 @@ public class BookingApplication {
         return studentBookings;
     }
     
+    public Bookings getBookingsByStudentEmail(String email){
+        Bookings studentBookings = new Bookings();
+        for(Booking b : bookings.getList()){
+            if(b.getStudentEmail().equals(email)){
+                studentBookings.getList().add(b);
+            }
+        }
+        return studentBookings;
+    }
+    
+    public Bookings getBookingsBySubject(String subject){
+        Bookings studentBookings = new Bookings();
+        for(Booking b : bookings.getList()){
+            if(b.getSubject().equals(subject)){
+                studentBookings.getList().add(b);
+            }
+        }
+        return studentBookings;
+    }
+    
+       public Bookings getBookingsByStatus(String status){
+        Bookings studentBookings = new Bookings();
+        for(Booking b : bookings.getList()){
+            if(b.getStatus().equals(status)){
+                studentBookings.getList().add(b);
+            }
+        }
+        return studentBookings;
+    }
+    
     public Bookings getBookingsByTutor(String tutor){
         Bookings tutorBookings = new Bookings();
         for(Booking b : bookings.getList()){
