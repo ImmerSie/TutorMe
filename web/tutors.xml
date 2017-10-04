@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<tutors xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:schemaLocation="tutors.xsd">
+    <tutor>
+        <name>Ryan</name>
+        <email>ryan@gmail.com</email>
+        <password>blahblah</password>
+        <birthday>January 2</birthday>
+        <userType>Tutor</userType>
+        <subject>WSD</subject>
+        <status>available</status>
+    </tutor>
+    <tutor>
+        <name>Georges</name>
+        <email>georges@gmail.com</email>
+        <password>blahblah</password>
+        <birthday>January 2</birthday>
+        <userType>Tutor</userType>
+        <subject>WSD</subject>
+        <status>unavailable</status>
+    </tutor>
+    <tutor>
+        <name>Luke</name>
+        <email>luke@gmail.com</email>
+        <password>blahblah</password>
+        <birthday>January 2</birthday>
+        <userType>Tutor</userType>
+        <subject>AppProg</subject>
+        <status>available</status>
+    </tutor>
+      <tutor>
+        <name>Brannigan</name>
+        <email>brannigan@gmail.com</email>
+        <password>blahblah</password>
+        <birthday>January 4</birthday>
+        <userType>Tutor</userType>
+        <subject>USP</subject>
+        <status>unavailable</status>
+    </tutor>
+      <tutor>
+        <name>Dennis</name>
+        <email>dennis@gmail.com</email>
+        <password>blahblah</password>
+        <birthday>December 2</birthday>
+        <userType>Tutor</userType>
+        <subject>MobileApp</subject>
+        <status>available</status>
+    </tutor>
+</tutors>
