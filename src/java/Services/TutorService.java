@@ -42,7 +42,7 @@ public class TutorService {
     @Produces("application/xml")
     public Tutors getUsers() throws IOException, Exception {
 
-        return getTutorApp().getAvailableTutors();
+        return getTutorApp().getTutors();
     }
 
     @Path("tutors/tutor/email/{email}")

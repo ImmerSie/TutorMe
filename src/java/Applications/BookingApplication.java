@@ -180,7 +180,7 @@ public class BookingApplication {
             Logger.getLogger(BookingApplication.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-    }
+    }    
     public void completeBooking(int bookingId){
         Booking booking = getBookingByID(bookingId);
         booking.setStatus("completed");

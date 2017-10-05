@@ -12,6 +12,7 @@
         <title>Tutor Me!</title>
     </head>
     <body>
+        <%session.invalidate();    %>
         <div align="center">
             
             <h1>Tutor Me!</h1>
