@@ -5,7 +5,7 @@
 
 <html >
   <head>
-    <title>Using a Named Template with Global Parameters</title>
+    <title>Tutor Me!</title>
   </head>
 
   <body>
@@ -33,16 +33,22 @@
            <h1><%= tutorid %></h1>
         <%
             Tutor bookedTutor = tutorApp.getTutorFromID(tutorid);
-
-            bookingApp.createBooking(bookedTutor, student);
-            tutorApp.saveTutors();
+            if(bookedTutor.getStatus().toLowerCase().equals("available")){
+                bookingApp.createBooking(bookedTutor, student);
+                tutorApp.saveTutors();
+            }
         }
      %>
     <% if(student != null){
         %><a href="createBooking.jsp">Create Booking</a></br><%          
     } %>
-
     <x:transform xml="${inputDoc}" xslt="${stylesheet}">
+        <x:param name="student"  value="${student.getName()}" />
+    </x:transform>
+    
+    <h2>All Bookings</h2>
+    <x:transform xml="${inputDoc}" xslt="${stylesheet}">
+        <x:param name="student"  value="getAll" />
     </x:transform>
     
     <a href="main.jsp">Return to Main</a>

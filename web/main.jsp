@@ -1,20 +1,23 @@
 <%-- 
-    Document   : main
-    Created on : 15/09/2017, 1:00:11 PM
+    Document   : createBooking
+    Created on : 16/09/2017, 9:38:44 PM
     Author     : Max
 --%>
-
-<%@page import="java.util.ArrayList"%>
-<%@page import="Models.Student"%>
 <%@page import="Models.Tutor"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Home</title>
-    </head>
-    <body>
+<%@page import="Models.Student"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="x" uri="http://java.sun.com/jsp/jstl/xml" %>
+
+<html >
+  <head>
+    <title>Tutor Me!</title>
+  </head>
+
+  <body>
+    <c:import url="WEB-INF/tutors.xml" var="inputDoc" />
+
+    <c:import url="WEB-INF/tutors.xsl" var="stylesheet" />
+    
         <% String filePath2 = application.getRealPath("WEB-INF/tutors.xml"); %>
         <jsp:useBean id="tutorApp" class="Applications.TutorApplication" scope="application">
             <jsp:setProperty name="tutorApp" property="filePath" value="<%=filePath2%>"/>
@@ -22,75 +25,45 @@
         <% 
             Student student = (Student) session.getAttribute("student");
             Tutor tutor = (Tutor) session.getAttribute("tutor");
-            if(student != null || tutor != null){
+            if(student != null || tutor != null)
+            {
                 String name = request.getParameter("name");
                 %>
                 <h1>Main Page</h1>
                 <% if(tutor != null){
                     %><p>Welcome, <%= tutor.getName() %>!</p>
                     <a href="oldBookings.jsp">Bookings</a>
-                <% }
-                else{
+                <% } else {
                     %><p>Welcome, <%= student.getName() %>!</p>
                     <a href="booking.jsp">Bookings</a>
                     <form action="main.jsp" method="POST">
-                        <select name="Subject" id="subjectList">
-                            <option value="WSD">WSD</option>
-                            <option value="USP">USP</option>
-                            <option value="SEP">SEP</option>
-                            <option value="AppProg">AppProg</option>
-                            <option value="MobileApp">MobileApp</option>
- 
+                        <select name="searchBy" id="searchList">
+                            <option value="searchStatus">Status</option>
+                            <option value="searchSubject">Subject</option>
+                            <option value="searchName">Name</option> 
                         </select>
+                        <input type="text" name="searchVal">
                         <input type="submit" value="Search" name="Search">
                     </form>
                     <%
-                        //String parameter = request.getParameter("subject");
-                        String subject = request.getParameter("Subject");
-                        //if(parameter != null){
-                        if(subject != null){
-                            %><p>Subject <%= subject %> is searched!</p><%
-                            ArrayList<Tutor> tutors = tutorApp.getTutorBySubject(subject);                            // Same code from createBooking.jsp  
-                            if(tutors.size() <= 0){%>                                        
-                              <h2>There are no tutors in this subject.</h2>
-                                     <% }else{ %>
-                            <!--<form action="booking.jsp" method="GET">-->
-                                <table>
-                                    <thead>
-                                        <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Subject</th>
-                                        <th>Status</th>
-                                    </thead>
-                                    <tbody>
-                                    <% for(Tutor t : tutors){
-                                    %> <tr>
-                                            <form action="booking.jsp" method="GET">
-                                                <td><%= t.getName() %></td>
-                                                <td><%= t.getEmail() %></td>
-                                                <td><%= t.getSubject() %></td>
-                                                <td><%= t.getStatus() %></td>
-                                                <% if(!t.getStatus().equals("Unavailable"))
-                                                { %>
-                                                    <td><input type="submit" value="Book" name="Book"></td>
-                                                    <input type="hidden" name="tutorid" id="tutorid" value="<%= t.getName() %>">
-                                                <% } %>
-                                            </form>
-                                        </tr>
-                                    <% }
-                                    %>
-                                    </tbody>
-                                </table>
-                            <!--</form>-->
-                        <%}}                     
-                }%>
-                <hr>
-                <p>Click <a href="account.jsp">here</a> to access your account details.</p>
-                <p>Click <a href="logout.jsp">here</a> to logout.</p>
-            <% } else { %>
+                    String searchVal = request.getParameter("searchVal");
+                    String searchBy = request.getParameter("searchBy");
+                    if(searchBy != null && searchVal != null)
+                    { %>
+                        <x:transform xml="${inputDoc}" xslt="${stylesheet}">
+                            <x:param name="searchVal"  value="<%= searchVal %>" />
+                            <x:param name="searchBy"  value="<%= searchBy %>" />
+                        </x:transform>
+                    <%}  
+                }
+            }
+            else { %>
             <hr>
                 <p>Incorrect login details. Click <a href="login.jsp">here</a> to return to the login page.</p>
             <% } %>
+            <hr>
+            <p>Click <a href="account.jsp">here</a> to access your account details.</p>
+            <p>Click <a href="logout.jsp">here</a> to logout.</p>
     </body>
 </html>
 

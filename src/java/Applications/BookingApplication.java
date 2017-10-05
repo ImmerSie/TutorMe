@@ -158,7 +158,7 @@ public class BookingApplication {
         String stuEmail = student.getEmail();
         String status = "active";
         Booking booking = new Booking(bookingID, tutName, tutEmail, subject, stuName, stuEmail, status);
-        tutor.setStatus("Unavailable");
+        tutor.setStatus("unavailable");
         getBookings().addBooking(booking);
         try {
             saveBookings();

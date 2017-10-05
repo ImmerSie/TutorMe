@@ -23,7 +23,7 @@ and open the template in the editor.
         <birthday>January 2</birthday>
         <userType>Tutor</userType>
         <subject>WSD</subject>
-        <status>unavailable</status>
+        <status>available</status>
     </tutor>
     <tutor>
         <name>Luke</name>

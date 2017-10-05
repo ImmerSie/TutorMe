@@ -3,17 +3,21 @@
     Created on : 16/09/2017, 9:38:44 PM
     Author     : Max
 --%>
-
 <%@page import="Models.Tutor"%>
-<%@page import="java.util.ArrayList"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Create Booking</title>
-    </head>
-    <body>
+<%@page import="Models.Student"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="x" uri="http://java.sun.com/jsp/jstl/xml" %>
+
+<html >
+  <head>
+    <title>Tutor Me!</title>
+  </head>
+
+  <body>
+    <c:import url="WEB-INF/tutors.xml" var="inputDoc" />
+
+    <c:import url="WEB-INF/tutors.xsl" var="stylesheet" />
+    
         <h1>Create Booking</h1>
         <% String filePath = application.getRealPath("WEB-INF/bookings.xml");
            String filePath2 = application.getRealPath("WEB-INF/tutors.xml"); %>
@@ -39,37 +43,8 @@
         String subject = request.getParameter("Subject");
         if(subject != null){
             %><p>Subject <%= subject %> is searched!</p>
-            <%  ArrayList<Tutor> tutors = tutorApp.getTutorBySubject(subject); 
-            if(tutors.size() <= 0){
-                %><h2>There are no tutors in this subject.</h2>
-            <% } else { %>
-                <table>
-                    <thead>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Subject</th>
-                        <th>Status</th>
-                    </thead>
-                    <tbody>
-                    <% for(Tutor t : tutors)
-                    {
-                        %> <tr>
-                            <form action="booking.jsp" method="GET">
-                                <td><%= t.getName() %></td>
-                                <td><%= t.getEmail() %></td>
-                                <td><%= t.getSubject() %></td>
-                                <td><%= t.getStatus() %></td>
-                                <% if(!t.getStatus().equals("unavailable"))
-                                { %>
-                                    <td><input type="submit" value="Book" name="Book"></td>
-                                    <input type="hidden" name="tutorid" id="tutorid" value="<%= t.getName() %>">
-                                <% } %>
-                            </form>
-                        </tr>
-                    <% } 
-                } %>
-                </tbody>
-            </table>
+            <x:transform xml="${inputDoc}" xslt="${stylesheet}">
+            </x:transform>
         <% } %>
         <a href="booking.jsp">Cancel</a>
     </body>
