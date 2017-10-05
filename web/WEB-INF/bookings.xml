@@ -52,5 +52,14 @@ and open the template in the editor.
         <studentEmail>yesman@gmail.com</studentEmail>
         <status>completed</status>
     </booking>
+    <booking>
+        <bookingID>6</bookingID>
+        <tutorName>Bender</tutorName>
+        <tutorEmail>bender@gmail.com</tutorEmail>
+        <subject>AppProg</subject>
+        <studentName>noman</studentName>
+        <studentEmail>noman@gmail.com</studentEmail>
+        <status>completed</status>
+    </booking>
 </bookings>
 

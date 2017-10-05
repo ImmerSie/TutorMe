@@ -71,13 +71,14 @@ public class TutorApplication implements Serializable{
         return tutors;
     }
     
-    public Tutor getTutorFromEmail(String email){
-        for(Tutor t : getTutors().getList()){
-            if(t.getEmail().equals(email)){
-                return t;
+    public Tutors getTutorsByEmail(String email){
+        Tutors tutors = new Tutors();
+        for(Tutor b : this.tutors.getList()){
+            if(b.getEmail().equals(email)){
+                tutors.getList().add(b);
             }
         }
-        return null;
+        return tutors;
     }
     
      public Tutor getTutorFromID(String name){

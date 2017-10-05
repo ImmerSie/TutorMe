@@ -40,11 +40,20 @@ public class TutorService {
     @Path("tutors")
     @GET
     @Produces("application/xml")
-    public Tutors getUsers() throws IOException, Exception {
+    public Tutors getUsers( @DefaultValue("0") @QueryParam("email") String email, 
+            @DefaultValue("0") @QueryParam("status") String status) throws IOException, Exception {
 
-        return getTutorApp().getTutors();
+        if(!email.equals("0")){
+                 return getTutorApp().getTutorsByEmail(email);
+            }
+            
+            if(!status.equals("0")){
+                 return getTutorApp().getTutorsByStatus(status);
+            }
+        return getTutorApp().getTutors();   
     }
 
+    /*
     @Path("tutors/tutor/email/{email}")
     @GET
     @Produces("application/xml")
@@ -60,7 +69,7 @@ public class TutorService {
     }
 
 
-
+*/
 
 
 }
