@@ -9,14 +9,14 @@
   </head>
 
   <body>
-    <c:import url="http://localhost:8080/TutorMe/bookings.xml" var="inputDoc" />
+    <c:import url="WEB-INF/bookings.xml" var="inputDoc" />
 
-    <c:import url="http://localhost:8080/TutorMe/bookings.xsl" var="stylesheet" />
+    <c:import url="WEB-INF/bookings.xsl" var="stylesheet" />
     
     <h1>Booking Page</h1>
     
     <% 
-        String filePath = application.getRealPath("bookings.xml");
+        String filePath = application.getRealPath("WEB-INF/bookings.xml");
         String filePath2 = application.getRealPath("WEB-INF/tutors.xml");
     %>
     <jsp:useBean id="bookingApp" class="Applications.BookingApplication" scope="application">
@@ -32,15 +32,25 @@
         if(tutorid != null){ %>
            <h1><%= tutorid %></h1>
         <%
-            Tutor bookedTutor = tutorApp.getTutorFromID(tutorid);
-            if(bookedTutor.getStatus().toLowerCase().equals("available")){
-                bookingApp.createBooking(bookedTutor, student);
-                tutorApp.saveTutors();
+            String confirmation = request.getParameter("confirm");
+            if(confirmation != null){ %>
+                <form action="booking.jsp" method="POST">
+                    <td><input type="hidden" value="<%= tutorid %>" id="tutorid" name="tutorid"></input></td>
+                    <input type="submit" value="Confirm Booking" name="confirmBtn"></input> 
+                </form>
+            <% }
+            else{
+                Tutor bookedTutor = tutorApp.getTutorFromID(tutorid);
+                if(bookedTutor.getStatus().toLowerCase().equals("available")){
+                    bookingApp.createBooking(bookedTutor, student);
+                    tutorApp.saveTutors();
+                    response.sendRedirect("/TutorMe/booking.jsp");
+                }
             }
+            
         }
      %>
     <% if(student != null){
-        %><a href="createBooking.jsp">Create Booking</a></br><%          
     } %>
     <x:transform xml="${inputDoc}" xslt="${stylesheet}">
         <x:param name="student"  value="${student.getName()}" />
