@@ -7,6 +7,7 @@
 <%@page import="Models.Tutor"%>
 <%@page import="Models.Student"%>
 <%@page import="Models.Booking"%>
+
 <%@page import="Models.Tutors"%>
 <%@page import="Models.Students"%>
 <%@page import="Models.Bookings"%>
@@ -32,35 +33,31 @@
 
     <% String filePath = application.getRealPath("WEB-INF/students.xml");
         String filePath2 = application.getRealPath("WEB-INF/tutors.xml");
-       String filePath3 = application.getRealPath("WEB-INF/bookings.xml");
+        String filePath3 = application.getRealPath("WEB-INF/bookings.xml");
 
     %>
     <jsp:useBean id="studentApp" class="Applications.StudentApplication" scope="application">
         <jsp:setProperty name="studentApp" property="filePath" value="<%=filePath%>"/>
     </jsp:useBean>
     <jsp:useBean id="tutorApp" class="Applications.TutorApplication" scope="application">
-        <jsp:setProperty name="tutorApp" property="filePath2" value="<%=filePath2%>"/>
+        <jsp:setProperty name="tutorApp" property="filePath" value="<%=filePath2%>"/>
     </jsp:useBean>
     <jsp:useBean id="bookingApp" class="Applications.BookingApplication" scope="application">
-            <jsp:setProperty name="bookingApp" property="filePath3" value="<%=filePath3%>"/>
-        </jsp:useBean>
-
+        <jsp:setProperty name="bookingApp" property="filePath" value="<%=filePath3%>"/>
+    </jsp:useBean>
 
 
 
     <body>
-        
-    <c:import url="http://localhost:8080/TutorMe/students.xml" var="inputDoc1" />
-    <c:import url="http://localhost:8080/TutorMe/students.xsl" var="stylesheet1" />
-    <c:import url="http://localhost:8080/TutorMe/tutors.xml" var="inputDoc2" />
-    <c:import url="http://localhost:8080/TutorMe/tutors.xsl" var="stylesheet2" />
-    
-    
-    
-    
-        <%  Student student = (Student) session.getAttribute("student");
-            Tutor tutor = (Tutor) session.getAttribute("tutor");
 
+        <c:import url="WEB-INF/tutors.xml" var="inputDocT" />
+        <c:import url="WEB-INF/tutors.xsl" var="stylesheetT" />
+        <c:import url="WEB-INF/students.xml" var="inputDocS" />
+        <c:import url="WEB-INF/students.xsl" var="stylesheetS" />
+
+        <%
+            Student student = (Student) session.getAttribute("student");
+            Tutor tutor = (Tutor) session.getAttribute("tutor");
         %>
         <h1>Your Account details</h1>
         <h3>You may edit your details.</h3>
@@ -70,18 +67,44 @@
                     if (student != null) {                                                                          //if current session's user is a student, show their account details
                         //    Student student1 = studentApp.getStudentByName(student.getName()); %>
 
+        <x:transform xml="${inputDocS}" xslt="${stylesheetS}">
+            <x:param name="stuEmail" value="<%= student.getEmail() %>"/>
+        </x:transform>
 
-            <x:transform xml="${inputDoc1}" xslt="${stylesheet1}"> </x:transform>
+
+        <%  } else if (tutor != null) {%>
+        <form action="account.jsp" method="POST">
+            <table>
+
+                <tr> 
+                    <td>Full Name:</td> 
+                    <td><input type="text" name="name" value=<%=tutor.getName()%>></td> 
+                </tr>
+                <tr> 
+                    <td>Email:</td> 
+                    <td><%=tutor.getEmail()%></td>
+                </tr>
+
+                <tr> 
+                    <td>Password:</td> 
+                    <td><input type="text" name="password" value=<%=tutor.getPassword()%>></td>
+                </tr>
+
+                <tr> 
+                    <td>Date of Birth:</td> 
+                    <td><input type="text" name="birthday"  value=<%=tutor.getBirthday()%>></td>
+                </tr>
+                <tr>
+                    <td></td> 
+                    <td><input type="submit" value="EditTutor" name="Edit"></td> 
+                </tr>
+            </table>
+
+        </form>
         <p>Click <form><input type="submit" value="cancel" name="cancel"></form> to cancel your account.</p>
-
-
-
-    <%  } else if (tutor != null) {%>
-    <form action="account.jsp" method="POST">
-        <x:transform xml="${inputDoc2}" xslt="${stylesheet2}">
-            </x:transform>
-
-    </form>
+    <hr>
+    <p>Click <a href="main.jsp">here</a> to get to the main page.</p>
+    <p>Click <a href="logout.jsp">here</a> to logout.</p>
 
     <%  }
     } else {
@@ -91,13 +114,40 @@
             student.setPassword(password);
             student.setBirthday(birthday);
             //studentApp.updateXML(students, filePath);
-%><h2>Details Updated!</h2>
+    %><h2>Details Updated!</h2>
 
-    <x:transform xml="${inputDoc1}" xslt="${stylesheet1}"></x:transform>
-    
-    
+    <form action="account.jsp" method="POST">
+        <table>
+
+            <tr> 
+                <td>Full Name:</td> 
+                <td><input type="text" name="name" value=<%=student.getName()%>></td> 
+            </tr>
+            <tr> 
+                <td>Email:</td> 
+                <td><%=student.getEmail()%></td>
+            </tr>
+
+            <tr> 
+                <td>Password:</td> 
+                <td><input type="text" name="password" value=<%=student.getPassword()%>></td>
+            </tr>
+
+            <tr> 
+                <td>Date of Birth:</td> 
+                <td><input type="text" name="birthday"  value=<%=student.getBirthday()%>></td>
+            </tr>
+            <tr>
+                <td></td> 
+                <td><input type="submit" value="EditStudent" name="Edit"></td> 
+            </tr>
+        </table>
+
+    </form>
     <p>Click <form><input type="submit" value="cancel" name="cancel"></form> to cancel your account.</p>
-
+<hr>
+<p>Click <a href="main.jsp">here</a> to get to the main page.</p>
+<p>Click <a href="logout.jsp">here</a> to logout.</p>
 
 
 
@@ -107,39 +157,87 @@
     tutor.setBirthday(birthday);
 %><h2>Details Updated!</h2> 
 
-<x:transform xml="${inputDoc2}" xslt="${stylesheet2}">
-            </x:transform>
+<form action="account.jsp" method="POST">
+    <table>
+
+        <tr> 
+            <td>Full Name:</td> 
+            <td><input type="text" name="name" value=<%=tutor.getName()%>></td> 
+        </tr>
+        <tr> 
+            <td>Email:</td> 
+            <td><%=tutor.getEmail()%></td>
+        </tr>
+
+        <tr> 
+            <td>Password:</td> 
+            <td><input type="text" name="password" value=<%=tutor.getPassword()%>></td>
+        </tr>
+
+        <tr> 
+            <td>Date of Birth:</td> 
+            <td><input type="text" name="birthday"  value=<%=tutor.getBirthday()%>></td>
+        </tr>
+        <tr>
+            <td></td> 
+            <td><input type="submit" value="EditTutor" name="Edit"></td> 
+        </tr>
+    </table>
+
+</form>
+<p>Click <form><input type="submit" value="cancel" name="cancel"></form> to cancel your account.</p>
+<hr>
+<p>Click <a href="main.jsp">here</a> to get to the main page.</p>
+<p>Click <a href="logout.jsp">here</a> to logout.</p>
+
 
 
 
 <% }
+    }
+} else if (student != null && cancel.equals("cancel")) {                            // if current user is student, and cancel has been clicked, remove the student. 
+    //Code for cancelling student account
+    Students students = studentApp.getStudents();
+    students.removeUser(student);
+    Bookings bookings = bookingApp.getBookingsByStudent(student.getName());
+    Tutors tutors = tutorApp.getTutors();
+
+    if (bookings.getList() != null) {
+        for (Booking b : bookings.getList()) {
+            for (Tutor t : tutors.getList()) {
+                if (b.getTutorName().equals(t.getName())) {
+                    t.setStatus("available");
+                }
+            }
+            b.setStatus("cancelled");
         }
-    } else if (student != null && cancel.equals("cancel")) {                            // if current user is student, and cancel has been clicked, remove the student. 
-        //Code for cancelling student account
-        Students students = studentApp.getStudents();
-        students.removeUser(student); 
-        Bookings bookings = bookingApp.getBookingsByTutor(tutor.getName());
-        for(Booking b : bookings.getList()){
+    }
+
+%>
+<h2>Your student account has been cancelled. Bye! </h2>
+<p>Click <a href="index.jsp">here</a> to get to the home page.</p>
+
+<% } else if (tutor != null && cancel.equals("cancel")) {                               // if current user is tutor, and cancel has been clicked, remove the tutor. 
+
+    Tutors tutors = tutorApp.getTutors();
+    tutors.removeUser(tutor);
+    Bookings bookings = bookingApp.getBookingsByTutor(tutor.getName());
+    if (bookings.getList() != null) {
+        for (Booking b : bookings.getList()) {
             b.setStatus("cancelled");
-        }%>    
-        <h2>Your account has been cancelled. Bye! </h2>
-   <% }else if (tutor !=null && cancel.equals("cancel")){                               // if current user is tutor, and cancel has been clicked, remove the tutor. 
-            
-        Tutors tutors = tutorApp.getTutors();
-        tutors.removeUser(tutor); 
-        Bookings bookings = bookingApp.getBookingsByTutor(tutor.getName());
-        for(Booking b : bookings.getList()){
-            b.setStatus("cancelled");
-        }%> 
-        <h2>Your tutor account has been cancelled. Bye! </h2>
-    <% }%>
+        }
+        tutor.setStatus("available");
+
+    }%> 
+<h2>Your tutor account has been cancelled. Bye! </h2>
+<p>Click <a href="index.jsp">here</a> to get to the home page.</p>
+
+<% }%>
 
 
 
-<hr>
 
-<p>Click <a href="main.jsp">here</a> to get to the main page.</p>
-<p>Click <a href="logout.jsp">here</a> to logout.</p>
+
 </body>
 
 
@@ -147,3 +245,14 @@
 
 
 </html>
+
+
+
+
+<form action="account.jsp">
+    <input type="text" label="Email" name="email" error="Email address invalid"/>
+    <input type="password" label="Password" name="password" error="Password invalid"/>
+
+
+
+</form>

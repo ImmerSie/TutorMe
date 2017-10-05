@@ -6,10 +6,13 @@
     Author     : Mango
     Description:
         Purpose of transformation follows.
+                    <x:param name="stuEmail"  value="<%= stuEmail%>" />
+
 -->
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
     <xsl:output method="html"/>
+        <xsl:param name="stuName"/>
 
     <!-- TODO customize transformation rules 
          syntax recommendation http://www.w3.org/TR/xslt 
@@ -20,8 +23,11 @@
                 <title>students.xsl</title>
             </head>
             <body>
-        <form action="account.jsp" method="POST">
-                 <table>
+     <xsl:choose>
+      <xsl:when test='>
+
+            <form action="account.jsp" method="POST">
+            <table>
 
                 <tr> 
                     <td>Full Name:</td> 
@@ -47,6 +53,10 @@
                 </tr>
             </table>
         </form>
+        <p>Click <form><input type="submit" value="cancel" name="cancel"></form> to cancel your account.</p>
+        <hr>
+        <p>Click <a href="main.jsp">here</a> to get to the main page.</p>
+        <p>Click <a href="logout.jsp">here</a> to logout.</p>
             </body>
         </html>
     </xsl:template>

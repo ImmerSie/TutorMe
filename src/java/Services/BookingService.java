@@ -80,6 +80,6 @@ public class BookingService {
     
   
     
-  
+  // Use QueryParam for the ?    Paramters can be usedin any order with Queryparam. 
     
 }

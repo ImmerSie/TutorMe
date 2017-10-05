@@ -38,10 +38,10 @@
         <jsp:setProperty name="studentApp" property="filePath" value="<%=filePath%>"/>
     </jsp:useBean>
     <jsp:useBean id="tutorApp" class="Applications.TutorApplication" scope="application">
-        <jsp:setProperty name="tutorApp" property="filePath2" value="<%=filePath2%>"/>
+        <jsp:setProperty name="tutorApp" property="filePath" value="<%=filePath2%>"/>
     </jsp:useBean>
     <jsp:useBean id="bookingApp" class="Applications.BookingApplication" scope="application">
-        <jsp:setProperty name="bookingApp" property="filePath3" value="<%=filePath3%>"/>
+        <jsp:setProperty name="bookingApp" property="filePath" value="<%=filePath3%>"/>
     </jsp:useBean>
 
 
@@ -173,7 +173,7 @@
 
 
 
-<%        } else if (button.equals("EditTutor")) {
+<%  } else if (button.equals("EditTutor")) {
     tutor.setName(name);
     tutor.setPassword(password);
     tutor.setBirthday(birthday);
