@@ -42,11 +42,30 @@ public class BookingService {
   @Path("bookings")
     @GET
     @Produces("application/xml")
-    public Bookings getUsers() throws IOException, Exception {
-        
-        return getBookingApp().getBookings();
+    public Bookings getUsers(@DefaultValue("0") @QueryParam("bookingID") int bookingID, 
+            @DefaultValue("0") @QueryParam("studentEmail") String studentEmail, 
+            @DefaultValue("0") @QueryParam("subject") String subject,
+            @DefaultValue("0") @QueryParam("status") String status) throws IOException, Exception {
+       
+            if(bookingID!=0){
+               return getBookingApp().getBookingsByID(bookingID);
+            }
+            
+            if(!studentEmail.equals("0")){
+                 return getBookingApp().getBookingsByStudentEmail(studentEmail);
+            }
+            
+            if(!subject.equals("0")){
+                 return getBookingApp().getBookingsBySubject(subject);
+            }
+            
+            if(!status.equals("0")){
+                 return getBookingApp().getBookingsByStatus(status);
+            }
+            return getBookingApp().getBookings();          
     }
     
+    /*
     @Path("bookings/booking/bookingID/{bookingID}")
     @GET
     @Produces("application/xml")
@@ -80,6 +99,6 @@ public class BookingService {
     
   
     
-  
-    
+  // Use QueryParam for the ?    Paramters can be usedin any order with Queryparam. 
+    */
 }

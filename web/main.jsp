@@ -58,6 +58,7 @@
                         String searchedVal = (String) session.getAttribute("searchVal");
                         if(session.getAttribute("showSearch").toString().equals("false")){ 
                             session.setAttribute("showSearch", "true");
+                            //tutorApp.searchTutors(searchFilepath, "", "");
                             response.sendRedirect("main.jsp");
                         }
                         else{

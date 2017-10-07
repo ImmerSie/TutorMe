@@ -103,9 +103,20 @@ public class TutorApplication implements Serializable{
         return searchTutors;
     }
     
+    public void clearSearch(String searchFilepath) throws JAXBException, IOException{
+        Tutors searchedTutors = new Tutors();
+        JAXBContext jc = JAXBContext.newInstance(Tutors.class);
+        Marshaller m = jc.createMarshaller();
+        m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+        FileOutputStream fout = new FileOutputStream(searchFilepath);
+        m.marshal(searchedTutors, fout);
+        fout.close();
+    }
+    
     public void searchTutors(String searchFilepath, String searchBy, String searchVal) throws JAXBException, IOException{
         this.searchedBy = searchBy;
         this.searchedVal = searchVal;
+        clearSearch(searchFilepath);
         Tutors searchTutors = null;
         if(searchBy.equals("searchSubject")){
             searchTutors = getTutorsBySubject(searchVal);
@@ -158,6 +169,16 @@ public class TutorApplication implements Serializable{
             }
         }
         return null;
+    }
+    
+    public Tutors getTutorsByEmail(String email){
+        Tutors tutors = new Tutors();
+        for(Tutor b : this.tutors.getList()){
+            if(b.getEmail().equals(email)){
+                tutors.getList().add(b);
+            }
+        }
+        return tutors;
     }
     
      public Tutor getTutorFromID(String name){

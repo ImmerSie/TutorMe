@@ -80,6 +80,16 @@ public class BookingApplication {
         return null;
     }
     
+    public Bookings getBookingsByID(int id){
+        Bookings studentBookings = new Bookings();
+        for(Booking b : bookings.getList()){
+            if(b.getBookingID() == id){
+                studentBookings.getList().add(b);
+            }
+        }
+        return studentBookings;
+    }
+    
     public Bookings getBookingsByStudents(String student){
         Bookings studentBookings = new Bookings();
         for(Booking b : bookings.getList()){
