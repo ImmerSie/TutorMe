@@ -23,7 +23,7 @@
         <jsp:setProperty name="bookingApp" property="filePath" value="<%=filePath%>"/>
     </jsp:useBean>
     <jsp:useBean id="tutorApp" class="Applications.TutorApplication" scope="application">
-        <jsp:setProperty name="tutorApp" property="filePath2" value="<%=filePath2%>"/>
+        <jsp:setProperty name="tutorApp" property="filePath" value="<%=filePath2%>"/>
     </jsp:useBean>
     <%
         Student student = (Student) session.getAttribute("student");

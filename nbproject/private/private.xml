@@ -4,10 +4,13 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/Mango/Documents/NetBeansProjects/TutorMe/web/students.xsl</file>
-            <file>file:/C:/Users/Mango/Documents/NetBeansProjects/TutorMe/web/WEB-INF/students.xml</file>
             <file>file:/C:/Users/Mango/Documents/NetBeansProjects/TutorMe/web/main.jsp</file>
+            <file>file:/C:/Users/Mango/Documents/NetBeansProjects/TutorMe/web/booking.jsp</file>
             <file>file:/C:/Users/Mango/Documents/NetBeansProjects/TutorMe/web/account.jsp</file>
+            <file>file:/C:/Users/Mango/Documents/NetBeansProjects/TutorMe/web/register.jsp</file>
+            <file>file:/C:/Users/Mango/Documents/NetBeansProjects/TutorMe/src/java/Applications/Validator.java</file>
             <file>file:/C:/Users/Mango/Documents/NetBeansProjects/TutorMe/web/WEB-INF/tutors.xsl</file>
+            <file>file:/C:/Users/Mango/Documents/NetBeansProjects/TutorMe/web/oldBookings.jsp</file>
         </group>
     </open-files>
 </project-private>
