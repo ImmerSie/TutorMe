@@ -34,7 +34,7 @@
                 if(cancelled != null){
                     booking.setStatus("canceled");
                     Tutor tutor = tutorApp.getTutorFromID(booking.getTutorName());
-                    tutor.setStatus("Available");
+                    tutor.setStatus("available");
                     tutorApp.saveTutors();
                     bookingApp.saveBookings();
                     %><h3>Booking has been canceled!</h3> <%
@@ -42,7 +42,7 @@
                 else if(completed != null){
                     booking.setStatus("completed");
                     Tutor tutor = tutorApp.getTutorFromID(booking.getTutorName());
-                    tutor.setStatus("Available");
+                    tutor.setStatus("available");
                     tutorApp.saveTutors();
                     bookingApp.saveBookings();
                     %><h3>Booking has been Completed!</h3> <%
@@ -56,17 +56,18 @@
                 <p>Student Email: <%= booking.getStudentEmail()%></p>
                 <p>Status: <%= booking.getStatus()%></p>
                 <% if(booking.getStatus().equals("active")){ %>
-                    <form action="viewBooking.jsp" method="POST">
-                        <input type="submit" value="Cancel" name="Cancel">
-                        <input type="hidden" value="<%= booking.getBookingID() %>" id="bookingID" name="bookingID">
-                        <input type="hidden" value="canceled" id="canceled" name="canceled">
-                    </form>
                     <% if((Tutor) session.getAttribute("tutor") != null)
                     { %>
                         <form action="viewBooking.jsp" method="POST">
-                            <input type="submit" value="Completed" name="Completed">
+                            <input type="submit" value="Complete" name="Completed">
                             <input type="hidden" value="<%= booking.getBookingID() %>" id="bookingID" name="bookingID">
                             <input type="hidden" value="completed" id="completed" name="completed">
+                        </form>
+                    <% } else { %>
+                         <form action="viewBooking.jsp" method="POST">
+                            <input type="submit" value="Cancel" name="Cancel">
+                            <input type="hidden" value="<%= booking.getBookingID() %>" id="bookingID" name="bookingID">
+                            <input type="hidden" value="canceled" id="canceled" name="canceled">
                         </form>
                     <% }
                 }                

@@ -3,6 +3,7 @@
     Created on : 16/09/2017, 9:38:44 PM
     Author     : Max
 --%>
+<%@page import="Models.Tutors"%>
 <%@page import="Models.Tutor"%>
 <%@page import="Models.Student"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -14,13 +15,15 @@
   </head>
 
   <body>
-    <c:import url="WEB-INF/tutors.xml" var="inputDoc" />
+    <c:import url="WEB-INF/tutorSearch.xml" var="inputDoc" />
 
-    <c:import url="WEB-INF/tutors.xsl" var="stylesheet" />
+    <c:import url="WEB-INF/tutorSearch.xsl" var="stylesheet" />
     
-        <% String filePath2 = application.getRealPath("WEB-INF/tutors.xml"); %>
+        <%  String tutorsFilepath = application.getRealPath("WEB-INF/tutors.xml");
+            String searchFilepath = application.getRealPath("WEB-INF/tutorSearch.xml");
+        %>
         <jsp:useBean id="tutorApp" class="Applications.TutorApplication" scope="application">
-            <jsp:setProperty name="tutorApp" property="filePath" value="<%=filePath2%>"/>
+            <jsp:setProperty name="tutorApp" property="filePath" value="<%=tutorsFilepath%>"/>
         </jsp:useBean>
         <% 
             Student student = (Student) session.getAttribute("student");
@@ -48,13 +51,34 @@
                     <%
                     String searchVal = request.getParameter("searchVal");
                     String searchBy = request.getParameter("searchBy");
-                    if(searchBy != null && searchVal != null)
-                    { %>
-                        <x:transform xml="${inputDoc}" xslt="${stylesheet}">
-                            <x:param name="searchVal"  value="<%= searchVal %>" />
-                            <x:param name="searchBy"  value="<%= searchBy %>" />
-                        </x:transform>
-                    <%}  
+                    
+                    if(session.getAttribute("showSearch") != null){
+                        Tutors searchedTutors = tutorApp.getAllSearchedTutors(searchFilepath);
+                        String searchedBy = (String) session.getAttribute("searchBy");
+                        String searchedVal = (String) session.getAttribute("searchVal");
+                        if(session.getAttribute("showSearch").toString().equals("false")){ 
+                            session.setAttribute("showSearch", "true");
+                            //tutorApp.searchTutors(searchFilepath, "", "");
+                            response.sendRedirect("main.jsp");
+                        }
+                        else{
+                            %>
+                                <x:transform xml="${inputDoc}" xslt="${stylesheet}"></x:transform>
+                            <%
+                        session.setAttribute("showSearch", null);
+                        session.setAttribute("searchBy", searchBy);
+                        session.setAttribute("searchVal", searchVal);
+                        }
+                    
+                     } 
+                    else if(searchBy != null && searchVal != null)
+                    { 
+                        tutorApp.searchTutors(searchFilepath, searchBy, searchVal);
+                        session.setAttribute("showSearch", "false");
+                        //session.setAttribute("searchBy", searchBy);
+                        //session.setAttribute("searchVal", searchVal);
+                        response.sendRedirect("main.jsp");
+                    }
                 }
             }
             else { %>

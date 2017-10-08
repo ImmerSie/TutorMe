@@ -48,36 +48,51 @@
                         <td><xsl:value-of select="email"/></td>
                         <td><xsl:value-of select="subject"/></td>
                         <td><xsl:value-of select="status"/></td>
-                        <td><input type="submit" value="Book" name="Book"></input></td>
-                        <td><input type="hidden" value="{$tutNameVar}" id="tutorid" name="tutorid"></input></td>
+                        <!--<xsl:if test="$tutStatus='available'"> -->
+                            <td><input type="submit" value="Book" name="Book"></input></td>
+                            <td><input type="hidden" value="{$tutNameVar}" id="tutorid" name="tutorid"></input></td>
+                            <td><input type="hidden" value="true" name="confirm"></input></td>
+                        <!-- </xsl:if> -->
                     </tr></form>
                 </xsl:if>
             </xsl:when>
             <xsl:when test="$searchBy='searchSubject'">
                 <xsl:variable name="tutSubject"><xsl:value-of select="subject"/></xsl:variable>
-                <xsl:if test="$searchVal=$tutSubject">
+                <xsl:if test="contains($tutSubject, $searchVal)">
                     <form action="booking.jsp" method="GET"><tr>
                         <xsl:variable name="tutNameVar"><xsl:value-of select="name"/></xsl:variable>
                         <td><xsl:value-of select="name"/></td>
                         <td><xsl:value-of select="email"/></td>
                         <td><xsl:value-of select="subject"/></td>
                         <td><xsl:value-of select="status"/></td>
-                        <td><input type="submit" value="Book" name="Book"></input></td>
-                        <td><input type="hidden" value="{$tutNameVar}" id="tutorid" name="tutorid"></input></td>
+                        <xsl:variable name="tutStatus">
+                            <xsl:value-of select="status"/>
+                        </xsl:variable>
+                        <xsl:if test="$tutStatus='available'">
+                            <td><input type="submit" value="Book" name="Book"></input></td>
+                            <td><input type="hidden" value="{$tutNameVar}" id="tutorid" name="tutorid"></input></td>
+                            <td><input type="hidden" value="true" name="confirm"></input></td>
+                        </xsl:if>
                     </tr></form>
                 </xsl:if>
             </xsl:when>
             <xsl:when test="$searchBy='searchName'">
                 <xsl:variable name="tutName"><xsl:value-of select="name"/></xsl:variable>
-                <xsl:if test="$searchVal=$tutName">
+                <xsl:if test="contains($tutName, $searchVal)">
                     <form action="booking.jsp" method="GET"><tr>
                         <xsl:variable name="tutNameVar"><xsl:value-of select="name"/></xsl:variable>
                         <td><xsl:value-of select="name"/></td>
                         <td><xsl:value-of select="email"/></td>
                         <td><xsl:value-of select="subject"/></td>
                         <td><xsl:value-of select="status"/></td>
-                        <td><input type="submit" value="Book" name="Book"></input></td>
-                        <td><input type="hidden" value="{$tutNameVar}" id="tutorid" name="tutorid"></input></td>
+                        <xsl:variable name="tutStatus">
+                            <xsl:value-of select="status"/>
+                        </xsl:variable>
+                        <xsl:if test="$tutStatus='available'">
+                            <td><input type="submit" value="Book" name="Book"></input></td>
+                            <td><input type="hidden" value="{$tutNameVar}" id="tutorid" name="tutorid"></input></td>
+                            <td><input type="hidden" value="true" name="confirm"></input></td>
+                        </xsl:if>
                     </tr></form>
                 </xsl:if>
             </xsl:when>
