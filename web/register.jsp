@@ -96,18 +96,7 @@
         <%} else if (userType.equals("student")) {                                                          // If user is student, 
             if (students.getUser(email) == null) {                                                          // check if user already exists. 
             
-                Validator eValidator = new Validator(email);
-                Validator nValidator = new Validator(name);
-                Validator pValidator = new Validator(password);
-                 
-                if(!eValidator.validate(email)){ %>
-                <h1>Email Format Incorrect</h1> 
-               <% }else if(!nValidator.validate(name)){ %>
-               <h1>Name Format Incorrect</h1> 
-              <%  }else if(!pValidator.validate(password)){ %>
-                <h1>Password Format Incorrect</h1> 
-           
-             <%   }else{
+            
 
 
                 Student student = new Student(name, email, password, birthday, userType);                       //Create new user according to parameters, update XML file, and activate session. 
@@ -115,16 +104,17 @@
                 session.setAttribute("student", student);
                 students.addUser(student);
                // studentApp.updateXML(students, filePath);
-               // response.sendRedirect("main.jsp");
-                    studentApp.addStudent(student);
+                studentApp.addStudent(student);
+                response.sendRedirect("main.jsp");
+                    
 
-                }
+                
         %>
 
-        <%} else {%>
+                 <%} else {%>
 
-        <p>This student <%=email%> already exists.</p>
-        <p>Click <a href="register.jsp">here</a> to go back</p>
+                 <p>This student <%=email%> already exists.</p>
+                 <p>Click <a href="register.jsp">here</a> to go back</p>
         <%}
         } else if (userType.equals("tutor")) {
             if (tutors.getUser(email) == null) {
@@ -145,8 +135,8 @@
                 }
 
             } else {%>
-        <p>This tutor <%=email%> already exists.</p>
-        <p>Click <a href="register.jsp">here</a> to go back</p>
+             <p>This tutor <%=email%> already exists.</p>
+             <p>Click <a href="register.jsp">here</a> to go back</p>
 
         <%}
             }%>

@@ -51,16 +51,13 @@
     <body>
 
         <c:import url="WEB-INF/tutors.xml" var="inputDocT" />
-        <c:import url="WEB-INF/tutors.xsl" var="stylesheetT" />
-        <c:import url="WEB-INF/students.xml" var="inputDoc" />
-        <c:import url="WEB-INF/students.xsl" var="stylesheet" />
+        <c:import url="WEB-INF/tutors2.xsl" var="stylesheetT" />
+        <c:import url="WEB-INF/students.xml" var="inputDocS" />
+        <c:import url="WEB-INF/students.xsl" var="stylesheetS" />
 
         <%
             Student student = (Student) session.getAttribute("student");
-            Tutor tutor = (Tutor) session.getAttribute("tutor");
-            String stuEmail = student.getEmail();  
-            String tutEmail = tutor.getEmail(); 
-             
+            Tutor tutor = (Tutor) session.getAttribute("tutor");          
         %>
         <h1>Your Account details</h1>
         <h3>You may edit your details.</h3>
@@ -70,16 +67,21 @@
                     if (student != null) {                                                                          //if current session's user is a student, show their account details
                         //    Student student1 = studentApp.getStudentByName(student.getName()); %>
 
-        <x:transform xml="${inputDocS}" xslt="${stylesheetS}">                                                      <!-- Import XML and use XSL stylesheet to transform -->
-            <x:param name="stuEmail" value="<%=stuEmail%>"/>               
-        </x:transform>
+    
         
+      <x:transform xml="${inputDocS}" xslt="${stylesheetS}">     
+            <x:param name="stuEmail" value="${student.getEmail()}"/>
+      </x:transform>
 
         <%  } else if (tutor != null) {%>
 
-        <x:transform xml="${inputDocT}" xslt="${stylesheetT}">                                                      <!-- Import XML and use XSL stylesheet to transform -->
+       <x:transform xml="${inputDocT}" xslt="${stylesheetT}">     
             <x:param name="tutEmail" value="${tutor.getEmail()}"/>
-        </x:transform>
+       </x:transform>
+
+        
+        
+        
 
         <%  }
         } else {
@@ -91,9 +93,12 @@
                 //studentApp.updateXML(students, filePath);
 %><h2>Details Updated!</h2>
 
-        <x:transform xml="${inputDocS}" xslt="${stylesheetS}">                                                      <!-- JSTL: Import XML and use XSL stylesheet to transform -->
+       
+      <x:transform xml="${inputDocS}" xslt="${stylesheetS}">     
             <x:param name="stuEmail" value="${student.getEmail()}"/>
-        </x:transform>
+      </x:transform>
+
+
 
         <%        } else if (button.equals("EditTutor")) {
             tutor.setName(name);
@@ -101,9 +106,13 @@
             tutor.setBirthday(birthday);
         %><h2>Details Updated!</h2> 
 
-        <x:transform xml="${inputDocT}" xslt="${stylesheetT}">                                                      <!-- Import XML and use XSL stylesheet to transform -->
-            <x:param name="tutEmail" value="${tutor.getEmail()}"/>
+        <x:transform xml="${inputDocT}" xslt="${stylesheetT}">     
+                <x:param name="tutEmail" value="${tutor.getEmail()}"/>
         </x:transform>
+
+        
+        
+        
 
         <% }
             }
@@ -155,14 +164,3 @@
 
 
 </html>
-
-
-
-
-<form action="account.jsp">
-    <input type="text" label="Email" name="email" error="Email address invalid"/>
-    <input type="password" label="Password" name="password" error="Password invalid"/>
-
-
-
-</form>

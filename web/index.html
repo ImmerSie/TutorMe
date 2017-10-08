@@ -14,3 +14,38 @@ and open the template in the editor.
         <div>TODO write content</div>
     </body>
 </html>
+
+<!--
+    Validator eValidator = new Validator(email);
+                Validator nValidator = new Validator(name);
+                Validator pValidator = new Validator(password);
+                 
+                if(!eValidator.validate(email)){ %>
+                <h1>Email Format Incorrect</h1> 
+               <% }else if(!nValidator.validate(name)){ %>
+               <h1>Name Format Incorrect</h1> 
+              <%  }else if(!pValidator.validate(password)){ %>
+                <h1>Password Format Incorrect</h1> 
+           
+             <%   }else{     
+
+
+             <x:transform xml="${inputDocT}" xslt="${stylesheetT}">     
+                <x:param name="tutEmail" value="${tutor.getEmail()}"/>
+        </x:transform>
+
+
+    <x:transform xml="${inputDocS}" xslt="${stylesheetS}">         
+
+ <x:param name="stuEmail" value="<%=stuEmail%>"/>     
+
+
+        </x:transform>
+                    
+
+            
+    <x:transform xml="${inputDocS}" xslt="${stylesheetS}">     
+            <x:param name="stuEmail" value="${student.getEmail()}"/>
+    </x:transform>
+
+            <x:param name="tutEmail" value="${tutor.getEmail()}"/>
