@@ -32,7 +32,29 @@ and open the template in the editor.
         </xs:restriction>
     </xs:simpleType>
 
-  
+   <xs:simpleType name="userType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[a-z]+"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="password">
+        <xs:restriction base="xs:string">
+            <xs:pattern value=".+"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="subject">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[A-Z]{1}[a-zA-Z]+"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="status">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[a-z]+"/>
+        </xs:restriction>
+    </xs:simpleType>
   
     <!-- Insert your element declarations here -->
  
@@ -44,11 +66,11 @@ and open the template in the editor.
                         <xs:sequence>
                             <xs:element name="name" type="name"/>
                             <xs:element name="email" type="email"/>
-                            <xs:element name="password" type="xs:string"/>
+                            <xs:element name="password" type="password"/>
                             <xs:element name="birthday" type="date"/>
-                            <xs:element name="userType" type="xs:string"/>     
-                            <xs:element name="subject" type="xs:string"/>
-                            <xs:element name="status" type="xs:string"/>                    
+                            <xs:element name="userType" type="usertype"/>     
+                            <xs:element name="subject" type="subject"/>
+                            <xs:element name="status" type="status"/>                    
                         </xs:sequence>                     
                     </xs:complexType>  
                 </xs:element>

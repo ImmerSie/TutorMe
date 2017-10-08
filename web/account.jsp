@@ -58,6 +58,9 @@
         <%
             Student student = (Student) session.getAttribute("student");
             Tutor tutor = (Tutor) session.getAttribute("tutor");
+            if(studentCheck == null && tutorCheck == null){
+                response.sendRedirect("login.jsp");
+            }
         %>
         <h1>Your Account details</h1>
         <h3>You may edit your details.</h3>
@@ -89,13 +92,13 @@
                 student.setPassword(password);
                 student.setBirthday(birthday);
                 //studentApp.updateXML(students, filePath);
-%><h2>Details Updated!</h2>
+                %><h2>Details Updated!</h2>
 
-        <x:transform xml="${inputDocS}" xslt="${stylesheetS}">                                                      <!-- Import XML and use XSL stylesheet to transform -->
-            <x:param name="stuEmail" value="<%= student.getEmail()%>"/>
-        </x:transform>
+                <x:transform xml="${inputDocS}" xslt="${stylesheetS}">                                                      <!-- Import XML and use XSL stylesheet to transform -->
+                    <x:param name="stuEmail" value="<%= student.getEmail()%>"/>
+                </x:transform>
 
-        <%        } else if (button.equals("EditTutor")) {
+        <%  } else if (button.equals("EditTutor")) {
             tutor.setName(name);
             tutor.setPassword(password);
             tutor.setBirthday(birthday);
@@ -130,7 +133,6 @@
         <p>Click <a href="index.jsp">here</a> to get to the home page.</p>
 
         <% } else if (tutor != null && cancel.equals("cancel")) {                               // if current user is tutor, and cancel has been clicked, remove the tutor. 
-
             Tutors tutors = tutorApp.getTutors();
             tutors.removeUser(tutor);
             Bookings bookings = bookingApp.getBookingsByTutor(tutor.getName());
@@ -139,30 +141,13 @@
                     b.setStatus("cancelled");
                 }
             }%> 
-        <h2>Your tutor account has been cancelled. Bye! </h2>
-        <p>Click <a href="index.jsp">here</a> to get to the home page.</p>
-
+            <h2>Your tutor account has been cancelled. Bye! </h2>
+            <p>Click <a href="index.jsp">here</a> to get to the home page.</p>
         <% }%>
-
-
-
-
-
     </body>
-
-
-
-
-
 </html>
-
-
-
 
 <form action="account.jsp">
     <input type="text" label="Email" name="email" error="Email address invalid"/>
     <input type="password" label="Password" name="password" error="Password invalid"/>
-
-
-
 </form>

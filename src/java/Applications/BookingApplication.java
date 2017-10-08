@@ -143,7 +143,7 @@ public class BookingApplication {
     public Bookings getBookingsByTutor(String tutor){
         Bookings tutorBookings = new Bookings();
         for(Booking b : bookings.getList()){
-            if(b.getTutorName().equals(tutor)){
+            if(b.getTutorEmail().equals(tutor)){
                 tutorBookings.getList().add(b);
             }
         }

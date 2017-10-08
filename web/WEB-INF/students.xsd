@@ -37,8 +37,18 @@ and open the template in the editor.
             <xs:pattern value="[A-Za-z_\.]+@[a-z\-][a-z\-]+(\.[a-z\-][a-z\-]+)+"/>
         </xs:restriction>
     </xs:simpleType>
+    
+    <xs:simpleType name="userType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[a-z]+"/>
+        </xs:restriction>
+    </xs:simpleType>
 
-  
+    <xs:simpleType name="password">
+        <xs:restriction base="xs:string">
+            <xs:pattern value=".+"/>
+        </xs:restriction>
+    </xs:simpleType>
   
     <!-- Insert your element declarations here -->
  
@@ -50,9 +60,9 @@ and open the template in the editor.
                         <xs:sequence>
                             <xs:element name="name" type="name"/>
                             <xs:element name="email" type="email"/>
-                            <xs:element name="password" type="xs:string"/>
+                            <xs:element name="password" type="password"/>
                             <xs:element name="birthday" type="date"/>
-                            <xs:element name="userType" type="xs:string"/>                     
+                            <xs:element name="userType" type="userType"/>                     
                         </xs:sequence>                     
                     </xs:complexType>  
                 </xs:element>

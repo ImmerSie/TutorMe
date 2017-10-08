@@ -4,11 +4,23 @@
 <xsd:import namespace="http://Services/" schemaLocation="http://localhost:8080/TutorMe/BookingSOAP?xsd=1"/>
 </xsd:schema>
 </types>
+<message name="cancelBooking">
+<part name="parameters" element="tns:cancelBooking"/>
+</message>
+<message name="cancelBookingResponse">
+<part name="parameters" element="tns:cancelBookingResponse"/>
+</message>
 <message name="loginStudent">
 <part name="parameters" element="tns:loginStudent"/>
 </message>
 <message name="loginStudentResponse">
 <part name="parameters" element="tns:loginStudentResponse"/>
+</message>
+<message name="loginTutor">
+<part name="parameters" element="tns:loginTutor"/>
+</message>
+<message name="loginTutorResponse">
+<part name="parameters" element="tns:loginTutorResponse"/>
 </message>
 <message name="completeBooking">
 <part name="parameters" element="tns:completeBooking"/>
@@ -16,11 +28,17 @@
 <message name="completeBookingResponse">
 <part name="parameters" element="tns:completeBookingResponse"/>
 </message>
-<message name="loginTutor">
-<part name="parameters" element="tns:loginTutor"/>
+<message name="createBooking">
+<part name="parameters" element="tns:createBooking"/>
 </message>
-<message name="loginTutorResponse">
-<part name="parameters" element="tns:loginTutorResponse"/>
+<message name="createBookingResponse">
+<part name="parameters" element="tns:createBookingResponse"/>
+</message>
+<message name="getBookings">
+<part name="parameters" element="tns:getBookings"/>
+</message>
+<message name="getBookingsResponse">
+<part name="parameters" element="tns:getBookingsResponse"/>
 </message>
 <message name="getBookingsFromTutor">
 <part name="parameters" element="tns:getBookingsFromTutor"/>
@@ -34,42 +52,36 @@
 <message name="getBookingsFromStudentResponse">
 <part name="parameters" element="tns:getBookingsFromStudentResponse"/>
 </message>
-<message name="cancelBooking">
-<part name="parameters" element="tns:cancelBooking"/>
-</message>
-<message name="cancelBookingResponse">
-<part name="parameters" element="tns:cancelBookingResponse"/>
-</message>
-<message name="createBooking">
-<part name="parameters" element="tns:createBooking"/>
-</message>
-<message name="createBookingResponse">
-<part name="parameters" element="tns:createBookingResponse"/>
-</message>
 <message name="getTutorsFromSubject">
 <part name="parameters" element="tns:getTutorsFromSubject"/>
 </message>
 <message name="getTutorsFromSubjectResponse">
 <part name="parameters" element="tns:getTutorsFromSubjectResponse"/>
 </message>
-<message name="fetchBookings">
-<part name="parameters" element="tns:fetchBookings"/>
-</message>
-<message name="fetchBookingsResponse">
-<part name="parameters" element="tns:fetchBookingsResponse"/>
-</message>
 <portType name="BookingSOAP">
+<operation name="cancelBooking">
+<input wsam:Action="http://Services/BookingSOAP/cancelBookingRequest" message="tns:cancelBooking"/>
+<output wsam:Action="http://Services/BookingSOAP/cancelBookingResponse" message="tns:cancelBookingResponse"/>
+</operation>
 <operation name="loginStudent">
 <input wsam:Action="http://Services/BookingSOAP/loginStudentRequest" message="tns:loginStudent"/>
 <output wsam:Action="http://Services/BookingSOAP/loginStudentResponse" message="tns:loginStudentResponse"/>
+</operation>
+<operation name="loginTutor">
+<input wsam:Action="http://Services/BookingSOAP/loginTutorRequest" message="tns:loginTutor"/>
+<output wsam:Action="http://Services/BookingSOAP/loginTutorResponse" message="tns:loginTutorResponse"/>
 </operation>
 <operation name="completeBooking">
 <input wsam:Action="http://Services/BookingSOAP/completeBookingRequest" message="tns:completeBooking"/>
 <output wsam:Action="http://Services/BookingSOAP/completeBookingResponse" message="tns:completeBookingResponse"/>
 </operation>
-<operation name="loginTutor">
-<input wsam:Action="http://Services/BookingSOAP/loginTutorRequest" message="tns:loginTutor"/>
-<output wsam:Action="http://Services/BookingSOAP/loginTutorResponse" message="tns:loginTutorResponse"/>
+<operation name="createBooking">
+<input wsam:Action="http://Services/BookingSOAP/createBookingRequest" message="tns:createBooking"/>
+<output wsam:Action="http://Services/BookingSOAP/createBookingResponse" message="tns:createBookingResponse"/>
+</operation>
+<operation name="getBookings">
+<input wsam:Action="http://Services/BookingSOAP/getBookingsRequest" message="tns:getBookings"/>
+<output wsam:Action="http://Services/BookingSOAP/getBookingsResponse" message="tns:getBookingsResponse"/>
 </operation>
 <operation name="getBookingsFromTutor">
 <input wsam:Action="http://Services/BookingSOAP/getBookingsFromTutorRequest" message="tns:getBookingsFromTutor"/>
@@ -79,26 +91,32 @@
 <input wsam:Action="http://Services/BookingSOAP/getBookingsFromStudentRequest" message="tns:getBookingsFromStudent"/>
 <output wsam:Action="http://Services/BookingSOAP/getBookingsFromStudentResponse" message="tns:getBookingsFromStudentResponse"/>
 </operation>
-<operation name="cancelBooking">
-<input wsam:Action="http://Services/BookingSOAP/cancelBookingRequest" message="tns:cancelBooking"/>
-<output wsam:Action="http://Services/BookingSOAP/cancelBookingResponse" message="tns:cancelBookingResponse"/>
-</operation>
-<operation name="createBooking">
-<input wsam:Action="http://Services/BookingSOAP/createBookingRequest" message="tns:createBooking"/>
-<output wsam:Action="http://Services/BookingSOAP/createBookingResponse" message="tns:createBookingResponse"/>
-</operation>
 <operation name="getTutorsFromSubject">
 <input wsam:Action="http://Services/BookingSOAP/getTutorsFromSubjectRequest" message="tns:getTutorsFromSubject"/>
 <output wsam:Action="http://Services/BookingSOAP/getTutorsFromSubjectResponse" message="tns:getTutorsFromSubjectResponse"/>
 </operation>
-<operation name="fetchBookings">
-<input wsam:Action="http://Services/BookingSOAP/fetchBookingsRequest" message="tns:fetchBookings"/>
-<output wsam:Action="http://Services/BookingSOAP/fetchBookingsResponse" message="tns:fetchBookingsResponse"/>
-</operation>
 </portType>
 <binding name="BookingSOAPPortBinding" type="tns:BookingSOAP">
 <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+<operation name="cancelBooking">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
 <operation name="loginStudent">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="loginTutor">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -116,7 +134,16 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="loginTutor">
+<operation name="createBooking">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="getBookings">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -143,34 +170,7 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="cancelBooking">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="createBooking">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
 <operation name="getTutorsFromSubject">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="fetchBookings">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>

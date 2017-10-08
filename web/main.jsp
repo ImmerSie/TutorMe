@@ -30,12 +30,19 @@
             Tutor tutor = (Tutor) session.getAttribute("tutor");
             if(student != null || tutor != null)
             {
+                if(session.getAttribute("showSearch") != null){
+                    Tutors searchedTutors = tutorApp.getAllSearchedTutors(searchFilepath);
+                    if(searchedTutors.getList().size() < 1){
+                        response.sendRedirect("errorPage.jsp");
+                        return;
+                    }
+                }
                 String name = request.getParameter("name");
                 %>
                 <h1>Main Page</h1>
                 <% if(tutor != null){
                     %><p>Welcome, <%= tutor.getName() %>!</p>
-                    <a href="oldBookings.jsp">Bookings</a>
+                    <a href="booking.jsp">Bookings</a>
                 <% } else {
                     %><p>Welcome, <%= student.getName() %>!</p>
                     <a href="booking.jsp">Bookings</a>
@@ -53,12 +60,10 @@
                     String searchBy = request.getParameter("searchBy");
                     
                     if(session.getAttribute("showSearch") != null){
-                        Tutors searchedTutors = tutorApp.getAllSearchedTutors(searchFilepath);
                         String searchedBy = (String) session.getAttribute("searchBy");
                         String searchedVal = (String) session.getAttribute("searchVal");
                         if(session.getAttribute("showSearch").toString().equals("false")){ 
                             session.setAttribute("showSearch", "true");
-                            //tutorApp.searchTutors(searchFilepath, "", "");
                             response.sendRedirect("main.jsp");
                         }
                         else{
@@ -75,16 +80,13 @@
                     { 
                         tutorApp.searchTutors(searchFilepath, searchBy, searchVal);
                         session.setAttribute("showSearch", "false");
-                        //session.setAttribute("searchBy", searchBy);
-                        //session.setAttribute("searchVal", searchVal);
                         response.sendRedirect("main.jsp");
                     }
                 }
             }
-            else { %>
-            <hr>
-                <p>Incorrect login details. Click <a href="login.jsp">here</a> to return to the login page.</p>
-            <% } %>
+            else {
+                response.sendRedirect("login.jsp");
+             } %>
             <hr>
             <p>Click <a href="account.jsp">here</a> to access your account details.</p>
             <p>Click <a href="logout.jsp">here</a> to logout.</p>

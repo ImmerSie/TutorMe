@@ -13,10 +13,8 @@
     </head>
     <body>
         <%session.invalidate();    %>
-        <div align="center">
-            
-            <h1>Tutor Me!</h1>
-        
+        <div>
+            <h1>UTSTutor</h1>
         </div>
         
         <hr>

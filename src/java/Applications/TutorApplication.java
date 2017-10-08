@@ -20,7 +20,7 @@ import javax.xml.bind.*;
 public class TutorApplication implements Serializable{
     
     
-    private String filePath2;
+    private String filePath;
     private Tutors tutors;
     private String searchedBy;
     private String searchedVal;
@@ -29,7 +29,7 @@ public class TutorApplication implements Serializable{
 
     public TutorApplication(String filePath, Tutors tutors) {
         super();
-        this.filePath2 = filePath;
+        this.filePath = filePath;
         this.tutors = tutors;
     }
     
@@ -38,7 +38,7 @@ public class TutorApplication implements Serializable{
         // Create the unmarshaller
         JAXBContext jc = JAXBContext.newInstance(Tutors.class);
         Unmarshaller u = jc.createUnmarshaller();
-        this.filePath2 = filePath;
+        this.filePath = filePath;
         // Now unmarshal the object from the file
         FileInputStream fin = new FileInputStream(filePath);
         tutors = (Tutors) u.unmarshal(fin); 		
@@ -64,7 +64,7 @@ public class TutorApplication implements Serializable{
         JAXBContext jc = JAXBContext.newInstance(Tutors.class);
         Marshaller m = jc.createMarshaller();
         m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-        FileOutputStream fout = new FileOutputStream(filePath2);
+        FileOutputStream fout = new FileOutputStream(filePath);
         m.marshal(tutors, fout);
         fout.close();
     }

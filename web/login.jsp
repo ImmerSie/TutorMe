@@ -13,20 +13,16 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link href="template.css" rel="stylesheet" type="text/css"/>
         <title>Tutor Me!-Login</title>
     </head>
-    
-    <%
-
+    <body>
+    <% 
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+        String filePath = application.getRealPath("WEB-INF/students.xml");
+        String filePath2 = application.getRealPath("WEB-INF/tutors.xml");
     %>
-    
-<body>
-      <% 
-            String filePath = application.getRealPath("WEB-INF/students.xml");
-            String filePath2 = application.getRealPath("WEB-INF/tutors.xml");
-        %>
    
     <jsp:useBean id="studentApp" class="Applications.StudentApplication" scope="application">
         <jsp:setProperty name="studentApp" property="filePath" value="<%=filePath%>"/>
@@ -39,7 +35,7 @@
     
     <%if(email==null && password==null){%>
         <h1>Login</h1>
-        <form action="login.jsp" method="POST">
+        <form action="login.jsp" method="POST" id="loginForm">
              <table>
                 
                 <tr>

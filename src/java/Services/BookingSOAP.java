@@ -101,9 +101,34 @@ public class BookingSOAP {
         return getTutorApp().getTutorBySubject(subject);
     }
     
-    @WebMethod
+    /*@WebMethod
     public Bookings fetchBookings(){
         return getBookingApp().getBookings();
+    }*/
+    
+    @WebMethod
+    public Bookings getBookings(int searchBy, String searchVal){
+        BookingApplication bookingApp = getBookingApp();
+        Bookings bookings = null;
+        switch(searchBy){
+            case 1 : 
+                bookings = bookingApp.getBookingsByID(Integer.parseInt(searchVal));
+                break;
+            case 2 :
+                bookings = bookingApp.getBookingsByStudentEmail(searchVal);
+                break;
+            case 3 :
+                bookings = bookingApp.getBookingsBySubject(searchVal);
+                break;
+            case 4 :
+                bookings = bookingApp.getBookingsByStatus(searchVal);
+                break;
+            default :
+                bookings = bookingApp.getBookings();
+                break;
+        }
+        
+        return bookings;
     }
     
     @WebMethod

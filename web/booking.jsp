@@ -16,14 +16,14 @@
     <h1>Booking Page</h1>
     
     <% 
-        String filePath = application.getRealPath("WEB-INF/bookings.xml");
-        String filePath2 = application.getRealPath("WEB-INF/tutors.xml");
+        String bookingsFilePath = application.getRealPath("WEB-INF/bookings.xml");
+        String tutorFilePath = application.getRealPath("WEB-INF/tutors.xml");
     %>
     <jsp:useBean id="bookingApp" class="Applications.BookingApplication" scope="application">
-        <jsp:setProperty name="bookingApp" property="filePath" value="<%=filePath%>"/>
+        <jsp:setProperty name="bookingApp" property="filePath" value="<%=bookingsFilePath%>"/>
     </jsp:useBean>
     <jsp:useBean id="tutorApp" class="Applications.TutorApplication" scope="application">
-        <jsp:setProperty name="tutorApp" property="filePath2" value="<%=filePath2%>"/>
+        <jsp:setProperty name="tutorApp" property="filePath" value="<%=tutorFilePath%>"/>
     </jsp:useBean>
     <%
         Student student = (Student) session.getAttribute("student");
@@ -50,15 +50,23 @@
             
         }
      %>
-    <% if(student != null){
-    } %>
-    <x:transform xml="${inputDoc}" xslt="${stylesheet}">
-        <x:param name="student"  value="${student.getName()}" />
-    </x:transform>
+    <% if(student != null){ %>
+         <x:transform xml="${inputDoc}" xslt="${stylesheet}">
+            <x:param name="studentEmail"  value="${student.getEmail()}" />
+        </x:transform>
+    <% } else if(tutor != null){ %>
+         <x:transform xml="${inputDoc}" xslt="${stylesheet}">
+            <x:param name="tutorEmail"  value="${tutor.getEmail()}" />
+        </x:transform>
+    
+    <% } else {
+        response.sendRedirect("login.jsp");
+    }%>
+   
     
     <h2>All Bookings</h2>
     <x:transform xml="${inputDoc}" xslt="${stylesheet}">
-        <x:param name="student"  value="getAll" />
+        <x:param name="studentEmail"  value="getAll" />
     </x:transform>
     
     <a href="main.jsp">Return to Main</a>

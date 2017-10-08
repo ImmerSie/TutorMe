@@ -22,16 +22,16 @@
         String userType = request.getParameter("userType");
         String subject = request.getParameter("subject");
 
-        String filePath = application.getRealPath("WEB-INF/students.xml");
-        String filePath2 = application.getRealPath("WEB-INF/tutors.xml");%>
+        String studentFilePath = application.getRealPath("WEB-INF/students.xml");
+        String TutorFilePath = application.getRealPath("WEB-INF/tutors.xml");%>
 
     <jsp:useBean id="studentApp" class="Applications.StudentApplication" scope="application">
-        <jsp:setProperty name="studentApp" property="filePath" value="<%=filePath%>"/>
+        <jsp:setProperty name="studentApp" property="filePath" value="<%=studentFilePath%>"/>
     </jsp:useBean>
     <%Students students = studentApp.getStudents();%>
 
     <jsp:useBean id="tutorApp" class="Applications.TutorApplication" scope="application">
-        <jsp:setProperty name="tutorApp" property="filePath" value="<%=filePath2%>"/>
+        <jsp:setProperty name="tutorApp" property="filePath" value="<%=TutorFilePath%>"/>
     </jsp:useBean>
     <%Tutors tutors = tutorApp.getTutors();%>
 
@@ -99,7 +99,8 @@
                 session.setAttribute("tutor", null);
                 session.setAttribute("student", student);
                 students.addUser(student);
-                studentApp.updateXML(students, filePath);
+                //studentApp.updateXML(students, filePath);
+                studentApp.saveStudents();
                 response.sendRedirect("main.jsp");
         %>
 
@@ -120,7 +121,7 @@
                     session.setAttribute("student", null);
                     session.setAttribute("tutor", tutor);
                     tutors.addUser(tutor);
-                    tutorApp.updateXML(tutors, filePath2);
+                    //tutorApp.updateXML(tutors, filePath2);
                     response.sendRedirect("main.jsp");
 
                 }

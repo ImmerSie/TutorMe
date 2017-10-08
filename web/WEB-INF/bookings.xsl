@@ -10,7 +10,8 @@
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
     <xsl:output method="html"/>
-    <xsl:param name="student"/>
+    <xsl:param name="studentEmail"/>
+    <xsl:param name="tutorEmail"/>
     <!-- TODO customize transformation rules 
          syntax recommendation http://www.w3.org/TR/xslt 
     -->
@@ -41,8 +42,9 @@
     </xsl:template>
     
     <xsl:template match="booking">
-        <xsl:variable name="studentVar"><xsl:value-of select="studentName"/></xsl:variable>
-        <xsl:if test="($student='getAll') or ($student=$studentVar)">
+        <xsl:variable name="studentVar"><xsl:value-of select="studentEmail"/></xsl:variable>
+        <xsl:variable name="tutorVar"><xsl:value-of select="tutorEmail"/></xsl:variable>
+        <xsl:if test="($studentEmail='getAll') or ($studentEmail=$studentVar) or ($tutorEmail=$tutorVar)">
             <form action="viewBooking.jsp" method="GET"><tr>
                 <xsl:variable name="bookIDVar"><xsl:value-of select="bookingID"/></xsl:variable>
                 <td><xsl:value-of select="bookingID"/></td>
