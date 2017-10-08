@@ -36,31 +36,29 @@
                     <table>
                         <tr> 
                             <td>Full Name:</td>
-                            <td><xsl:value-of select="name"/></td> 
-                            <td><input type="text" name="name"/></td> 
+                   <td><input type="text" name="name" value="{name}"/></td> 
+
                         </tr>
                         <tr> 
                             <td>Email:</td> 
                             <td><xsl:value-of select="email"/></td>
-                            <td>Email cannot be changed.</td>
+       
                         </tr>
 
                         <tr> 
                             <td>Password:</td> 
-                            <td><xsl:value-of select="password"/></td> 
-                            <td><input type="text" name="password"/></td> 
-                           <!-- <td><input type="text" name="password"  value="{$stuPassword}"/></td> -->
+                   <td><input type="text" name="name" value="{password}"/></td> 
+
                         </tr>
 
                         <tr> 
                             <td>Date of Birth:</td> 
-                            <td><xsl:value-of select="birthday"/></td> 
-                            <td><input type="text" name="birthday"/></td> 
-                          <!--  <td><input type="text" name="birthday"  value="{$stuBirthday}"/></td> -->
+                   <td><input type="text" name="name" value="{birthday}"/></td> 
+
                         </tr>
                         <tr>
                             <td></td> 
-                            <td></td> 
+               
                             <td><input type="submit" value="EditStudent" name="Edit"/> </td> 
                         </tr>
                     </table>

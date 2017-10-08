@@ -221,7 +221,7 @@
     //Code for cancelling student account
     Students students = studentApp.getStudents();
     students.removeUser(student);
-    Bookings bookings = bookingApp.getBookingsByStudent(student.getName());
+    Bookings bookings = bookingApp.getBookingsByStudentEmail(student.getEmail());
     Tutors tutors = tutorApp.getTutors();
 
     if (bookings.getList() != null) {
@@ -243,7 +243,7 @@
 
     Tutors tutors = tutorApp.getTutors();
     tutors.removeUser(tutor);
-    Bookings bookings = bookingApp.getBookingsByTutor(tutor.getName());
+    Bookings bookings = bookingApp.getBookingsByTutorEmail(tutor.getName());
     if (bookings.getList() != null) {
         for (Booking b : bookings.getList()) {
             b.setStatus("cancelled");

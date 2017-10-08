@@ -44,12 +44,10 @@
                             <td>Email:</td> 
                             <td><xsl:value-of select="email"/></td>
                         </tr>
-
                         <tr> 
                             <td>Password:</td> 
                             <td><input type="text" name="password" value="{password}"/></td> 
                         </tr>
-
                         <tr> 
                             <td>Date of Birth:</td> 
                             <td><input type="text" name="birthday" value="{birthday}"/></td> 

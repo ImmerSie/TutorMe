@@ -208,15 +208,6 @@ public class TutorApplication implements Serializable{
         return tutorList;
     }
     
-    /*public ArrayList<Tutor> getTutorByStatus(String status){
-        ArrayList<Tutor> tutorList = new ArrayList<Tutor>();
-        for(Tutor t : this.tutors.getList()){
-            if(t.getStatus().toLowerCase().equals(status.toLowerCase())){
-                tutorList.add(t);
-            }
-        }
-        return tutorList;
-    }*/
 
     public Tutors getTutorsByStatus(String status){
         Tutors tutors = new Tutors();
@@ -227,17 +218,6 @@ public class TutorApplication implements Serializable{
         }
         return tutors;
     }
-     
-     /*public Tutors getAvailableTutors(){
-        Tutors tutors = new Tutors();
-        for(Tutor b : this.tutors.getList()){
-            if(b.getStatus().equals("available")){
-                tutors.getList().add(b);
-            }
-        }
-        return tutors;
-    }*/
-     
      
     public void setTutors(Tutors tutors) {
         this.tutors = tutors;

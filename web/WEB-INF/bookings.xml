@@ -6,13 +6,13 @@ and open the template in the editor.
 -->
 
 
-<bookings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:schemaLocation="bookings.xsd">
+<bookings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:schemaLocation="http://www.w3.org/2001/XMLSchema bookings.xsd">
     <booking>
         <bookingID>1</bookingID>
         <tutorName>Ryan</tutorName>
         <tutorEmail>ryan@gmail.com</tutorEmail>
         <subject>WSD</subject>
-        <studentName>Sarah</studentName>
+        <studentName>Firste</studentName>
         <studentEmail>firstEmail@yahoo.com</studentEmail>
         <status>active</status>
     </booking>
