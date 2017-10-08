@@ -20,8 +20,6 @@
 
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        String passCheck = "";
-        String userCheck = "";
     %>
 
     <body>
@@ -47,12 +45,10 @@
                 <tr>
                     <td>Email:</td> 
                     <td><input type="text" name="email"> </td>
-                    <td></td>
                 </tr>
                 <tr> 
                     <td>Password:</td> 
                     <td><input type="password" name="password"></td>
-                    <td></td>
                 </tr>
                 <tr>
                     <td></td> 
@@ -77,63 +73,12 @@
         %>
 
         <% if ((studentExist != null && student == null) || tutorExist != null && tutor == null) {                                         //Checks is password is incorrect
+        %>                                         
+        <p> Password is incorrect. Click <a href="login.jsp">here </a>to retry. </p>             
 
-        %>             
-        <h1>Login</h1>
-        <form action="login.jsp" method="POST">
-            <table>
-
-                <tr>
-                    <td>Email:</td> 
-                    <td><input type="text" name="email"> </td>
-
-                </tr>
-                <tr> 
-                    <td>Password:</td> 
-                    <td><input type="password" name="password"></td>
-                    <td><p>Password Incorrect</p></td>
-                </tr>
-                <tr>
-                    <td></td> 
-                    <td><input type="submit" value="Login" name="Login"></td> 
-
-                </tr>
-            </table>
-        </form>
-        <hr>
-        <p> Click <a href="register.jsp">here </a>to register. </p>
-
-
-        <%} else if (studentExist == null || tutorExist == null) { %>
-        <h1>Login</h1>
-        <form action="login.jsp" method="POST">
-            <table>
-
-                <tr>
-                    <td>Email:</td> 
-                    <td><input type="text" name="email"> </td>
-                    <td><p>User doesn't exist.</p></td>
-                </tr>
-                <tr> 
-                    <td>Password:</td> 
-                    <td><input type="password" name="password"></td>
-
-                </tr>
-                <tr>
-                    <td></td> 
-                    <td><input type="submit" value="Login" name="Login"></td> 
-
-                </tr>
-            </table>
-        </form>
-        <hr>
-        <p> Click <a href="register.jsp">here </a>to register. </p>
-
-
-
-
-        <%  }
-
+        <%} else if (studentExist == null || tutorExist == null) {%>
+        <p> User doesn't exist, click <a href="register.jsp">here</a> to register. </p>
+        <%}
             if (student != null) {                                                       // Upon successful match, activate session for appropriate user type and redirect to main.jsp
                 session.setAttribute("tutor", null);
                 session.setAttribute("student", student);
@@ -146,6 +91,7 @@
             response.sendRedirect("main.jsp");
         %>
 
+        <% } else { %>
         <% }
             }%>
 

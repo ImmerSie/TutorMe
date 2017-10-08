@@ -11,11 +11,17 @@ and open the template in the editor.
 
     
     
-
+    <xs:simpleType name="id">
+        <xs:restriction base="xs:integer">
+            <xs:minInclusive value="1"/>
+            <xs:maxInclusive value="9999999"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    
     <xs:simpleType name="name">
         <xs:restriction base="xs:string">
-            <xs:pattern value="[A-Z][a-z]+(\s[A-Z][a-z]+)*"/>
-           
+            <xs:pattern value="[A-Z][a-z]+(\s[A-Z][a-z]+)*"/>     
         </xs:restriction>
     </xs:simpleType>
     
@@ -23,6 +29,18 @@ and open the template in the editor.
     <xs:simpleType name="email">
         <xs:restriction base="xs:string">
             <xs:pattern value="[A-Za-z_\.]+@[a-z\-][a-z\-]+(\.[a-z\-][a-z\-]+)+"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="subject">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="(WSD)|(SEP)|(USP)|(AppProg)|(MobileApp)"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="status">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="(active)|(cancelled)|(complete)"/>
         </xs:restriction>
     </xs:simpleType>
 
@@ -36,13 +54,13 @@ and open the template in the editor.
                 <xs:element name="booking" minOccurs="0" maxOccurs="1">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="bookingID" type="xs:string"/>
+                            <xs:element name="bookingID" type="id"/>
                             <xs:element name="tutorName" type="name"/>
                             <xs:element name="tutorEmail" type="email"/>
-                            <xs:element name="subject" type="xs:string"/>
+                            <xs:element name="subject" type="subject"/>
                             <xs:element name="studentName" type="name"/>     
                             <xs:element name="studentEmail" type="email"/>
-                            <xs:element name="status" type="xs:string"/>                    
+                            <xs:element name="status" type="status"/>                    
                         </xs:sequence>                     
                     </xs:complexType>  
                 </xs:element>

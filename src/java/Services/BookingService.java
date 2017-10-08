@@ -62,6 +62,7 @@ public class BookingService {
             if(!status.equals("0")){
                  return getBookingApp().getBookingsByStatus(status);
             }
+            
             return getBookingApp().getBookings();          
     }
 }

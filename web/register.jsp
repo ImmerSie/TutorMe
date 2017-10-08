@@ -14,6 +14,18 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Tutor Me! - Register</title>
+
+        <script type="text/javascript">
+            var e = document.getElementById("tutorcheck");
+            var strUser = e.options[e.selectedIndex].text;
+            function tutorCheck() {
+                if(strUser=="student"){
+                    document.getElementById("subjectChoice").disabled=true;
+                }
+            }
+        </script>
+
+
     </head>
     <%
         String name = request.getParameter("name");
@@ -64,7 +76,7 @@
                 </tr>
                 <tr>
                     <td>User Type:</td> 
-                    <td><select name="userType">
+                    <td><select name="userType" id="tutorCheck">
                             <option value="student">Student</option>
                             <option value="tutor">Tutor</option>
 
@@ -72,7 +84,7 @@
                 </tr>
                 <tr> 
                     <td>Subject</td> 
-                    <td><select name="subject">
+                    <td><select name="subject" id="subjectChoice">
                             <option value="tutorsOnly">Tutors Only</option>
                             <option value="WSD">WSD</option>
                             <option value="USP">USP</option>
@@ -95,48 +107,43 @@
 
         <%} else if (userType.equals("student")) {                                                          // If user is student, 
             if (students.getUser(email) == null) {                                                          // check if user already exists. 
-            
-            
-
 
                 Student student = new Student(name, email, password, birthday, userType);                       //Create new user according to parameters, update XML file, and activate session. 
                 session.setAttribute("tutor", null);
                 session.setAttribute("student", student);
                 students.addUser(student);
-               // studentApp.updateXML(students, filePath);
+                // studentApp.updateXML(students, filePath);
                 studentApp.addStudent(student);
                 response.sendRedirect("main.jsp");
-                    
 
-                
         %>
 
-                 <%} else {%>
+        <%} else {%>
 
-                 <p>This student <%=email%> already exists.</p>
-                 <p>Click <a href="register.jsp">here</a> to go back</p>
+        <p>This student <%=email%> already exists.</p>
+        <p>Click <a href="register.jsp">here</a> to go back</p>
         <%}
         } else if (userType.equals("tutor")) {
             if (tutors.getUser(email) == null) {
                 if (subject.equals("tutorsOnly")) { %>
-                    <p>Tutors must choose a subject</p>
-                    <p>Click <a href="register.jsp">here</a> to go back</p>
-             <%   } else {
+        <p>Tutors must choose a subject</p>
+        <p>Click <a href="register.jsp">here</a> to go back</p>
+        <%   } else {
 
-                    String status = "available";
-                    Tutor tutor = new Tutor(name, email, password, birthday, userType, subject, status);
-                    session.setAttribute("student", null);
-                    session.setAttribute("tutor", tutor);
-                    //tutors.addUser(tutor);
-                   // tutorApp.updateXML(tutors, filePath2);
-                    tutorApp.addTutor(tutor);
-                    response.sendRedirect("main.jsp");
+                String status = "available";
+                Tutor tutor = new Tutor(name, email, password, birthday, userType, subject, status);
+                session.setAttribute("student", null);
+                session.setAttribute("tutor", tutor);
+                //tutors.addUser(tutor);
+                // tutorApp.updateXML(tutors, filePath2);
+                tutorApp.addTutor(tutor);
+                response.sendRedirect("main.jsp");
 
-                }
+                 }
 
-            } else {%>
-             <p>This tutor <%=email%> already exists.</p>
-             <p>Click <a href="register.jsp">here</a> to go back</p>
+             } else {%>
+        <p>This tutor <%=email%> already exists.</p>
+        <p>Click <a href="register.jsp">here</a> to go back</p>
 
         <%}
             }%>
@@ -144,7 +151,7 @@
 
 
     </body>
-
-
-
 </html>
+
+
+
