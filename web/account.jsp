@@ -52,12 +52,14 @@
 
         <c:import url="WEB-INF/tutors.xml" var="inputDocT" />
         <c:import url="WEB-INF/tutors.xsl" var="stylesheetT" />
-        <c:import url="WEB-INF/students.xml" var="inputDocS" />
-        <c:import url="WEB-INF/students.xsl" var="stylesheetS" />
+        <c:import url="WEB-INF/students.xml" var="inputDoc" />
+        <c:import url="WEB-INF/students.xsl" var="stylesheet" />
 
         <%
             Student student = (Student) session.getAttribute("student");
             Tutor tutor = (Tutor) session.getAttribute("tutor");
+            String stuEmail = student.getEmail();  
+             
         %>
         <h1>Your Account details</h1>
         <h3>You may edit your details.</h3>
@@ -68,17 +70,14 @@
                         //    Student student1 = studentApp.getStudentByName(student.getName()); %>
 
         <x:transform xml="${inputDocS}" xslt="${stylesheetS}">                                                      <!-- Import XML and use XSL stylesheet to transform -->
-            <x:param name="stuEmail" value="<%= student.getEmail()%>"/>
-            <x:param name="stuName" value="<%= student.getName()%>"/>
-            <x:param name="stuPassword" value="<%= student.getPassword()%>"/>
-            <x:param name="stuBirthday" value="<%= student.getBirthday()%>"/>
+            <x:param name="stuEmail" value="${student.getEmail()}"/>
         </x:transform>
-
+        
 
         <%  } else if (tutor != null) {%>
 
         <x:transform xml="${inputDocT}" xslt="${stylesheetT}">                                                      <!-- Import XML and use XSL stylesheet to transform -->
-            <x:param name="tutEmail" value="<%= tutor.getEmail()%>"/>
+            <x:param name="tutEmail" value="${tutor.getEmail()}"/>
         </x:transform>
 
         <%  }
@@ -91,8 +90,8 @@
                 //studentApp.updateXML(students, filePath);
 %><h2>Details Updated!</h2>
 
-        <x:transform xml="${inputDocS}" xslt="${stylesheetS}">                                                      <!-- Import XML and use XSL stylesheet to transform -->
-            <x:param name="stuEmail" value="<%= student.getEmail()%>"/>
+        <x:transform xml="${inputDocS}" xslt="${stylesheetS}">                                                      <!-- JSTL: Import XML and use XSL stylesheet to transform -->
+            <x:param name="stuEmail" value="${student.getEmail()}"/>
         </x:transform>
 
         <%        } else if (button.equals("EditTutor")) {
@@ -102,7 +101,7 @@
         %><h2>Details Updated!</h2> 
 
         <x:transform xml="${inputDocT}" xslt="${stylesheetT}">                                                      <!-- Import XML and use XSL stylesheet to transform -->
-            <x:param name="tutEmail" value="<%= tutor.getEmail()%>"/>
+            <x:param name="tutEmail" value="${tutor.getEmail()}"/>
         </x:transform>
 
         <% }

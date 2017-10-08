@@ -7,6 +7,7 @@
 <%@page import="Models.Student"%>
 <%@page import="Models.Tutors"%>
 <%@page import="Models.Students"%>
+<%@page import="Applications.Validator"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -94,6 +95,20 @@
 
         <%} else if (userType.equals("student")) {                                                          // If user is student, 
             if (students.getUser(email) == null) {                                                          // check if user already exists. 
+            
+                Validator eValidator = new Validator(email);
+                Validator nValidator = new Validator(name);
+                Validator pValidator = new Validator(password);
+                 
+                if(!eValidator.validate(email)){ %>
+                <h1>Email Format Incorrect</h1> 
+               <% }else if(!nValidator.validate(name)){ %>
+               <h1>Name Format Incorrect</h1> 
+              <%  }else if(!pValidator.validate(password)){ %>
+                <h1>Password Format Incorrect</h1> 
+           
+             <%   }else{
+
 
                 Student student = new Student(name, email, password, birthday, userType);                       //Create new user according to parameters, update XML file, and activate session. 
                 session.setAttribute("tutor", null);
@@ -101,6 +116,7 @@
                 students.addUser(student);
                 studentApp.updateXML(students, filePath);
                 response.sendRedirect("main.jsp");
+                }
         %>
 
         <%} else {%>
