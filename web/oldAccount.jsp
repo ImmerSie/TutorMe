@@ -88,7 +88,7 @@
             </table>
 
         </form>
-        <p>Click <form><input type="submit" value="cancel" name="cancel"></form> to cancel your account.</p>
+                 <form><td>Click <input type="submit" value="cancel" name="cancel"/> to cancel your account.</td></form> 
     <hr>
     <p>Click <a href="main.jsp">here</a> to get to the main page.</p>
     <p>Click <a href="logout.jsp">here</a> to logout.</p>
@@ -123,7 +123,7 @@
         </table>
 
     </form>
-    <p>Click <form><input type="submit" value="cancel" name="cancel"></form> to cancel your account.</p>
+                 <form><td>Click <input type="submit" value="cancel" name="cancel"/> to cancel your account.</td></form> 
 <hr>
 <p>Click <a href="main.jsp">here</a> to get to the main page.</p>
 <p>Click <a href="logout.jsp">here</a> to logout.</p>
@@ -166,7 +166,7 @@
     </table>
 
 </form>
-<p>Click <form><input type="submit" value="cancel" name="cancel"></form> to cancel your account.</p>
+                 <form><td>Click <input type="submit" value="cancel" name="cancel"/> to cancel your account.</td></form> 
 <hr>
 <p>Click <a href="main.jsp">here</a> to get to the main page.</p>
 <p>Click <a href="logout.jsp">here</a> to logout.</p>
@@ -207,7 +207,7 @@
     </table>
 
 </form>
-<p>Click <form><input type="submit" value="cancel" name="cancel"></form> to cancel your account.</p>
+                 <form><td>Click <input type="submit" value="cancel" name="cancel"/> to cancel your account.</td></form> 
 <hr>
 <p>Click <a href="main.jsp">here</a> to get to the main page.</p>
 <p>Click <a href="logout.jsp">here</a> to logout.</p>

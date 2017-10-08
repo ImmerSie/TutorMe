@@ -39,6 +39,13 @@ public class StudentApplication implements Serializable{
         students = (Students) u.unmarshal(fin); 		
         fin.close();
     }
+     
+      public void addStudent(Student student) throws Exception{
+         students.addUser(student);
+            saveStudents();
+    }
+      
+      /*
     public void updateXML(Students students, String filePath) throws Exception {
         this.students = students;
         this.filePath = filePath;
@@ -49,6 +56,7 @@ public class StudentApplication implements Serializable{
         m.marshal(students, fout);
         fout.close();
     }
+*/
     
     // to be used from the welcome.jsp page
     public void saveStudents() throws JAXBException, IOException {

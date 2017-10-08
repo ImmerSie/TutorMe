@@ -59,6 +59,7 @@
             Student student = (Student) session.getAttribute("student");
             Tutor tutor = (Tutor) session.getAttribute("tutor");
             String stuEmail = student.getEmail();  
+            String tutEmail = tutor.getEmail(); 
              
         %>
         <h1>Your Account details</h1>
@@ -70,7 +71,7 @@
                         //    Student student1 = studentApp.getStudentByName(student.getName()); %>
 
         <x:transform xml="${inputDocS}" xslt="${stylesheetS}">                                                      <!-- Import XML and use XSL stylesheet to transform -->
-            <x:param name="stuEmail" value="${student.getEmail()}"/>
+            <x:param name="stuEmail" value="<%=stuEmail%>"/>               
         </x:transform>
         
 

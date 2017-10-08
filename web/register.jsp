@@ -114,8 +114,10 @@
                 session.setAttribute("tutor", null);
                 session.setAttribute("student", student);
                 students.addUser(student);
-                studentApp.updateXML(students, filePath);
-                response.sendRedirect("main.jsp");
+               // studentApp.updateXML(students, filePath);
+               // response.sendRedirect("main.jsp");
+                    studentApp.addStudent(student);
+
                 }
         %>
 
@@ -135,8 +137,9 @@
                     Tutor tutor = new Tutor(name, email, password, birthday, userType, subject, status);
                     session.setAttribute("student", null);
                     session.setAttribute("tutor", tutor);
-                    tutors.addUser(tutor);
-                    tutorApp.updateXML(tutors, filePath2);
+                    //tutors.addUser(tutor);
+                   // tutorApp.updateXML(tutors, filePath2);
+                    tutorApp.addTutor(tutor);
                     response.sendRedirect("main.jsp");
 
                 }

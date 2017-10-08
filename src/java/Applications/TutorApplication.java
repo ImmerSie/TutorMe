@@ -33,6 +33,11 @@ public class TutorApplication implements Serializable{
         this.tutors = tutors;
     }
     
+    public void addTutor(Tutor tutor) throws Exception{
+         tutors.addUser(tutor);
+            saveTutors();
+    }
+    
      public void setFilePath(String filePath) throws Exception {
 
         // Create the unmarshaller
@@ -44,7 +49,9 @@ public class TutorApplication implements Serializable{
         tutors = (Tutors) u.unmarshal(fin); 		
         fin.close();
     }
-    /*public void updateXML(Tutors tutors, String filePath) throws Exception {
+     
+     /*
+    public void updateXML(Tutors tutors, String filePath) throws Exception {
         this.tutors = tutors;
         this.filePath2 = filePath;
         JAXBContext jc = JAXBContext.newInstance(Tutors.class);
@@ -57,7 +64,8 @@ public class TutorApplication implements Serializable{
         m.marshal(tutors, fout);
         fout.close();
             
-    }*/
+    }
+    */
     
     // to be used from the welcome.jsp page
     public void saveTutors() throws JAXBException, IOException {
