@@ -58,10 +58,7 @@
                         </tr>
                     </table>
                 </form>
-                 <form><td>Click <input type="submit" value="cancel" name="cancel"/> to cancel your account.</td></form> 
-                <hr/>
-                    <p>Click <a href="main.jsp">here</a> to get to the main page.</p>
-                    <p>Click <a href="logout.jsp">here</a> to logout.</p>   
+                 <form id="cancelBtn"><td>Click <input type="submit" value="cancel" name="cancel"/> to cancel your account.</td></form>   
             </xsl:when>  
         </xsl:choose>
     </xsl:template>
