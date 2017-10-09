@@ -6,8 +6,6 @@
 package Services.client;
 
 
-import Models.Tutors;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -16,15 +14,30 @@ import java.util.Scanner;
  * @author Max
  */
 public class BookingClient {
+    // Either a logged in student, or null
+    private static Student student;
     
-    private static Student loginStudent(BookingSOAP bookingApp){
-        Scanner sc = new Scanner(System.in);
+    // Either a logged in tutor, or null
+    private static Tutor tutor;
+    
+    // Scanner object to read in user input
+    private static Scanner sc;
+    
+    // The BookingSOAP web service to access methods
+    private static BookingSOAP bookingApp;
+    
+    /**
+     * Allows a student to be authenticated
+     */
+    private static void loginStudent(){
+        // Initial user input (no error message required)
         System.out.print("Enter email address: ");
         String email = sc.nextLine();
         System.out.print("Enter password: ");
         String password = sc.nextLine();
-        Student student = bookingApp.loginStudent(email, password);
+        student = bookingApp.loginStudent(email, password);
         
+        // Loops until correct user input is entered, and student is logged in
         while(student == null){
             System.out.println("Incorrect login details (must be a student).");            
             System.out.print("Enter email address: ");
@@ -33,17 +46,20 @@ public class BookingClient {
             password = sc.nextLine();
             student = bookingApp.loginStudent(email, password);
         }
-        return student;
     }
     
-    private static Tutor loginTutor(BookingSOAP bookingApp){
-        Scanner sc = new Scanner(System.in);
+    /**
+     * Allows a tutor to be authenticated
+     */
+    private static void loginTutor(){
+        // Initial user input (no error message required)
         System.out.print("Enter email address: ");
         String email = sc.nextLine();
         System.out.print("Enter password: ");
         String password = sc.nextLine();
-        Tutor tutor = bookingApp.loginTutor(email, password);
+        tutor = bookingApp.loginTutor(email, password);
         
+        // Loops until tutor is authenticated
         while(tutor == null){
             System.out.println("Incorrect login details.");            
             System.out.print("Enter email address: ");
@@ -52,12 +68,19 @@ public class BookingClient {
             password = sc.nextLine();
             tutor = bookingApp.loginTutor(email, password);
         }
-        return tutor;
     }
     
+    /**
+     * Outputs to the console the details of the booking records in the Bookings object
+     * 
+     * @param bookings A collection of bookings
+     */
     private static void printBookings(Bookings bookings){
+        // Checks to ensure there is at least 1 booking
         if(bookings.getBooking().size() > 0){
             System.out.println("Bookings");
+            
+            // Loops through each booking record, printing details
             for(Booking b : bookings.booking){
                 System.out.print("Booking ID: " + b.getBookingID() + " | Tutor: " + b.getTutorName() + " | Tutor Email: ");
                 System.out.print(b.getTutorEmail() + " | Subject: " + b.getSubject() + " | Student: " + b.getStudentName() + " | Student Email: ");
@@ -69,17 +92,23 @@ public class BookingClient {
         }
     }
     
-    private static void createBooking(BookingSOAP bookingApp, Student student){
-        Scanner sc = new Scanner(System.in);
+    /**
+     * Creates a booking record, using the logged in student and an input tutor email
+     */
+    private static void createBooking(){
+        // Gets what subject the student wants to create a booking in
         System.out.println("Please input subject: (WSD, SEP, UDP, AppProg, MobileApp)");
         String subject = sc.nextLine().toLowerCase().trim();
         while(!subject.equals("wsd") && !subject.equals("sep") && !subject.equals("udp") && !subject.equals("appprog") && !subject.equals("mobileapp")){
+            // Cancels creation of booking
             if(subject.equals("x")){
                 return;
             }
             System.out.println("Did not recognise subject. Please input subject: (WSD, SEP, UDP, AppProg, MobileApp)");
             subject = sc.nextLine().toLowerCase().trim();
         }
+        
+        // Prints out tutor details for the input subject
         System.out.println("Available Tutors for " + subject);
         List<Tutor> tutors = bookingApp.getTutorsFromSubject(subject);
         for(Tutor t : tutors){
@@ -87,14 +116,20 @@ public class BookingClient {
                 System.out.println("Tutor Name: " + t.getName() + " | Tutor Email: " + t.getEmail() + " | Subject: " + t.getSubject() + " | Status: " + t.getStatus());
             }
         }
+        
+        // Asks for a tutor email to be booked
         String tutorEmail = null;
         boolean whileCheck = true;
         while(whileCheck){
             System.out.println("Please input available tutor email: ");
             tutorEmail = sc.nextLine().toLowerCase().trim();
+            
+            // Cancels creation of booking
             if(tutorEmail.equals("x")){
                 break;
             }
+            
+            // Creates booking if tutor email is valid
             for(Tutor t : tutors){
                 System.out.println(t.getName().toLowerCase());
                 if(t.getEmail().toLowerCase().equals(tutorEmail)){
@@ -107,18 +142,55 @@ public class BookingClient {
         }
     }
     
-    private static void completeBooking(BookingSOAP bookingApp, Tutor tutor){
+    private static void cancelBooking(){
+        // Gets the bookings for the user
+        Bookings bookings = null;
+        if(tutor != null){
+            bookings = bookingApp.getBookingsFromTutor(tutor.getEmail());
+        }
+        else if(student != null){
+            bookings = bookingApp.getBookingsFromStudent(student.getEmail());
+        }
+        else {
+            System.out.println("You must be logged in!");
+            return;
+        }
+        
+        // Prints the users bookings
+        printBookings(bookings);
+        
+        // User inputs the booking ID to be cancelled
+        System.out.println("Please input bookingID: ");
+        int bookingId = sc.nextInt();
+        sc.nextLine();
+        
+        // Completes booking
+        bookingApp.cancelBooking(bookingId);
+    }
+    
+    /**
+     * Prints the logged in tutors bookings, and lets the tutor input a bookingID,
+     * and completes the booking that has that ID.
+     */
+    private static void completeBooking(){
+        // Prints the tutors bookings
         Bookings bookings = bookingApp.getBookingsFromTutor(tutor.getEmail());
         printBookings(bookings);
-        Scanner sc = new Scanner(System.in);
+        
+        // Tutor inputs the booking ID to be completed
         System.out.println("Please input bookingID: ");
         String bookingIdString = sc.nextLine().toLowerCase().trim();
         int bookingId = Integer.parseInt(bookingIdString);
+        
+        // Completes booking
         bookingApp.completeBooking(bookingId);
     }
     
-    private static void viewBookings(BookingSOAP bookingApp){
-        Scanner sc = new Scanner(System.in);
+    /**
+     * Allows a user to view the bookings according to input parameters
+     */
+    private static void viewBookings(){
+        // Indicates what the search parameter is
         System.out.println("Search by:");
         System.out.println("1: bookingID");
         System.out.println("2: student email");
@@ -128,7 +200,9 @@ public class BookingClient {
         int searchBy = sc.nextInt();
         sc.nextLine();
         
+        // Loops until valid input is entered
         while(searchBy > 5 && searchBy < 1){
+            System.out.println("Must enter a number between 1 and 5");
             System.out.println("Search by:");
             System.out.println("1: bookingID");
             System.out.println("2: student email");
@@ -138,57 +212,71 @@ public class BookingClient {
             searchBy = sc.nextInt();
             sc.nextLine();
         }
+        
+        // The value which is being searched by (e.g. student@email.com)
         String searchVal = "";
         if(searchBy != 5){
             System.out.print("Search: ");
             searchVal = sc.nextLine();
         }
         
+        // Retrieves and prints bookings according to the search parameter and input value
         Bookings bookings = bookingApp.getBookings(searchBy, searchVal);
         printBookings(bookings);
         
     }
     
-    
-    private static void studentMenu(BookingSOAP bookingApp){
+    /**
+     * Prints out the menu for user actions and allows the user to select 1
+     */
+    private static void studentMenu(){
         System.out.println("Welcome!");
-        Student student = null;
-        Tutor tutor = null;
-        Scanner sc = new Scanner(System.in);
-        String selection = "";
+        int selection = -1;
         OUTER:
-        while (!selection.equals("x")) {
+        while (selection != 0) {
+            // Instructions for user
             System.out.println("");
             System.out.println("");
-            System.out.println("Menu - (input)");
-            System.out.println("Create Booking - create");
-            System.out.println("Cancel Booking - cancel");
-            System.out.println("Complete Booking - complete");
-            System.out.println("View Bookings - view");
+            System.out.println("Menu");
+            System.out.println("1: Create Booking");
+            System.out.println("2: Cancel Booking");
+            System.out.println("3: Complete Booking");
+            System.out.println("4: View Bookings");
             if(student != null || tutor != null){
-                System.out.println("Logout User - logout");
+                System.out.println("5: Logout User");
             }
-            System.out.println("Exit - x");
-            selection = sc.nextLine().toLowerCase().trim();
+            else{
+                System.out.println("5: Login User");
+            }
+            System.out.println("0: Exit");
+            
+            // Gets a user input
+            selection = sc.nextInt();
+            sc.nextLine();
+            
+            // Chooses actions based on the user input
             switch (selection) {
-                case "create":
+                // Create a booking
+                case 1:
                     if(student == null){
-                        student = loginStudent(bookingApp);
-                    }   if(student != null){
-                        createBooking(bookingApp, student);
+                        loginStudent();
+                    }   
+                    if(student != null){
+                        createBooking();
                     }
                     else{
                         System.out.println("Student credentials incorrect");
                     }   
                     break;
-                    
-                case "cancel":
-                    System.out.print("Enter email address: ");
-                    String email = sc.nextLine();
-                    System.out.print("Enter password: ");
-                    String password = sc.nextLine();
+                
+                // Cancel a booking
+                case 2:
                     Bookings bookings = null;
                     if(tutor == null && student == null){
+                        System.out.print("Enter email address: ");
+                        String email = sc.nextLine();
+                        System.out.print("Enter password: ");
+                        String password = sc.nextLine();
                         tutor = bookingApp.loginTutor(email, password);
                         student = bookingApp.loginStudent(email, password);
                     }
@@ -203,48 +291,79 @@ public class BookingClient {
                         break;
                     }
                     
+                    // Display bookings for user to select booking from ID
                     printBookings(bookings);
                     System.out.println("Please input bookingID: ");
-                    String bookingIdString = sc.nextLine().toLowerCase().trim();
-                    int bookingId = Integer.parseInt(bookingIdString);
+                    int bookingId = sc.nextInt();
+                    
+                    // Cancel based on booking ID
                     bookingApp.cancelBooking(bookingId);
                     break;
-                    
-                case "complete":
+                
+                // Complete booking
+                case 3:
                     if(tutor == null){
-                        tutor = loginTutor(bookingApp);
-                    }   if(tutor != null){
-                        completeBooking(bookingApp, tutor);
+                        loginTutor();
+                    }   
+                    if(tutor != null){
+                        completeBooking();
                     }
                     else{
                         System.out.println("Tutor credentials incorrect");
                     }   
                     break;
-                    
-                case "view":
-                    viewBookings(bookingApp);
+                
+                // View bookings
+                case 4:
+                    viewBookings();
                     break;
-                    
-                case "logout":
-                    student = null;
-                    tutor = null;
-                    System.out.println("Logged out!");
+                
+                // Login or logout depending on user state
+                case 5:
+                    // Login a user
+                    if(student == null && tutor == null){
+                        System.out.print("Enter email address: ");
+                        String email = sc.nextLine();
+                        System.out.print("Enter password: ");
+                        String password = sc.nextLine();
+                        tutor = bookingApp.loginTutor(email, password);
+                        student = bookingApp.loginStudent(email, password);
+                        if(tutor == null && student == null){
+                            System.out.println("Tutor credentials incorrect");
+                        }
+                    }
+                    // Logout a user
+                    else{
+                        student = null;
+                        tutor = null;
+                        System.out.println("Logged out!");
+                    }
                     break;
-                    
-                case "x":
+                
+                // Exit from the application
+                case 0:
                     break OUTER;
                     
                 default:
-                    System.out.println("Please input selection in the form of one word (e.g. 'create')");
+                    System.out.println("Please input selection in the form of a number between 0 and 5");
                     break;
             }
         }
     }
     
+    /**
+     * Entry method for client
+     * @param args Command line arguments
+     */
     public static void main(String[] args) {
+        // Instantiate the fields
         BookingSOAP_Service locator = new BookingSOAP_Service();
-        BookingSOAP bookingApp = locator.getBookingSOAPPort();
-
-        studentMenu(bookingApp);
+        bookingApp = locator.getBookingSOAPPort();
+        sc = new Scanner(System.in);
+        student = null;
+        tutor = null;
+        
+        // Begin menu loop
+        studentMenu();
     }
 }
