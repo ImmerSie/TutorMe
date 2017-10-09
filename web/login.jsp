@@ -34,53 +34,51 @@
     
     
     <%if(email==null && password==null){%>
-        <h1>Login</h1>
-        <form action="login.jsp" method="POST" id="loginForm">
-             <table>
-                
-                <tr>
-                    <td>Email:</td> 
-                    <td><input type="text" name="email"> </td>
-                </tr>
-                <tr> 
-                    <td>Password:</td> 
-                    <td><input type="password" name="password"></td>
-                </tr>
-                <tr>
-               <td></td> 
-               <td><input type="submit" value="Login" name="Login"></td> 
-           
-                </tr>
-             </table>
-        </form>
+        <div id="headerSection">
+            <h1>UTSTutor</h1>
+        </div>
         <hr>
-           <p> Click <a href="register.jsp">here </a>to register. </p>
-           <%}else{%>
-           
-           <%
-            Students students = studentApp.getStudents();                               //Fetch current students and tutors. 
-            Student student = students.login(email, password);
-            
-            Tutors tutors = tutorApp.getTutors();
-            Tutor tutor = tutors.login(email, password);
-        %>
+        <div id="loginDiv">
+            <h2>Login</h2>
+            <form action="login.jsp" method="POST" id="loginForm">
+                <table>
+                    <tr>
+                        <td>Email:</td> 
+                        <td><input type="text" name="email"> </td>
+                    </tr>
+                    <tr> 
+                        <td>Password:</td> 
+                        <td><input type="password" name="password"></td>
+                    </tr>
+                    <tr> 
+                        <td><input type="submit" value="Login" name="Login"></td>
+                    </tr>
+                 </table>
+            </form>
+            <p> Not a user? Click <a href="register.jsp">here </a>to register. </p>
+        </div>
+    <% } 
+    else {
+        Students students = studentApp.getStudents();                               //Fetch current students and tutors. 
+        Student student = students.login(email, password);
 
-        <% if (student != null) {                                                       // Upon successful match, activate session for appropriate user type and redirect to main.jsp
-                session.setAttribute("tutor", null);
-                session.setAttribute("student", student); 
-                
-                response.sendRedirect("main.jsp");
-                %>
-        <% }else if(tutor != null) {
+        Tutors tutors = tutorApp.getTutors();
+        Tutor tutor = tutors.login(email, password);
+    
+        if (student != null) {                                                       // Upon successful match, activate session for appropriate user type and redirect to main.jsp
+            session.setAttribute("tutor", null);
+            session.setAttribute("student", student); 
+            response.sendRedirect("main.jsp");
+        } 
+        else if(tutor != null) {
             session.setAttribute("student", null);
-             session.setAttribute("tutor", tutor); 
-        response.sendRedirect("main.jsp");
-        %>
-             
-        <% } else { %>
+            session.setAttribute("tutor", tutor); 
+            response.sendRedirect("main.jsp");
+        }
+        else { %>
             <p> Username or password is incorrect. Click <a href="login.jsp">here </a>to retry. </p>
             <p> Alternatively, click <a href="register.jsp">here</a> to register. </p>
-        <% }}%>
-           
+        <% }
+    }%>       
     </body>
 </html>

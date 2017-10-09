@@ -10,22 +10,23 @@
 <%@ taglib prefix="x" uri="http://java.sun.com/jsp/jstl/xml" %>
 
 <html >
-  <head>
-    <title>Tutor Me!</title>
-  </head>
+    <head>
+        <link href="template.css" rel="stylesheet" type="text/css"/>
+        <title>Tutor Me!</title>
+    </head>
 
-  <body>
-    <c:import url="WEB-INF/tutorSearch.xml" var="inputDoc" />
+    <body>
+        <c:import url="WEB-INF/tutorSearch.xml" var="inputDoc" />
 
-    <c:import url="WEB-INF/tutorSearch.xsl" var="stylesheet" />
-    
-        <%  String tutorsFilepath = application.getRealPath("WEB-INF/tutors.xml");
-            String searchFilepath = application.getRealPath("WEB-INF/tutorSearch.xml");
-        %>
-        <jsp:useBean id="tutorApp" class="Applications.TutorApplication" scope="application">
-            <jsp:setProperty name="tutorApp" property="filePath" value="<%=tutorsFilepath%>"/>
-        </jsp:useBean>
-        <% 
+        <c:import url="WEB-INF/tutorSearch.xsl" var="stylesheet" />
+
+            <%  String tutorsFilepath = application.getRealPath("WEB-INF/tutors.xml");
+                String searchFilepath = application.getRealPath("WEB-INF/tutorSearch.xml");
+            %>
+            <jsp:useBean id="tutorApp" class="Applications.TutorApplication" scope="application">
+                <jsp:setProperty name="tutorApp" property="filePath" value="<%=tutorsFilepath%>"/>
+            </jsp:useBean>
+            <% 
             Student student = (Student) session.getAttribute("student");
             Tutor tutor = (Tutor) session.getAttribute("tutor");
             if(student != null || tutor != null)
@@ -39,57 +40,65 @@
                 }
                 String name = request.getParameter("name");
                 %>
-                <h1>Main Page</h1>
-                <% if(tutor != null){
-                    %><p>Welcome, <%= tutor.getName() %>!</p>
-                    <a href="booking.jsp">Bookings</a>
-                <% } else {
-                    %><p>Welcome, <%= student.getName() %>!</p>
-                    <a href="booking.jsp">Bookings</a>
-                    <form action="main.jsp" method="POST">
-                        <select name="searchBy" id="searchList">
-                            <option value="searchStatus">Status</option>
-                            <option value="searchSubject">Subject</option>
-                            <option value="searchName">Name</option> 
-                        </select>
-                        <input type="text" name="searchVal">
-                        <input type="submit" value="Search" name="Search">
-                    </form>
-                    <%
-                    String searchVal = request.getParameter("searchVal");
-                    String searchBy = request.getParameter("searchBy");
-                    
-                    if(session.getAttribute("showSearch") != null){
-                        String searchedBy = (String) session.getAttribute("searchBy");
-                        String searchedVal = (String) session.getAttribute("searchVal");
-                        if(session.getAttribute("showSearch").toString().equals("false")){ 
-                            session.setAttribute("showSearch", "true");
+                <div id="headerSection">
+                    <h1>UTSTutor</h1>
+                    <div id="headerMenu">
+                        <a href="account.jsp">Account</a>
+                        <a href="index.jsp">Logout</a>
+                    </div>
+                </div>
+                <hr id="divider">
+                <div id="mainContentDiv">
+                    <h1>Main Page</h1>
+                    <% if(tutor != null){
+                        %><p>Welcome, <%= tutor.getName() %>!</p>
+                        <a href="booking.jsp">Bookings</a>
+                    <% } else {
+                        %><p>Welcome, <%= student.getName() %>!</p>
+                        <a href="booking.jsp">Bookings</a>
+                        <form action="main.jsp" method="POST">
+                            <select name="searchBy" id="searchList">
+                                <option value="searchStatus">Status</option>
+                                <option value="searchSubject">Subject</option>
+                                <option value="searchName">Name</option> 
+                            </select>
+                            <input type="text" name="searchVal">
+                            <input type="submit" value="Search" name="Search">
+                        </form>
+                        <%
+                        String searchVal = request.getParameter("searchVal");
+                        String searchBy = request.getParameter("searchBy");
+
+                        if(session.getAttribute("showSearch") != null){
+                            String searchedBy = (String) session.getAttribute("searchBy");
+                            String searchedVal = (String) session.getAttribute("searchVal");
+                            if(session.getAttribute("showSearch").toString().equals("false")){ 
+                                session.setAttribute("showSearch", "true");
+                                response.sendRedirect("main.jsp");
+                            }
+                            else{
+                                %>
+                                    <x:transform xml="${inputDoc}" xslt="${stylesheet}"></x:transform>
+                                <%
+                            session.setAttribute("showSearch", null);
+                            session.setAttribute("searchBy", searchBy);
+                            session.setAttribute("searchVal", searchVal);
+                            }
+
+                         } 
+                        else if(searchBy != null && searchVal != null)
+                        { 
+                            tutorApp.searchTutors(searchFilepath, searchBy, searchVal);
+                            session.setAttribute("showSearch", "false");
                             response.sendRedirect("main.jsp");
                         }
-                        else{
-                            %>
-                                <x:transform xml="${inputDoc}" xslt="${stylesheet}"></x:transform>
-                            <%
-                        session.setAttribute("showSearch", null);
-                        session.setAttribute("searchBy", searchBy);
-                        session.setAttribute("searchVal", searchVal);
-                        }
-                    
-                     } 
-                    else if(searchBy != null && searchVal != null)
-                    { 
-                        tutorApp.searchTutors(searchFilepath, searchBy, searchVal);
-                        session.setAttribute("showSearch", "false");
-                        response.sendRedirect("main.jsp");
                     }
                 }
-            }
-            else {
-                response.sendRedirect("login.jsp");
-             } %>
-            <hr>
-            <p>Click <a href="account.jsp">here</a> to access your account details.</p>
-            <p>Click <a href="logout.jsp">here</a> to logout.</p>
+                else {
+                    response.sendRedirect("login.jsp");
+                 } %>
+                <!--<p>Click <a href="account.jsp">here</a> to access your account details.</p>-->
+            </div>
     </body>
 </html>
 

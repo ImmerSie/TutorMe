@@ -49,9 +49,9 @@
                         <td><xsl:value-of select="subject"/></td>
                         <td><xsl:value-of select="status"/></td>
                         <!--<xsl:if test="$tutStatus='available'"> -->
-                            <td><input type="submit" value="Book" name="Book"></input></td>
-                            <td><input type="hidden" value="{$tutNameVar}" id="tutorid" name="tutorid"></input></td>
-                            <td><input type="hidden" value="true" name="confirm"></input></td>
+                            <td><input type="submit" value="Book" name="Book"></td>
+                            <td><input type="hidden" value="{$tutNameVar}" id="tutorid" name="tutorid"></td>
+                            <td><input type="hidden" value="true" name="confirm"></td>
                         <!-- </xsl:if> -->
                     </tr></form>
                 </xsl:if>
@@ -69,9 +69,9 @@
                             <xsl:value-of select="status"/>
                         </xsl:variable>
                         <xsl:if test="$tutStatus='available'">
-                            <td><input type="submit" value="Book" name="Book"></input></td>
-                            <td><input type="hidden" value="{$tutNameVar}" id="tutorid" name="tutorid"></input></td>
-                            <td><input type="hidden" value="true" name="confirm"></input></td>
+                            <td><input type="submit" value="Book" name="Book"></td>
+                            <td><input type="hidden" value="{$tutNameVar}" id="tutorid" name="tutorid"></td>
+                            <td><input type="hidden" value="true" name="confirm"></td>
                         </xsl:if>
                     </tr></form>
                 </xsl:if>
@@ -89,9 +89,9 @@
                             <xsl:value-of select="status"/>
                         </xsl:variable>
                         <xsl:if test="$tutStatus='available'">
-                            <td><input type="submit" value="Book" name="Book"></input></td>
-                            <td><input type="hidden" value="{$tutNameVar}" id="tutorid" name="tutorid"></input></td>
-                            <td><input type="hidden" value="true" name="confirm"></input></td>
+                            <td><input type="submit" value="Book" name="Book"></td>
+                            <td><input type="hidden" value="{$tutNameVar}" id="tutorid" name="tutorid"></td>
+                            <td><input type="hidden" value="true" name="confirm"></td>
                         </xsl:if>
                     </tr></form>
                 </xsl:if>

@@ -8,7 +8,46 @@ and open the template in the editor.
     Author     : Max
 */
 
-#loginForm{
+body {
+    background-image: url("UTSTutor.png");
+    background-color: #cccccc;
+}
+
+#loginDiv{
     margin: auto;
-    width: 40%;
+    width: 30%;
+    background-color: #ffffff;
+    padding-left: 2%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
+
+#registerDiv{
+    margin: auto;
+    width: 30%;
+    background-color: #ffffff;
+    padding-left: 2%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
+
+#headerSection{
+    margin-left: 11%;
+    margin-top: 4%;
+}
+
+#headerMenu{
+    text-align: right;
+}
+
+#mainContentDiv{
+    margin-left: 11%;
+}
+
+#bookingContentDiv{
+   margin-left: 11%;
+}
+
+#viewBookDiv{
+    margin-left: 11%
 }

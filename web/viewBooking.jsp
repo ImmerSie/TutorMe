@@ -12,6 +12,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link href="template.css" rel="stylesheet" type="text/css"/>
         <title>View Booking</title>
     </head>
     <body>
@@ -24,8 +25,24 @@
         <jsp:useBean id="tutorApp" class="Applications.TutorApplication" scope="application">
             <jsp:setProperty name="tutorApp" property="filePath" value="<%=tutorFilePath%>"/>
         </jsp:useBean>
-        <h1>View Booking</h1>
-        <%
+        <div id="headerSection">
+            <h1>UTSTutor</h1>
+            <div id="headerMenu">
+                <a href="main.jsp">Main</a>
+                <a href="index.jsp">Logout</a>
+            </div>
+        </div>
+        <hr id="divider">
+        <div id="viewBookDiv">
+            <h1>View Booking</h1>
+            <table id="breadcrumbsTbl">
+                <tr>
+                    <td><a href="main.jsp">Main</a></td>
+                    <td><p> > </p></td>
+                    <td><a href="booking.jsp">Bookings</a></td>
+                </tr>
+            </table>
+            <%
             Student studentCheck = (Student) session.getAttribute("student");
             Tutor tutorCheck = (Tutor) session.getAttribute("tutor");
             if(studentCheck == null && tutorCheck == null){
@@ -77,8 +94,8 @@
                             </form>
                         <% }     
                     }                
-                } %>
-                <a href="booking.jsp">Return to Booking</a>
-            <% } %>
+                }
+            } %>
+        </div>
     </body>
 </html>

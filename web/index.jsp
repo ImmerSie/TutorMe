@@ -9,14 +9,14 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link href="template.css" rel="stylesheet" type="text/css"/>
         <title>Tutor Me!</title>
     </head>
     <body>
         <%session.invalidate();    %>
-        <div>
+        <div id="headerSection">
             <h1>UTSTutor</h1>
         </div>
-        
         <hr>
         <table width="100%" align="center">
             <tr>
