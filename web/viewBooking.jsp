@@ -4,6 +4,9 @@
     Author     : Max
 --%>
 
+<%@page import="Applications.BookingApplication"%>
+<%@page import="Applications.StudentApplication"%>
+<%@page import="Applications.TutorApplication"%>
 <%@page import="Models.Tutor"%>
 <%@page import="Models.Student"%>
 <%@page import="Models.Booking"%>
@@ -16,15 +19,28 @@
         <title>View Booking</title>
     </head>
     <body>
-        <% String bookingsFilePath = application.getRealPath("WEB-INF/bookings.xml");
-            String tutorFilePath = application.getRealPath("WEB-INF/tutors.xml");
+        <% if(session.getAttribute("studentApp") == null){
+                String studentsFilePath = application.getRealPath("WEB-INF/students.xml");
+                %> <jsp:useBean id="studentApp" class="Applications.StudentApplication" scope="session">
+                    <jsp:setProperty name="studentApp" property="filePath" value="<%=studentsFilePath%>"/>
+                </jsp:useBean> <%
+            }
+            if(session.getAttribute("tutorApp") == null){
+                String tutorFilePath = application.getRealPath("WEB-INF/tutors.xml");
+                %> <jsp:useBean id="tutorApp" class="Applications.TutorApplication" scope="session">
+                    <jsp:setProperty name="tutorApp" property="filePath" value="<%=tutorFilePath%>"/>
+                </jsp:useBean> <%
+            }
+            if(session.getAttribute("bookingApp") == null){
+                String bookingFilePath = application.getRealPath("WEB-INF/bookings.xml");
+                %> <jsp:useBean id="bookingApp" class="Applications.BookingApplication" scope="session">
+                    <jsp:setProperty name="bookingApp" property="filePath" value="<%=bookingFilePath%>"/>
+                </jsp:useBean> <%
+            } 
+            TutorApplication tutorApp = (TutorApplication) session.getAttribute("tutorApp");
+            StudentApplication studentApp = (StudentApplication) session.getAttribute("studentApp");
+            BookingApplication bookingApp = (BookingApplication) session.getAttribute("bookingApp");
         %>
-        <jsp:useBean id="bookingApp" class="Applications.BookingApplication" scope="application">
-            <jsp:setProperty name="bookingApp" property="filePath" value="<%=bookingsFilePath%>"/>
-        </jsp:useBean>
-        <jsp:useBean id="tutorApp" class="Applications.TutorApplication" scope="application">
-            <jsp:setProperty name="tutorApp" property="filePath" value="<%=tutorFilePath%>"/>
-        </jsp:useBean>
         <div id="headerSection">
             <h1>UTSTutor</h1>
             <div id="headerMenu">

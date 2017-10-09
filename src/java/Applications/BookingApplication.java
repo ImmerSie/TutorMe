@@ -103,7 +103,7 @@ public class BookingApplication {
     public Bookings getBookingsByStudent(String student){
         Bookings studentBookings = new Bookings();
         for(Booking b : bookings.getList()){
-            if(b.getStudentName().equals(student)){
+            if(b.getStudentEmail().equals(student)){
                 studentBookings.getList().add(b);
             }
         }
@@ -144,6 +144,16 @@ public class BookingApplication {
         Bookings tutorBookings = new Bookings();
         for(Booking b : bookings.getList()){
             if(b.getTutorEmail().equals(tutor)){
+                tutorBookings.getList().add(b);
+            }
+        }
+        return tutorBookings;
+    }
+    
+    public Bookings getBookingsByTutorEmail(String email){
+        Bookings tutorBookings = new Bookings();
+        for(Booking b : bookings.getList()){
+            if(b.getTutorEmail().equals(email)){
                 tutorBookings.getList().add(b);
             }
         }

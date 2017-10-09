@@ -40,7 +40,7 @@ public class TutorService {
     @Path("tutors")
     @GET
     @Produces("application/xml")
-    public Tutors getUsers( @DefaultValue("0") @QueryParam("email") String email, 
+    public Tutors getUsers( @DefaultValue("0") @QueryParam("email") String email,                               // Use of DefaultValue in order to use if-statements. 
             @DefaultValue("0") @QueryParam("status") String status) throws IOException, Exception {
 
         if(!email.equals("0")){
@@ -52,24 +52,4 @@ public class TutorService {
             }
         return getTutorApp().getTutors();   
     }
-
-    /*
-    @Path("tutors/tutor/email/{email}")
-    @GET
-    @Produces("application/xml")
-    public Tutor getTutorByEmail(@PathParam("email") String email) throws JAXBException, IOException, Exception {
-       return getTutorApp().getTutorFromEmail(email);
-    }
-    
-    @Path("tutors/tutor/status/{status}")
-    @GET
-    @Produces(MediaType.APPLICATION_XML)
-    public Tutors getTutorsByStatus(@PathParam("status") String status) throws JAXBException, IOException, Exception {
-       return getTutorApp().getTutorsByStatus(status);
-    }
-
-
-*/
-
-
 }

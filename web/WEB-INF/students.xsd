@@ -11,13 +11,6 @@ and open the template in the editor.
 
     
     
-    <xs:simpleType name="rating">
-        <xs:restriction base="xs:integer">
-            <xs:minInclusive value="1"/>
-            <xs:maxInclusive value="5"/>
-        </xs:restriction>
-    </xs:simpleType>
-    
     <xs:simpleType name="date">
         <xs:restriction base="xs:string">
             <xs:pattern value="\d{1,2}/\d{1,2}/\d{1,4}"/>
@@ -38,9 +31,15 @@ and open the template in the editor.
         </xs:restriction>
     </xs:simpleType>
     
+<<<<<<< HEAD
     <xs:simpleType name="userType">
         <xs:restriction base="xs:string">
             <xs:pattern value="[a-z]+"/>
+=======
+      <xs:simpleType name="type">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="(student)"/>
+>>>>>>> bdc50f7ae52ad12e4191db981545b9a8b2d37151
         </xs:restriction>
     </xs:simpleType>
 
@@ -62,7 +61,11 @@ and open the template in the editor.
                             <xs:element name="email" type="email"/>
                             <xs:element name="password" type="password"/>
                             <xs:element name="birthday" type="date"/>
+<<<<<<< HEAD
                             <xs:element name="userType" type="userType"/>                     
+=======
+                            <xs:element name="userType" type="type"/>                     
+>>>>>>> bdc50f7ae52ad12e4191db981545b9a8b2d37151
                         </xs:sequence>                     
                     </xs:complexType>  
                 </xs:element>

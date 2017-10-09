@@ -42,7 +42,7 @@ public class BookingService {
   @Path("bookings")
     @GET
     @Produces("application/xml")
-    public Bookings getUsers(@DefaultValue("0") @QueryParam("bookingID") int bookingID, 
+    public Bookings getUsers(@DefaultValue("0") @QueryParam("bookingID") int bookingID,                                     // Use of DefaultValue in order to use if-statements. 
             @DefaultValue("0") @QueryParam("studentEmail") String studentEmail, 
             @DefaultValue("0") @QueryParam("subject") String subject,
             @DefaultValue("0") @QueryParam("status") String status) throws IOException, Exception {
@@ -62,43 +62,7 @@ public class BookingService {
             if(!status.equals("0")){
                  return getBookingApp().getBookingsByStatus(status);
             }
+            
             return getBookingApp().getBookings();          
     }
-    
-    /*
-    @Path("bookings/booking/bookingID/{bookingID}")
-    @GET
-    @Produces("application/xml")
-    public Booking getBookingByID(@PathParam("bookingID") int bookingID) throws JAXBException, IOException, Exception{
-        return getBookingApp().getBookingByID(bookingID);
-    }
-    
-    @Path("bookings/booking/studentEmail/{studentEmail}")
-    @GET
-    @Produces("application/xml")
-    public Bookings getBookingsByEmail(@PathParam("studentEmail") String studentEmail) throws JAXBException, IOException, Exception{
-        //return getBookingApp().getBookings().getBookingByEmail(studentEmail);
-        return getBookingApp().getBookingsByStudentEmail(studentEmail);
-    }
-    
-    @Path("bookings/booking/subject/{subject}")
-    @GET
-    @Produces("application/xml")
-    public Bookings getBookingsBySubject(@PathParam("subject") String subject) throws JAXBException, IOException, Exception{
-       // return getBookingApp().getBookings().getBookingBySubject(subject);
-       return getBookingApp().getBookingsBySubject(subject);
-    }
-    
-    @Path("bookings/booking/status/{status}")
-    @GET
-    @Produces("application/xml")
-    public Bookings getBookingsByStatus(@PathParam("status") String status) throws JAXBException, IOException, Exception{
-      //  return getBookingApp().getBookings().getBookingByStatus(status);
-      return getBookingApp().getBookingsByStatus(status);
-    }
-    
-  
-    
-  // Use QueryParam for the ?    Paramters can be usedin any order with Queryparam. 
-    */
 }

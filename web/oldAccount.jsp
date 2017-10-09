@@ -88,7 +88,7 @@
             </table>
 
         </form>
-        <p>Click <form><input type="submit" value="cancel" name="cancel"></form> to cancel your account.</p>
+                 <form><td>Click <input type="submit" value="cancel" name="cancel"/> to cancel your account.</td></form> 
     <hr>
     <p>Click <a href="main.jsp">here</a> to get to the main page.</p>
     <p>Click <a href="logout.jsp">here</a> to logout.</p>
@@ -123,7 +123,7 @@
         </table>
 
     </form>
-    <p>Click <form><input type="submit" value="cancel" name="cancel"></form> to cancel your account.</p>
+                 <form><td>Click <input type="submit" value="cancel" name="cancel"/> to cancel your account.</td></form> 
 <hr>
 <p>Click <a href="main.jsp">here</a> to get to the main page.</p>
 <p>Click <a href="logout.jsp">here</a> to logout.</p>
@@ -166,7 +166,7 @@
     </table>
 
 </form>
-<p>Click <form><input type="submit" value="cancel" name="cancel"></form> to cancel your account.</p>
+                 <form><td>Click <input type="submit" value="cancel" name="cancel"/> to cancel your account.</td></form> 
 <hr>
 <p>Click <a href="main.jsp">here</a> to get to the main page.</p>
 <p>Click <a href="logout.jsp">here</a> to logout.</p>
@@ -207,7 +207,7 @@
     </table>
 
 </form>
-<p>Click <form><input type="submit" value="cancel" name="cancel"></form> to cancel your account.</p>
+                 <form><td>Click <input type="submit" value="cancel" name="cancel"/> to cancel your account.</td></form> 
 <hr>
 <p>Click <a href="main.jsp">here</a> to get to the main page.</p>
 <p>Click <a href="logout.jsp">here</a> to logout.</p>
@@ -221,7 +221,7 @@
     //Code for cancelling student account
     Students students = studentApp.getStudents();
     students.removeUser(student);
-    Bookings bookings = bookingApp.getBookingsByStudent(student.getName());
+    Bookings bookings = bookingApp.getBookingsByStudentEmail(student.getEmail());
     Tutors tutors = tutorApp.getTutors();
 
     if (bookings.getList() != null) {
@@ -243,7 +243,7 @@
 
     Tutors tutors = tutorApp.getTutors();
     tutors.removeUser(tutor);
-    Bookings bookings = bookingApp.getBookingsByTutor(tutor.getName());
+    Bookings bookings = bookingApp.getBookingsByTutorEmail(tutor.getName());
     if (bookings.getList() != null) {
         for (Booking b : bookings.getList()) {
             b.setStatus("cancelled");

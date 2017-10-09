@@ -4,6 +4,8 @@
     Author     : Mango
 --%>
 
+<%@page import="Applications.StudentApplication"%>
+<%@page import="Applications.TutorApplication"%>
 <%@page import="Models.Tutor"%>
 <%@page import="Models.Tutors"%>
 <%@page import="Models.Student"%>
@@ -16,69 +18,130 @@
         <link href="template.css" rel="stylesheet" type="text/css"/>
         <title>Tutor Me!-Login</title>
     </head>
-    <body>
-    <% 
+    <%
+
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        String filePath = application.getRealPath("WEB-INF/students.xml");
-        String filePath2 = application.getRealPath("WEB-INF/tutors.xml");
+        String passCheck = "";
+        String userCheck = "";
     %>
-   
-    <jsp:useBean id="studentApp" class="Applications.StudentApplication" scope="application">
-        <jsp:setProperty name="studentApp" property="filePath" value="<%=filePath%>"/>
-    </jsp:useBean>
-    
-    <jsp:useBean id="tutorApp" class="Applications.TutorApplication" scope="application">
-        <jsp:setProperty name="tutorApp" property="filePath" value="<%=filePath2%>"/>
-    </jsp:useBean>
-    
-    
-    <%if(email==null && password==null){%>
+
+    <body>
+        <%
+        if(session.getAttribute("studentApp") == null){
+            String studentsFilePath = application.getRealPath("WEB-INF/students.xml");
+            %> <jsp:useBean id="studentApp" class="Applications.StudentApplication" scope="session">
+                <jsp:setProperty name="studentApp" property="filePath" value="<%=studentsFilePath%>"/>
+            </jsp:useBean> <%
+        }
+        if(session.getAttribute("tutorApp") == null){
+            String tutorFilePath = application.getRealPath("WEB-INF/tutors.xml");
+            %> <jsp:useBean id="tutorApp" class="Applications.TutorApplication" scope="session">
+                <jsp:setProperty name="tutorApp" property="filePath" value="<%=tutorFilePath%>"/>
+            </jsp:useBean> <%
+        } 
+        TutorApplication tutorApp = (TutorApplication) session.getAttribute("tutorApp");
+        StudentApplication studentApp = (StudentApplication) session.getAttribute("studentApp");
+        %>  
         <div id="headerSection">
             <h1>UTSTutor</h1>
         </div>
         <hr>
         <div id="loginDiv">
-            <h2>Login</h2>
-            <form action="login.jsp" method="POST" id="loginForm">
+            <% if (email == null && password == null) { %>
+            <h1>Login</h1>
+            <form action="login.jsp" method="POST">
                 <table>
+
                     <tr>
                         <td>Email:</td> 
                         <td><input type="text" name="email"> </td>
+                        <td></td>
                     </tr>
                     <tr> 
                         <td>Password:</td> 
                         <td><input type="password" name="password"></td>
+                        <td></td>
                     </tr>
-                    <tr> 
-                        <td><input type="submit" value="Login" name="Login"></td>
-                    </tr>
-                 </table>
-            </form>
-            <p> Not a user? Click <a href="register.jsp">here </a>to register. </p>
-        </div>
-    <% } 
-    else {
-        Students students = studentApp.getStudents();                               //Fetch current students and tutors. 
-        Student student = students.login(email, password);
+                    <tr>
+                        <td></td> 
+                        <td><input type="submit" value="Login" name="Login"></td> 
 
-        Tutors tutors = tutorApp.getTutors();
-        Tutor tutor = tutors.login(email, password);
-    
-        if (student != null) {                                                       // Upon successful match, activate session for appropriate user type and redirect to main.jsp
-            session.setAttribute("tutor", null);
-            session.setAttribute("student", student); 
-            response.sendRedirect("main.jsp");
-        } 
-        else if(tutor != null) {
-            session.setAttribute("student", null);
-            session.setAttribute("tutor", tutor); 
-            response.sendRedirect("main.jsp");
-        }
-        else { %>
-            <p> Username or password is incorrect. Click <a href="login.jsp">here </a>to retry. </p>
-            <p> Alternatively, click <a href="register.jsp">here</a> to register. </p>
-        <% }
-    }%>       
+                    </tr>
+                </table>
+            </form>
+            <hr>
+            <p> Click <a href="register.jsp">here </a>to register. </p>
+            <%} else {
+                Students students = studentApp.getStudents();                               //Fetch current students and tutors. 
+                Student student = students.login(email, password);
+                Student studentExist = students.getUser(email);
+
+                Tutors tutors = tutorApp.getTutors();
+                Tutor tutor = tutors.login(email, password);
+                Tutor tutorExist = tutors.getUser(email);
+
+                if ((studentExist != null && student == null) || tutorExist != null && tutor == null) {                                         //Checks is password is incorrect
+                    %>             
+                    <h1>Login</h1>
+                    <form action="login.jsp" method="POST">
+                        <table>
+
+                            <tr>
+                                <td>Email:</td> 
+                                <td><input type="text" name="email"> </td>
+
+                            </tr>
+                            <tr> 
+                                <td>Password:</td> 
+                                <td><input type="password" name="password"></td>
+                                <td><p>Password Incorrect</p></td>
+                            </tr>
+                            <tr>
+                                <td></td> 
+                                <td><input type="submit" value="Login" name="Login"></td> 
+
+                            </tr>
+                        </table>
+                    </form>
+                    <hr>
+                    <p> Click <a href="register.jsp">here </a>to register. </p>
+                <%} else if (studentExist == null || tutorExist == null) { %>
+                <h1>Login</h1>
+                <form action="login.jsp" method="POST">
+                    <table>
+
+                        <tr>
+                            <td>Email:</td> 
+                            <td><input type="text" name="email"> </td>
+                            <td><p>User doesn't exist.</p></td>
+                        </tr>
+                        <tr> 
+                            <td>Password:</td> 
+                            <td><input type="password" name="password"></td>
+
+                        </tr>
+                        <tr>
+                            <td></td> 
+                            <td><input type="submit" value="Login" name="Login"></td> 
+
+                        </tr>
+                    </table>
+                </form>
+                <hr>
+                <p> Click <a href="register.jsp">here </a>to register. </p>
+            <% }
+
+            if (student != null) {                                                       // Upon successful match, activate session for appropriate user type and redirect to main.jsp
+                session.setAttribute("tutor", null);
+                session.setAttribute("student", student);
+                response.sendRedirect("main.jsp");
+            } else if (tutor != null) {
+                session.setAttribute("student", null);
+                session.setAttribute("tutor", tutor);
+                response.sendRedirect("main.jsp");
+            }
+        } %>
+        </div>
     </body>
 </html>

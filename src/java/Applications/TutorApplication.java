@@ -33,6 +33,11 @@ public class TutorApplication implements Serializable{
         this.tutors = tutors;
     }
     
+    public void addTutor(Tutor tutor) throws Exception{
+         tutors.addUser(tutor);
+            saveTutors();
+    }
+    
      public void setFilePath(String filePath) throws Exception {
 
         // Create the unmarshaller
@@ -44,7 +49,9 @@ public class TutorApplication implements Serializable{
         tutors = (Tutors) u.unmarshal(fin); 		
         fin.close();
     }
-    /*public void updateXML(Tutors tutors, String filePath) throws Exception {
+     
+     /*
+    public void updateXML(Tutors tutors, String filePath) throws Exception {
         this.tutors = tutors;
         this.filePath2 = filePath;
         JAXBContext jc = JAXBContext.newInstance(Tutors.class);
@@ -57,7 +64,8 @@ public class TutorApplication implements Serializable{
         m.marshal(tutors, fout);
         fout.close();
             
-    }*/
+    }
+    */
     
     // to be used from the welcome.jsp page
     public void saveTutors() throws JAXBException, IOException {
@@ -200,15 +208,6 @@ public class TutorApplication implements Serializable{
         return tutorList;
     }
     
-    /*public ArrayList<Tutor> getTutorByStatus(String status){
-        ArrayList<Tutor> tutorList = new ArrayList<Tutor>();
-        for(Tutor t : this.tutors.getList()){
-            if(t.getStatus().toLowerCase().equals(status.toLowerCase())){
-                tutorList.add(t);
-            }
-        }
-        return tutorList;
-    }*/
 
     public Tutors getTutorsByStatus(String status){
         Tutors tutors = new Tutors();
@@ -219,17 +218,6 @@ public class TutorApplication implements Serializable{
         }
         return tutors;
     }
-     
-     /*public Tutors getAvailableTutors(){
-        Tutors tutors = new Tutors();
-        for(Tutor b : this.tutors.getList()){
-            if(b.getStatus().equals("available")){
-                tutors.getList().add(b);
-            }
-        }
-        return tutors;
-    }*/
-     
      
     public void setTutors(Tutors tutors) {
         this.tutors = tutors;
