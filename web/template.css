@@ -60,3 +60,7 @@ body {
 #viewBookDiv{
     margin-left: 11%
 }
+
+#cancelBtn{
+    text-align: right;
+}

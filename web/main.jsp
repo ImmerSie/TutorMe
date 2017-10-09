@@ -3,6 +3,7 @@
     Created on : 16/09/2017, 9:38:44 PM
     Author     : Max
 --%>
+<%@page import="Applications.TutorApplication"%>
 <%@page import="Models.Tutors"%>
 <%@page import="Models.Tutor"%>
 <%@page import="Models.Student"%>
@@ -20,13 +21,21 @@
 
         <c:import url="WEB-INF/tutorSearch.xsl" var="stylesheet" />
 
-            <%  String tutorsFilepath = application.getRealPath("WEB-INF/tutors.xml");
-                String searchFilepath = application.getRealPath("WEB-INF/tutorSearch.xml");
-            %>
-            <jsp:useBean id="tutorApp" class="Applications.TutorApplication" scope="application">
-                <jsp:setProperty name="tutorApp" property="filePath" value="<%=tutorsFilepath%>"/>
-            </jsp:useBean>
-            <% 
+            <%  
+            String searchFilepath = application.getRealPath("WEB-INF/tutorSearch.xml");
+            if(session.getAttribute("tutorApp") == null){
+                String tutorFilePath = application.getRealPath("WEB-INF/tutors.xml");
+                %> <jsp:useBean id="tutorApp" class="Applications.TutorApplication" scope="session">
+                    <jsp:setProperty name="tutorApp" property="filePath" value="<%=tutorFilePath%>"/>
+                </jsp:useBean> <%
+            }
+            if(session.getAttribute("bookingApp") == null){
+                String bookingFilePath = application.getRealPath("WEB-INF/bookings.xml");
+                %> <jsp:useBean id="bookingApp" class="Applications.BookingApplication" scope="session">
+                    <jsp:setProperty name="bookingApp" property="filePath" value="<%=bookingFilePath%>"/>
+                </jsp:useBean> <%
+            } 
+            TutorApplication tutorApp = (TutorApplication) session.getAttribute("tutorApp");
             Student student = (Student) session.getAttribute("student");
             Tutor tutor = (Tutor) session.getAttribute("tutor");
             if(student != null || tutor != null)
