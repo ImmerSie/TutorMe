@@ -29,19 +29,19 @@
         String cancel = request.getParameter("cancel");
     %>
 
-    <% String filePath = application.getRealPath("WEB-INF/students.xml");
-        String filePath2 = application.getRealPath("WEB-INF/tutors.xml");
-        String filePath3 = application.getRealPath("WEB-INF/bookings.xml");
+    <% String studentsFilePath = application.getRealPath("WEB-INF/students.xml");
+        String tutorFilePath = application.getRealPath("WEB-INF/tutors.xml");
+        String bookingFilePath = application.getRealPath("WEB-INF/bookings.xml");
 
     %>
     <jsp:useBean id="studentApp" class="Applications.StudentApplication" scope="application">
-        <jsp:setProperty name="studentApp" property="filePath" value="<%=filePath%>"/>
+        <jsp:setProperty name="studentApp" property="filePath" value="<%=studentsFilePath%>"/>
     </jsp:useBean>
     <jsp:useBean id="tutorApp" class="Applications.TutorApplication" scope="application">
-        <jsp:setProperty name="tutorApp" property="filePath" value="<%=filePath2%>"/>
+        <jsp:setProperty name="tutorApp" property="filePath" value="<%=tutorFilePath%>"/>
     </jsp:useBean>
     <jsp:useBean id="bookingApp" class="Applications.BookingApplication" scope="application">
-        <jsp:setProperty name="bookingApp" property="filePath" value="<%=filePath3%>"/>
+        <jsp:setProperty name="bookingApp" property="filePath" value="<%=bookingFilePath%>"/>
     </jsp:useBean>
 
 
@@ -62,7 +62,6 @@
 
         <form action="account.jsp" method="POST">
             <table>
-
                 <tr> 
                     <td>Full Name:</td> 
                     <td><input type="text" name="name" value=<%=student.getName()%>></td> 
@@ -71,12 +70,10 @@
                     <td>Email:</td> 
                     <td><%=student.getEmail()%></td>
                 </tr>
-
                 <tr> 
                     <td>Password:</td> 
                     <td><input type="text" name="password" value=<%=student.getPassword()%>></td>
                 </tr>
-
                 <tr> 
                     <td>Date of Birth:</td> 
                     <td><input type="text" name="birthday"  value=<%=student.getBirthday()%>></td>
@@ -86,7 +83,6 @@
                     <td><input type="submit" value="EditStudent" name="Edit"></td> 
                 </tr>
             </table>
-
         </form>
                  <form><td>Click <input type="submit" value="cancel" name="cancel"/> to cancel your account.</td></form> 
     <hr>
@@ -97,7 +93,6 @@
     <%  } else if (tutor != null) {%>
     <form action="account.jsp" method="POST">
         <table>
-
             <tr> 
                 <td>Full Name:</td> 
                 <td><input type="text" name="name" value=<%=tutor.getName()%>></td> 
@@ -106,12 +101,10 @@
                 <td>Email:</td> 
                 <td><%=tutor.getEmail()%></td>
             </tr>
-
             <tr> 
                 <td>Password:</td> 
                 <td><input type="text" name="password" value=<%=tutor.getPassword()%>></td>
             </tr>
-
             <tr> 
                 <td>Date of Birth:</td> 
                 <td><input type="text" name="birthday"  value=<%=tutor.getBirthday()%>></td>
@@ -121,7 +114,6 @@
                 <td><input type="submit" value="EditTutor" name="Edit"></td> 
             </tr>
         </table>
-
     </form>
                  <form><td>Click <input type="submit" value="cancel" name="cancel"/> to cancel your account.</td></form> 
 <hr>
@@ -140,7 +132,6 @@
 
 <form action="account.jsp" method="POST">
     <table>
-
         <tr> 
             <td>Full Name:</td> 
             <td><input type="text" name="name" value=<%=student.getName()%>></td> 
@@ -149,7 +140,6 @@
             <td>Email:</td> 
             <td><%=student.getEmail()%></td>
         </tr>
-
         <tr> 
             <td>Password:</td> 
             <td><input type="text" name="password" value=<%=student.getPassword()%>></td>
@@ -220,7 +210,7 @@
 } else if (student != null && cancel.equals("cancel")) {                            // if current user is student, and cancel has been clicked, remove the student. 
     //Code for cancelling student account
     Students students = studentApp.getStudents();
-    students.removeUser(student);
+    
     Bookings bookings = bookingApp.getBookingsByStudentEmail(student.getEmail());
     Tutors tutors = tutorApp.getTutors();
 
@@ -234,6 +224,7 @@
             b.setStatus("cancelled");
         }
     }
+    students.removeUser(student);
 
 %>
 <h2>Your student account has been cancelled. Bye! </h2>
@@ -242,7 +233,7 @@
 <% } else if (tutor != null && cancel.equals("cancel")) {                               // if current user is tutor, and cancel has been clicked, remove the tutor. 
 
     Tutors tutors = tutorApp.getTutors();
-    tutors.removeUser(tutor);
+    
     Bookings bookings = bookingApp.getBookingsByTutorEmail(tutor.getName());
     if (bookings.getList() != null) {
         for (Booking b : bookings.getList()) {
@@ -250,7 +241,10 @@
         }
         tutor.setStatus("available");
 
-    }%> 
+    }
+    tutors.removeUser(tutor);
+%> 
+    
 <h2>Your tutor account has been cancelled. Bye! </h2>
 <p>Click <a href="index.jsp">here</a> to get to the home page.</p>
 
