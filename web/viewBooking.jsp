@@ -66,13 +66,13 @@
             }
             else{
                 String bookingString = request.getParameter("bookingID");
-                String cancelled = request.getParameter("canceled");
+                String cancelled = request.getParameter("cancelled");
                 String completed = request.getParameter("completed");
                 int bookingID = Integer.parseInt(bookingString);
                 Booking booking = bookingApp.getBookingByID(bookingID);
                 if(booking != null){
                     if(cancelled != null){
-                        booking.setStatus("canceled");
+                        booking.setStatus("cancelled");
                         Tutor tutor = tutorApp.getTutorFromID(booking.getTutorName());
                         tutor.setStatus("available");
                         tutorApp.saveTutors();
@@ -99,7 +99,7 @@
                         <form action="viewBooking.jsp" method="POST">
                             <input type="submit" value="Cancel" name="Cancel">
                             <input type="hidden" value="<%= booking.getBookingID() %>" id="bookingID" name="bookingID">
-                            <input type="hidden" value="canceled" id="canceled" name="canceled">
+                            <input type="hidden" value="cancelled" id="canceled" name="cancelled">
                         </form>
                         <% if((Tutor) session.getAttribute("tutor") != null)
                         { %>

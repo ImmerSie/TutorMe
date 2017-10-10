@@ -84,5 +84,22 @@ public class StudentApplication implements Serializable{
         }
         return null;
     }
+     
+     public Student getStudentByEmail(String email){
+        for(Student s : getStudents().getList()){
+            if(s.getEmail().equals(email)){
+                return s;
+            }
+        }
+        return null;
+    }
+     
+     public void updateStudent(String email, String name, String password, String dob) throws JAXBException, IOException{
+        Student student = getStudentByEmail(email);
+        student.setName(name);
+        student.setPassword(password);
+        student.setBirthday(dob);
+        saveStudents();
+     }
 
 }

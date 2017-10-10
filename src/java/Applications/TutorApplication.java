@@ -189,6 +189,23 @@ public class TutorApplication implements Serializable{
         return tutors;
     }
     
+    public void updateTutor(String email, String name, String password, String dob) throws JAXBException, IOException{
+        Tutor tutor = getTutorFromEmail(email);
+        tutor.setName(name);
+        tutor.setPassword(password);
+        tutor.setBirthday(dob);
+        saveTutors();
+     }
+    
+    public void cancelTutorsByEmail(ArrayList<String> tutorEmail) throws JAXBException, IOException{
+        for(Tutor t : tutors.getList()){
+            if(t.getEmail().equals(tutorEmail)){
+                t.setStatus("available");
+            }
+        }
+        saveTutors();
+    }
+    
      public Tutor getTutorFromID(String name){
         for(Tutor t : getTutors().getList()){
             if(t.getName().toLowerCase().contains(name.toLowerCase())){

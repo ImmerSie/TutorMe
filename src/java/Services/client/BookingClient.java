@@ -8,9 +8,12 @@ package Services.client;
 
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
- *
+ * This class consumes the BookingSOAP web service, offering a CLI to perform functions
+ * 
  * @author Max
  */
 public class BookingClient {
@@ -142,6 +145,9 @@ public class BookingClient {
         }
     }
     
+    /**
+     * Allows a user to cancel a booking, from an input bookingID
+     */
     private static void cancelBooking(){
         // Gets the bookings for the user
         Bookings bookings = null;
@@ -227,6 +233,124 @@ public class BookingClient {
     }
     
     /**
+     * Allows user to perform functions related to their account
+     */
+    private static void updateAccount(){
+        // User detail fields
+        String name = null;
+        String email = null;
+        String password = null;
+        String dob = null;
+        
+        // Sets details fields according to the logged in user
+        if(tutor != null){
+            name = tutor.getName();
+            email = tutor.getEmail();
+            password = tutor.getPassword();
+            dob = tutor.getBirthday();
+        }
+        else if(student != null){
+            name = student.getName();
+            email = student.getEmail();
+            password = student.getPassword();
+            dob = student.getBirthday();
+        }
+        
+        // Displays menu for performing account functions
+        int selection = -1;
+        while(selection != 0){
+            System.out.println("Menu");
+            System.out.println("1: Name");
+            System.out.println("2: Password");
+            System.out.println("3: Date of Birth");
+            System.out.println("4: Cancel Account");
+            System.out.println("5: Print Account");
+            System.out.println("0: Save");
+            
+            // Gets a user input
+            selection = sc.nextInt();
+            sc.nextLine();
+            
+            // Chooses actions based on the user input
+            switch (selection) {
+                // Change name
+                case 1:
+                    System.out.print("Enter new name: ");
+                    name = sc.nextLine();
+                    break;
+                
+                // Change password
+                case 2:
+                    System.out.print("Enter new password: ");
+                    password = sc.nextLine();
+                    break;
+                
+                // Change DOB
+                case 3:
+                    System.out.print("Enter new date of birth: ");
+                    dob = sc.nextLine();
+                    break;
+                
+                // Cancel account
+                case 4:
+                    if(student != null){
+                        try {
+                            bookingApp.cancelStudentAccount(student);
+                        } catch (IOException_Exception ex) {
+                            Logger.getLogger(BookingClient.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (JAXBException_Exception ex) {
+                            Logger.getLogger(BookingClient.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                    else if(tutor != null){
+                        try {
+                            bookingApp.cancelTutorAccount(tutor);
+                        } catch (IOException_Exception ex) {
+                            Logger.getLogger(BookingClient.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (JAXBException_Exception ex) {
+                            Logger.getLogger(BookingClient.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                    break;
+                    
+                // View account
+                case 5:
+                    System.out.print("Name: " + name);
+                    System.out.print("Email: " + email);
+                    System.out.print("Password: " + password);
+                    System.out.print("Date of Birth: " + dob);
+                    break;
+                   
+                // Save/Exit
+                case 0:
+                    if(tutor != null){
+                        try {
+                            bookingApp.updateTutor(email, name, password, dob);
+                        } catch (IOException_Exception ex) {
+                            Logger.getLogger(BookingClient.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (JAXBException_Exception ex) {
+                            Logger.getLogger(BookingClient.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                    else if(student != null){
+                        try {
+                            bookingApp.updateStudent(email, name, password, dob);
+                        } catch (IOException_Exception ex) {
+                            Logger.getLogger(BookingClient.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (JAXBException_Exception ex) {
+                            Logger.getLogger(BookingClient.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                   break;
+                    
+                default:
+                    System.out.println("Please input selection in the form of a number between 0 and 4");
+                    break;
+            }
+        }
+    }
+    
+    /**
      * Prints out the menu for user actions and allows the user to select 1
      */
     private static void studentMenu(){
@@ -248,6 +372,7 @@ public class BookingClient {
             else{
                 System.out.println("5: Login User");
             }
+            System.out.println("6: View Account");
             System.out.println("0: Exit");
             
             // Gets a user input
@@ -329,7 +454,7 @@ public class BookingClient {
                         tutor = bookingApp.loginTutor(email, password);
                         student = bookingApp.loginStudent(email, password);
                         if(tutor == null && student == null){
-                            System.out.println("Tutor credentials incorrect");
+                            System.out.println("User credentials incorrect");
                         }
                     }
                     // Logout a user
@@ -339,13 +464,38 @@ public class BookingClient {
                         System.out.println("Logged out!");
                     }
                     break;
+                    
+                // Peform account functions
+                case 6:
+                    // Log in if not logged in
+                    if(tutor == null && student == null){
+                        System.out.print("Enter email address: ");
+                        String email = sc.nextLine();
+                        System.out.print("Enter password: ");
+                        String password = sc.nextLine();
+                        tutor = bookingApp.loginTutor(email, password);
+                        student = bookingApp.loginStudent(email, password);
+                    }
+                    
+                    // Access account functions
+                    if(tutor != null){
+                        updateAccount();
+                    }
+                    else if(student != null){
+                        updateAccount();
+                    }
+                    else{
+                        System.out.println("Incorrect credentials");
+                        break;
+                    }
+                    break;
                 
                 // Exit from the application
                 case 0:
                     break OUTER;
                     
                 default:
-                    System.out.println("Please input selection in the form of a number between 0 and 5");
+                    System.out.println("Please input selection in the form of a number between 0 and 6");
                     break;
             }
         }

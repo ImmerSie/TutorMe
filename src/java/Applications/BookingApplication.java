@@ -9,9 +9,11 @@ import Models.Booking;
 import Models.Bookings;
 import Models.Student;
 import Models.Tutor;
+import Models.Tutors;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.bind.JAXBContext;
@@ -199,8 +201,32 @@ public class BookingApplication {
         } catch (IOException ex) {
             Logger.getLogger(BookingApplication.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-    }    
+    }  
+    
+    public ArrayList<String> cancelBookingsByStudentEmail(String email) throws JAXBException, IOException{
+        Bookings bookings = getBookingsByStudentEmail(email);
+        ArrayList<String> cancelledTutors = new ArrayList<String>();
+        Tutor tutor = null;
+        if (bookings.getList() != null) {                                                       //set tutor's booking statuses as cancelled.
+            for (Booking b : bookings.getList()) {
+                b.setStatus("cancelled");
+                cancelledTutors.add(b.getTutorEmail());
+            }
+        }
+        saveBookings();
+        return cancelledTutors;
+    }
+    
+    public void cancelBookingsByTutor(Tutor tutor) throws JAXBException, IOException{
+        Bookings bookings = getBookingsByTutorEmail(tutor.getEmail());
+        if (bookings.getList() != null) {                                                       //set tutor's booking statuses as cancelled.
+            for (Booking b : bookings.getList()) {
+                b.setStatus("cancelled");
+            }
+        }
+        saveBookings();
+    }
+    
     public void completeBooking(int bookingId){
         Booking booking = getBookingByID(bookingId);
         booking.setStatus("completed");

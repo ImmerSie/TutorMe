@@ -4,23 +4,23 @@
 <xsd:import namespace="http://Services/" schemaLocation="http://localhost:8080/TutorMe/BookingSOAP?xsd=1"/>
 </xsd:schema>
 </types>
-<message name="cancelBooking">
-<part name="parameters" element="tns:cancelBooking"/>
+<message name="cancelStudentAccount">
+<part name="parameters" element="tns:cancelStudentAccount"/>
 </message>
-<message name="cancelBookingResponse">
-<part name="parameters" element="tns:cancelBookingResponse"/>
+<message name="cancelStudentAccountResponse">
+<part name="parameters" element="tns:cancelStudentAccountResponse"/>
 </message>
-<message name="loginStudent">
-<part name="parameters" element="tns:loginStudent"/>
+<message name="JAXBException">
+<part name="fault" element="tns:JAXBException"/>
 </message>
-<message name="loginStudentResponse">
-<part name="parameters" element="tns:loginStudentResponse"/>
+<message name="IOException">
+<part name="fault" element="tns:IOException"/>
 </message>
-<message name="loginTutor">
-<part name="parameters" element="tns:loginTutor"/>
+<message name="cancelTutorAccount">
+<part name="parameters" element="tns:cancelTutorAccount"/>
 </message>
-<message name="loginTutorResponse">
-<part name="parameters" element="tns:loginTutorResponse"/>
+<message name="cancelTutorAccountResponse">
+<part name="parameters" element="tns:cancelTutorAccountResponse"/>
 </message>
 <message name="completeBooking">
 <part name="parameters" element="tns:completeBooking"/>
@@ -28,11 +28,29 @@
 <message name="completeBookingResponse">
 <part name="parameters" element="tns:completeBookingResponse"/>
 </message>
+<message name="loginTutor">
+<part name="parameters" element="tns:loginTutor"/>
+</message>
+<message name="loginTutorResponse">
+<part name="parameters" element="tns:loginTutorResponse"/>
+</message>
 <message name="createBooking">
 <part name="parameters" element="tns:createBooking"/>
 </message>
 <message name="createBookingResponse">
 <part name="parameters" element="tns:createBookingResponse"/>
+</message>
+<message name="loginStudent">
+<part name="parameters" element="tns:loginStudent"/>
+</message>
+<message name="loginStudentResponse">
+<part name="parameters" element="tns:loginStudentResponse"/>
+</message>
+<message name="cancelBooking">
+<part name="parameters" element="tns:cancelBooking"/>
+</message>
+<message name="cancelBookingResponse">
+<part name="parameters" element="tns:cancelBookingResponse"/>
 </message>
 <message name="getBookings">
 <part name="parameters" element="tns:getBookings"/>
@@ -58,26 +76,50 @@
 <message name="getTutorsFromSubjectResponse">
 <part name="parameters" element="tns:getTutorsFromSubjectResponse"/>
 </message>
+<message name="updateTutor">
+<part name="parameters" element="tns:updateTutor"/>
+</message>
+<message name="updateTutorResponse">
+<part name="parameters" element="tns:updateTutorResponse"/>
+</message>
+<message name="updateStudent">
+<part name="parameters" element="tns:updateStudent"/>
+</message>
+<message name="updateStudentResponse">
+<part name="parameters" element="tns:updateStudentResponse"/>
+</message>
 <portType name="BookingSOAP">
-<operation name="cancelBooking">
-<input wsam:Action="http://Services/BookingSOAP/cancelBookingRequest" message="tns:cancelBooking"/>
-<output wsam:Action="http://Services/BookingSOAP/cancelBookingResponse" message="tns:cancelBookingResponse"/>
+<operation name="cancelStudentAccount">
+<input wsam:Action="http://Services/BookingSOAP/cancelStudentAccountRequest" message="tns:cancelStudentAccount"/>
+<output wsam:Action="http://Services/BookingSOAP/cancelStudentAccountResponse" message="tns:cancelStudentAccountResponse"/>
+<fault message="tns:JAXBException" name="JAXBException" wsam:Action="http://Services/BookingSOAP/cancelStudentAccount/Fault/JAXBException"/>
+<fault message="tns:IOException" name="IOException" wsam:Action="http://Services/BookingSOAP/cancelStudentAccount/Fault/IOException"/>
 </operation>
-<operation name="loginStudent">
-<input wsam:Action="http://Services/BookingSOAP/loginStudentRequest" message="tns:loginStudent"/>
-<output wsam:Action="http://Services/BookingSOAP/loginStudentResponse" message="tns:loginStudentResponse"/>
-</operation>
-<operation name="loginTutor">
-<input wsam:Action="http://Services/BookingSOAP/loginTutorRequest" message="tns:loginTutor"/>
-<output wsam:Action="http://Services/BookingSOAP/loginTutorResponse" message="tns:loginTutorResponse"/>
+<operation name="cancelTutorAccount">
+<input wsam:Action="http://Services/BookingSOAP/cancelTutorAccountRequest" message="tns:cancelTutorAccount"/>
+<output wsam:Action="http://Services/BookingSOAP/cancelTutorAccountResponse" message="tns:cancelTutorAccountResponse"/>
+<fault message="tns:JAXBException" name="JAXBException" wsam:Action="http://Services/BookingSOAP/cancelTutorAccount/Fault/JAXBException"/>
+<fault message="tns:IOException" name="IOException" wsam:Action="http://Services/BookingSOAP/cancelTutorAccount/Fault/IOException"/>
 </operation>
 <operation name="completeBooking">
 <input wsam:Action="http://Services/BookingSOAP/completeBookingRequest" message="tns:completeBooking"/>
 <output wsam:Action="http://Services/BookingSOAP/completeBookingResponse" message="tns:completeBookingResponse"/>
 </operation>
+<operation name="loginTutor">
+<input wsam:Action="http://Services/BookingSOAP/loginTutorRequest" message="tns:loginTutor"/>
+<output wsam:Action="http://Services/BookingSOAP/loginTutorResponse" message="tns:loginTutorResponse"/>
+</operation>
 <operation name="createBooking">
 <input wsam:Action="http://Services/BookingSOAP/createBookingRequest" message="tns:createBooking"/>
 <output wsam:Action="http://Services/BookingSOAP/createBookingResponse" message="tns:createBookingResponse"/>
+</operation>
+<operation name="loginStudent">
+<input wsam:Action="http://Services/BookingSOAP/loginStudentRequest" message="tns:loginStudent"/>
+<output wsam:Action="http://Services/BookingSOAP/loginStudentResponse" message="tns:loginStudentResponse"/>
+</operation>
+<operation name="cancelBooking">
+<input wsam:Action="http://Services/BookingSOAP/cancelBookingRequest" message="tns:cancelBooking"/>
+<output wsam:Action="http://Services/BookingSOAP/cancelBookingResponse" message="tns:cancelBookingResponse"/>
 </operation>
 <operation name="getBookings">
 <input wsam:Action="http://Services/BookingSOAP/getBookingsRequest" message="tns:getBookings"/>
@@ -95,10 +137,22 @@
 <input wsam:Action="http://Services/BookingSOAP/getTutorsFromSubjectRequest" message="tns:getTutorsFromSubject"/>
 <output wsam:Action="http://Services/BookingSOAP/getTutorsFromSubjectResponse" message="tns:getTutorsFromSubjectResponse"/>
 </operation>
+<operation name="updateTutor">
+<input wsam:Action="http://Services/BookingSOAP/updateTutorRequest" message="tns:updateTutor"/>
+<output wsam:Action="http://Services/BookingSOAP/updateTutorResponse" message="tns:updateTutorResponse"/>
+<fault message="tns:JAXBException" name="JAXBException" wsam:Action="http://Services/BookingSOAP/updateTutor/Fault/JAXBException"/>
+<fault message="tns:IOException" name="IOException" wsam:Action="http://Services/BookingSOAP/updateTutor/Fault/IOException"/>
+</operation>
+<operation name="updateStudent">
+<input wsam:Action="http://Services/BookingSOAP/updateStudentRequest" message="tns:updateStudent"/>
+<output wsam:Action="http://Services/BookingSOAP/updateStudentResponse" message="tns:updateStudentResponse"/>
+<fault message="tns:JAXBException" name="JAXBException" wsam:Action="http://Services/BookingSOAP/updateStudent/Fault/JAXBException"/>
+<fault message="tns:IOException" name="IOException" wsam:Action="http://Services/BookingSOAP/updateStudent/Fault/IOException"/>
+</operation>
 </portType>
 <binding name="BookingSOAPPortBinding" type="tns:BookingSOAP">
 <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-<operation name="cancelBooking">
+<operation name="cancelStudentAccount">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -106,8 +160,29 @@
 <output>
 <soap:body use="literal"/>
 </output>
+<fault name="JAXBException">
+<soap:fault name="JAXBException" use="literal"/>
+</fault>
+<fault name="IOException">
+<soap:fault name="IOException" use="literal"/>
+</fault>
 </operation>
-<operation name="loginStudent">
+<operation name="cancelTutorAccount">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+<fault name="JAXBException">
+<soap:fault name="JAXBException" use="literal"/>
+</fault>
+<fault name="IOException">
+<soap:fault name="IOException" use="literal"/>
+</fault>
+</operation>
+<operation name="completeBooking">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -125,7 +200,7 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="completeBooking">
+<operation name="createBooking">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -134,7 +209,16 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="createBooking">
+<operation name="loginStudent">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="cancelBooking">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -178,6 +262,36 @@
 <output>
 <soap:body use="literal"/>
 </output>
+</operation>
+<operation name="updateTutor">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+<fault name="JAXBException">
+<soap:fault name="JAXBException" use="literal"/>
+</fault>
+<fault name="IOException">
+<soap:fault name="IOException" use="literal"/>
+</fault>
+</operation>
+<operation name="updateStudent">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+<fault name="JAXBException">
+<soap:fault name="JAXBException" use="literal"/>
+</fault>
+<fault name="IOException">
+<soap:fault name="IOException" use="literal"/>
+</fault>
 </operation>
 </binding>
 <service name="BookingSOAP">
