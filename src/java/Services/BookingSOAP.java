@@ -258,14 +258,21 @@ public class BookingSOAP {
      * @param name The new name of the tutor
      * @param password The new password of the tutor
      * @param dob The new date of birth of the tutor
-     * @throws JAXBException Marshalling exception, from StudentApplication
-     * @throws IOException Filepath exception, from StudentApplication
+     * @throws JAXBException Marshalling exception, from TutorApplication
+     * @throws IOException Filepath exception, from TutorApplication
      */
     @WebMethod
     public void updateTutor(String email, String name, String password, String dob) throws JAXBException, IOException{
         getTutorApp().updateTutor(email, name, password, dob);
     }
     
+    /**
+     * Cancels a student account, cancelling all their active bookings
+     * 
+     * @param student The student whose account is being cancelled
+     * @throws JAXBException Marshalling exception, from StudentApplication
+     * @throws IOException Filepath exception, from StudentApplication
+     */
     @WebMethod
     public void cancelStudentAccount(Student student) throws JAXBException, IOException{
         getStudentApp().getStudents().removeUser(student);
@@ -274,6 +281,13 @@ public class BookingSOAP {
         getStudentApp().saveStudents();
     }
     
+    /**
+     * Cancels a tutors account, cancelling all their active bookings
+     * 
+     * @param tutor The tutor whose account is being cancelled
+     * @throws JAXBException Marshalling exception, from TutorApplication
+     * @throws IOException Filepath exception, from TutorApplication
+     */
     @WebMethod
     public void cancelTutorAccount(Tutor tutor) throws JAXBException, IOException{
         getTutorApp().getTutors().removeUser(tutor);
@@ -281,6 +295,12 @@ public class BookingSOAP {
         getTutorApp().saveTutors();
     }
     
+    /**
+     * Creates a booking record, with the associated tutor and student
+     * 
+     * @param tutor The tutor being booked
+     * @param student The student doing the booking
+     */
     @WebMethod
     public void createBooking(Tutor tutor, Student student){
         getBookingApp().createBooking(tutor, student);
@@ -294,10 +314,18 @@ public class BookingSOAP {
         }
     }
     
+    /**
+     * Sets a booking records status to cancelled, making the tutor available again
+     * 
+     * @param bookingId The identifier for the record being cancelled
+     */
     @WebMethod
     public void cancelBooking(int bookingId){
+        // Cancels booking
         getBookingApp().cancelBooking(bookingId);
         Booking booking = getBookingApp().getBookingByID(bookingId);
+        
+        // Resets tutors status
         Tutor tutor = getTutorApp().getTutorFromID(booking.getTutorName());
         tutor.setStatus("available");
         try {
@@ -309,10 +337,18 @@ public class BookingSOAP {
         }
     }
     
+    /**
+     * Completes a booking, resetting the tutor status to available
+     * 
+     * @param bookingId The identifier for the booking record
+     */
     @WebMethod
     public void completeBooking(int bookingId){
+        // Completes the booking
         getBookingApp().completeBooking(bookingId);
         Booking booking = getBookingApp().getBookingByID(bookingId);
+        
+        // Resets the tutor status
         Tutor tutor = getTutorApp().getTutorFromID(booking.getTutorName());
         tutor.setStatus("available");
         try {

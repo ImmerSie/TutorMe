@@ -6,15 +6,18 @@
     Author     : Max
     Description:
         Purpose of transformation follows.
+        To display a table of bookings, filtered by either the student or the tutor
+        who made them
 -->
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
     <xsl:output method="html"/>
+    
+    <!-- Parameters to filter using the user data -->
     <xsl:param name="studentEmail"/>
     <xsl:param name="tutorEmail"/>
-    <!-- TODO customize transformation rules 
-         syntax recommendation http://www.w3.org/TR/xslt 
-    -->
+    
+    <!-- root of xml document -->
     <xsl:template match="bookings">
         <html>
             <head>
@@ -44,9 +47,9 @@
     <xsl:template match="booking">
         <xsl:variable name="studentVar"><xsl:value-of select="studentEmail"/></xsl:variable>
         <xsl:variable name="tutorVar"><xsl:value-of select="tutorEmail"/></xsl:variable>
+        <xsl:variable name="bookIDVar"><xsl:value-of select="bookingID"/></xsl:variable>
         <xsl:if test="($studentEmail='getAll') or ($studentEmail=$studentVar) or ($tutorEmail=$tutorVar)">
-            <form action="viewBooking.jsp" method="GET"><tr>
-                <xsl:variable name="bookIDVar"><xsl:value-of select="bookingID"/></xsl:variable>
+            <form action="booking.jsp" method="GET"><tr>
                 <td><xsl:value-of select="bookingID"/></td>
                 <td><xsl:value-of select="tutorName"/></td>
                 <td><xsl:value-of select="tutorEmail"/></td>
@@ -55,7 +58,7 @@
                 <td><xsl:value-of select="studentEmail"/></td>
                 <td><xsl:value-of select="status"/></td>
                 <td><input type="submit" value="View" name="View"></input></td>
-                <td><input type="hidden" value="{$bookIDVar}" id="bookingID" name="bookingID"></input></td>
+                <td><input type="hidden" value="{$bookIDVar}" id="view" name="view"></input></td>
             </tr></form>
         </xsl:if>
     </xsl:template>

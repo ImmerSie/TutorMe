@@ -64,3 +64,7 @@ body {
 #cancelBtn{
     text-align: right;
 }
+
+form{
+    margin: 1px;
+}

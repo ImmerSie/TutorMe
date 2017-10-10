@@ -1,3 +1,4 @@
+<%@page import="Models.Booking"%>
 <%@page import="Applications.BookingApplication"%>
 <%@page import="Applications.StudentApplication"%>
 <%@page import="Applications.TutorApplication"%>
@@ -15,6 +16,7 @@
     <body>
         <c:import url="WEB-INF/bookings.xml" var="inputDoc" />
         <c:import url="WEB-INF/bookings.xsl" var="stylesheet" />
+        <c:import url="WEB-INF/viewBooking.xsl" var="viewStylesheet" />
         <% 
             if(session.getAttribute("studentApp") == null){
                 String studentsFilePath = application.getRealPath("WEB-INF/students.xml");
@@ -56,44 +58,77 @@
             <%
             Student student = (Student) session.getAttribute("student");
             Tutor tutor = (Tutor) session.getAttribute("tutor");
-            String tutorid = request.getParameter("tutorid");
-            if(tutorid != null){ %>
-                <h1><%= tutorid %></h1>
-                <%
-                String confirmation = request.getParameter("confirm");
-                if(confirmation != null){ %>
-                    <form action="booking.jsp" method="POST">
-                        <td><input type="hidden" value="<%= tutorid %>" id="tutorid" name="tutorid"></td>
-                        <input type="submit" value="Confirm Booking" name="confirmBtn">
-                    </form>
-                <% }
-                else{
-                    Tutor bookedTutor = tutorApp.getTutorFromID(tutorid);
-                    if(bookedTutor.getStatus().toLowerCase().equals("available")){
-                        bookingApp.createBooking(bookedTutor, student);
-                        tutorApp.saveTutors();
-                        response.sendRedirect("/TutorMe/booking.jsp");
+            //if(student == null && tutor == null){
+                
+                String tutorid = request.getParameter("tutorid");
+                if(tutorid != null){ %>
+                    <h1><%= tutorid %></h1>
+                    <%
+                    String confirmation = request.getParameter("confirm");
+                    if(confirmation != null){ %>
+                        <form action="booking.jsp" method="POST">
+                            <td><input type="hidden" value="<%= tutorid %>" id="tutorid" name="tutorid"></td>
+                            <input type="submit" value="Confirm Booking" name="confirmBtn">
+                        </form>
+                    <% }
+                    else{
+                        Tutor bookedTutor = tutorApp.getTutorFromID(tutorid);
+                        if(bookedTutor.getStatus().toLowerCase().equals("available")){
+                            bookingApp.createBooking(bookedTutor, student);
+                            tutorApp.saveTutors();
+                            response.sendRedirect("/TutorMe/booking.jsp");
+                        }
                     }
                 }
-            }
-            if(student != null){ %>
-                 <x:transform xml="${inputDoc}" xslt="${stylesheet}">
-                    <x:param name="studentEmail"  value="${student.getEmail()}" />
-                </x:transform>
-            <% } 
-            else if(tutor != null){ %>
-                 <x:transform xml="${inputDoc}" xslt="${stylesheet}">
-                    <x:param name="tutorEmail"  value="${tutor.getEmail()}" />
-                </x:transform>
-            <% } 
-            else {
+
+                if(request.getParameter("bookingID") != null){
+                
+                    Booking booking = bookingApp.getBookingByID(Integer.parseInt(request.getParameter("bookingID")));
+                    if(request.getParameter("cancelled") != null){
+                        booking.setStatus("cancelled");
+                        Tutor bookTutor = tutorApp.getTutorFromEmail(booking.getTutorEmail());
+                        bookTutor.setStatus("available");
+                        tutorApp.saveTutors();
+                        bookingApp.saveBookings();
+                        %><h3>Booking has been canceled!</h3> <%
+                    }
+                    else if(request.getParameter("completed") != null){
+                        booking.setStatus("completed");
+                        Tutor bookTutor = tutorApp.getTutorFromEmail(booking.getTutorEmail());
+                        bookTutor.setStatus("available");
+                        tutorApp.saveTutors();
+                        bookingApp.saveBookings();
+                        %><h3>Booking has been Completed!</h3> <%
+                    }
+                }
+     
+                String view = (String) request.getParameter("view");
+                    if(view == null || view.equals("all")){
+                        if(student != null){ %>
+                            <x:transform xml="${inputDoc}" xslt="${stylesheet}">
+                               <x:param name="studentEmail"  value="${student.getEmail()}" />
+                           </x:transform>
+                        <% } 
+                        else if(tutor != null){ %>
+                             <x:transform xml="${inputDoc}" xslt="${stylesheet}">
+                                <x:param name="tutorEmail"  value="${tutor.getEmail()}" />
+                            </x:transform>
+                        <% } 
+                    }
+                    else{
+                        String isTutor = "false";
+                        if(tutor != null){
+                            isTutor = "true";
+                        } %>
+                        <x:transform xml="${inputDoc}" xslt="${viewStylesheet}">
+                            <x:param name="isTutor"  value="<%= isTutor %>" />
+                            <x:param name="viewID"  value="<%= view %>" />
+                        </x:transform>
+                    <% }
+            //}
+            /*else {
                 response.sendRedirect("login.jsp");
-            }%>
-            
-            <h2>All Bookings</h2>
-            <x:transform xml="${inputDoc}" xslt="${stylesheet}">
-                <x:param name="studentEmail"  value="getAll" />
-            </x:transform>
+            }*/%>
         </div>
   </body>
 </html>
