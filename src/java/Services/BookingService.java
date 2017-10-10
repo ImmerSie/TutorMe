@@ -42,7 +42,7 @@ public class BookingService {
   @Path("bookings")
     @GET
     @Produces("application/xml")
-    public Bookings getUsers(@DefaultValue("0") @QueryParam("bookingID") int bookingID,                                     // Use of DefaultValue in order to use if-statements. 
+    public Bookings getBookings(@DefaultValue("0") @QueryParam("bookingID") int bookingID,                                     // Use of DefaultValue in order to use if-statements. 
             @DefaultValue("0") @QueryParam("studentEmail") String studentEmail, 
             @DefaultValue("0") @QueryParam("subject") String subject,
             @DefaultValue("0") @QueryParam("status") String status) throws IOException, Exception {

@@ -12,7 +12,7 @@ and open the template in the editor.
         <tutorName>Ryan</tutorName>
         <tutorEmail>ryan@gmail.com</tutorEmail>
         <subject>WSD</subject>
-        <studentName>Firste</studentName>
+        <studentName>Sarah</studentName>
         <studentEmail>firstEmail@yahoo.com</studentEmail>
         <status>active</status>
     </booking>

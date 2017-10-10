@@ -56,11 +56,15 @@
         Tutors tutors = tutorApp.getTutors(); %>
         <div id="headerSection">
             <h1>UTSTutor</h1>
+            <div id="headerMenu">
+                        <a href="index.jsp">Home</a>
+                        <a href="login.jsp">Login</a>
+                    </div>
         </div>
-        <hr>
+        <hr id="divider">
         <div id="registerDiv">
+        <h1>Register your TutorMe account.</h1>
         <% if (email == null && password == null) { %>
-            <h1>Register your Tutor Me account.</h1>
             <form action="register.jsp" method="POST">
                 <table>
 
@@ -121,15 +125,105 @@
                 response.sendRedirect("main.jsp");
             }
             else { %>
-                <p>This student <%=email%> already exists.</p>
-                <p>Click <a href="register.jsp">here</a> to go back</p>
+                 <form action="register.jsp" method="POST">
+            <table>
+
+                <tr> 
+                    <td>Full Name:</td> 
+                    <td><input type="text" name="name" value="<%=name%>"></td> 
+                </tr>
+                <tr>
+                    <td>Email:</td> 
+                    <td><input type="text" name="email" value="<%=email%>"> </td>
+                    <td><p>This student already exists!</p></td>
+                </tr>
+
+                <tr> 
+                    <td>Password:</td> 
+                    <td><input type="password" name="password" ></td>
+                </tr>
+
+                <tr> 
+                    <td>Date of Birth:</td> 
+                    <td><input type="text" name="birthday" value="<%=birthday%>"></td>
+                </tr>
+                <tr>
+                    <td>User Type:</td> 
+                    <td><select name="userType" id="tutorCheck">
+                            <option value="student">Student</option>
+                            <option value="tutor">Tutor</option>
+
+                        </select></td>
+                </tr>
+                <tr> 
+                    <td>Subject</td> 
+                    <td><select name="subject" id="subjectChoice">
+                            <option value="tutorsOnly">Tutors Only</option>
+                            <option value="WSD">WSD</option>
+                            <option value="USP">USP</option>
+                            <option value="SEP">SEP</option>
+                            <option value="AppProg">AppProg</option>
+                            <option value="MobileApp">MobileApp</option>
+                        </select></td>
+                </tr>
+                <tr>
+                    <td></td> 
+                    <td><input type="submit" value="Register" name="Register"></td> 
+                </tr>
+            </table>
+        </form>
             <% }
         } 
         else if (userType.equals("tutor")) {
             if (tutors.getUser(email) == null) {
                 if (subject.equals("tutorsOnly")) { %>
-                    <p>Tutors must choose a subject</p>
-                    <p>Click <a href="register.jsp">here</a> to go back</p>
+                     <form action="register.jsp" method="POST">
+            <table>
+                <tr> 
+                    <td>Full Name:</td> 
+                    <td><input type="text" name="name" value="<%=name%>" ></td> 
+                </tr>
+                <tr>
+                    <td>Email:</td> 
+                    <td><input type="text" name="email" value="<%=email%>"> </td>
+              
+                </tr>
+
+                <tr> 
+                    <td>Password:</td> 
+                    <td><input type="password" name="password"></td>
+                </tr>
+
+                <tr> 
+                    <td>Date of Birth:</td> 
+                    <td><input type="text" name="birthday" value="<%=birthday%>"></td>
+                </tr>
+                <tr>
+                    <td>User Type:</td> 
+                    <td><select name="userType" id="tutorCheck">
+                            <option value="student">Student</option>
+                            <option value="tutor">Tutor</option>
+
+                        </select></td>
+                </tr>
+                <tr> 
+                    <td>Subject</td> 
+                    <td><select name="subject" id="subjectChoice">
+                            <option value="tutorsOnly">Tutors Only</option>
+                            <option value="WSD">WSD</option>
+                            <option value="USP">USP</option>
+                            <option value="SEP">SEP</option>
+                            <option value="AppProg">AppProg</option>
+                            <option value="MobileApp">MobileApp</option>
+                        </select></td>
+                              <td><p>Tutors must choose a subject!</p></td>
+                </tr>
+                <tr>
+                    <td></td> 
+                    <td><input type="submit" value="Register" name="Register"></td> 
+                </tr>
+            </table>
+        </form>
                 <% } 
                 else {
                     String status = "available";
@@ -141,8 +235,53 @@
                 }
             }
             else { %>
-                <p>This tutor <%=email%> already exists.</p>
-                <p>Click <a href="register.jsp">here</a> to go back</p>
+                 <form action="register.jsp" method="POST">
+            <table>
+
+                <tr> 
+                    <td>Full Name:</td> 
+                    <td><input type="text" name="name" value="<%=name%>"></td> 
+                </tr>
+                <tr>
+                    <td>Email:</td> 
+                    <td><input type="text" name="email" value="<%=email%>"> </td>
+                    <td><p>This tutor already exists!</p></td>
+                </tr>
+
+                <tr> 
+                    <td>Password:</td> 
+                    <td><input type="password" name="password"></td>
+                </tr>
+
+                <tr> 
+                    <td>Date of Birth:</td> 
+                    <td><input type="text" name="birthday" value="<%=birthday%>"></td>
+                </tr>
+                <tr>
+                    <td>User Type:</td> 
+                    <td><select name="userType" id="tutorCheck">
+                            <option value="student">Student</option>
+                            <option value="tutor">Tutor</option>
+
+                        </select></td>
+                </tr>
+                <tr> 
+                    <td>Subject</td> 
+                    <td><select name="subject" id="subjectChoice">
+                            <option value="tutorsOnly">Tutors Only</option>
+                            <option value="WSD">WSD</option>
+                            <option value="USP">USP</option>
+                            <option value="SEP">SEP</option>
+                            <option value="AppProg">AppProg</option>
+                            <option value="MobileApp">MobileApp</option>
+                        </select></td>
+                </tr>
+                <tr>
+                    <td></td> 
+                    <td><input type="submit" value="Register" name="Register"></td> 
+                </tr>
+            </table>
+        </form>
             <%}
         }%>
         </div>

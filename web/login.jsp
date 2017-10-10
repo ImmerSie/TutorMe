@@ -45,8 +45,13 @@
         %>  
         <div id="headerSection">
             <h1>UTSTutor</h1>
+            
+            <div id="headerMenu">
+                        <a href="index.jsp">Home</a>
+                        <a href="register.jsp">Register</a>
+                    </div>
         </div>
-        <hr>
+        <hr id="divider">
         <div id="loginDiv">
             <% if (email == null && password == null) { %>
             <h1>Login</h1>
@@ -89,7 +94,7 @@
 
                             <tr>
                                 <td>Email:</td> 
-                                <td><input type="text" name="email"> </td>
+                                <td><input type="text" name="email" value="<%=email%>"> </td>
 
                             </tr>
                             <tr> 
