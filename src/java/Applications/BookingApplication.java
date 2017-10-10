@@ -26,10 +26,14 @@ import javax.xml.bind.Unmarshaller;
  * @author Max
  */
 public class BookingApplication {
+    
+    // The path to the XML file that holds the booking data
     private String filePath;
+    
+    // All bookings held in the XML file
     private Bookings bookings;
     
-     public BookingApplication() {}
+    public BookingApplication() {}
 
     public BookingApplication(String filePath, Bookings bookings) {
         super();
@@ -37,7 +41,14 @@ public class BookingApplication {
         this.bookings = bookings;
     }
     
-     public void setFilePath(String filePath) throws Exception {
+    /**
+     * Reads the XML file into the field
+     * 
+     * @param filePath The location of the XML file
+     * @throws JAXBException Marshalling exception
+     * @throws IOException File reading exception
+     */
+    public void setFilePath(String filePath) throws JAXBException, IOException {
 
         // Create the unmarshaller
         JAXBContext jc = JAXBContext.newInstance(Bookings.class);
@@ -48,7 +59,8 @@ public class BookingApplication {
         bookings = (Bookings) u.unmarshal(fin); 		
         fin.close();
     }
-    public void updateXML(Bookings bookings, String filePath) throws Exception {
+    
+    /*public void updateXML(Bookings bookings, String filePath) throws Exception {
         this.bookings = bookings;
         this.filePath = filePath;
         JAXBContext jc = JAXBContext.newInstance(Bookings.class);
@@ -57,9 +69,14 @@ public class BookingApplication {
         FileOutputStream fout = new FileOutputStream(filePath);
         m.marshal(bookings, fout);
         fout.close();
-    }
+    }*/
     
-    // to be used from the welcome.jsp page
+    /**
+     * Saves the booking data to the bookings.xml file
+     * 
+     * @throws JAXBException Marshalling exception
+     * @throws IOException File not found
+     */
     public void saveBookings() throws JAXBException, IOException {
         JAXBContext jc = JAXBContext.newInstance(Bookings.class);
         Marshaller m = jc.createMarshaller();
@@ -73,6 +90,12 @@ public class BookingApplication {
         return bookings;
     }
     
+    /**
+     * Retrieves a booking record from the bookingID
+     * 
+     * @param id The ID of the booking record to be retrieved
+     * @return The Booking record that has that ID
+     */
     public Booking getBookingByID(int id){
         for(Booking b : bookings.getList()){
             if(b.getBookingID() == id){
@@ -82,6 +105,7 @@ public class BookingApplication {
         return null;
     }
     
+    /*
     public Bookings getBookingsByID(int id){
         Bookings studentBookings = new Bookings();
         for(Booking b : bookings.getList()){
@@ -90,9 +114,10 @@ public class BookingApplication {
             }
         }
         return studentBookings;
-    }
+    } */
     
-    public Bookings getBookingsByStudents(String student){
+    
+    /*public Bookings getBookingsByStudents(String student){
         Bookings studentBookings = new Bookings();
         for(Booking b : bookings.getList()){
             if(b.getStudentName() == student){
@@ -100,8 +125,14 @@ public class BookingApplication {
             }
         }
         return studentBookings;
-    }
+    }*/
     
+    /**
+     * Gets all the bookings associated with a student's name
+     * 
+     * @param student The name of the student
+     * @return All the bookings made by that student
+     */
     public Bookings getBookingsByStudent(String student){
         Bookings studentBookings = new Bookings();
         for(Booking b : bookings.getList()){
@@ -112,6 +143,12 @@ public class BookingApplication {
         return studentBookings;
     }
     
+    /**
+     * Gets the bookings associated with a students email address
+     * 
+     * @param email The email of the student
+     * @return The bookings made by that student
+     */
     public Bookings getBookingsByStudentEmail(String email){
         Bookings studentBookings = new Bookings();
         for(Booking b : bookings.getList()){
@@ -122,6 +159,12 @@ public class BookingApplication {
         return studentBookings;
     }
     
+    /**
+     * Gets all the bookings made for a specific subject
+     * 
+     * @param subject The subject being used as a filter
+     * @return All the bookings made in that subject
+     */
     public Bookings getBookingsBySubject(String subject){
         Bookings studentBookings = new Bookings();
         for(Booking b : bookings.getList()){
@@ -132,7 +175,13 @@ public class BookingApplication {
         return studentBookings;
     }
     
-       public Bookings getBookingsByStatus(String status){
+    /**
+     * Gets all bookings of a certain status
+     * 
+     * @param status The status being used as a filter
+     * @return All the bookings of that status
+     */
+    public Bookings getBookingsByStatus(String status){
         Bookings studentBookings = new Bookings();
         for(Booking b : bookings.getList()){
             if(b.getStatus().equals(status)){
@@ -142,7 +191,13 @@ public class BookingApplication {
         return studentBookings;
     }
     
-    public Bookings getBookingsByTutor(String tutor){
+    /**
+     * Gets all bookings made with a tutor
+     * 
+     * @param tutor The tutor's email address
+     * @return The bookings associated with a tutor
+     */
+    /*public Bookings getBookingsByTutor(String tutor){
         Bookings tutorBookings = new Bookings();
         for(Booking b : bookings.getList()){
             if(b.getTutorEmail().equals(tutor)){
@@ -150,8 +205,14 @@ public class BookingApplication {
             }
         }
         return tutorBookings;
-    }
+    }*/
     
+    /**
+     * Gets all bookings made with a tutor
+     * 
+     * @param tutor The tutor's email address
+     * @return The bookings associated with a tutor
+     */
     public Bookings getBookingsByTutorEmail(String email){
         Bookings tutorBookings = new Bookings();
         for(Booking b : bookings.getList()){
@@ -166,12 +227,33 @@ public class BookingApplication {
         this.bookings = bookings;
     }
     
+    /**
+     * Generates a unique booking ID
+     * @return a unique ID for a booking
+     */
     public int getNewBookingID(){
-        Booking b = getBookings().getList().get(getBookings().getList().size() - 1);
-        return b.getBookingID() + 1;
+        if(getBookings().getList().size() > 0){
+            int max = 0;
+            for(Booking b : getBookings().getList()){
+                if(b.getBookingID() > max){
+                    max = b.getBookingID();
+                }
+            }
+            return max + 1;
+        }
+        else{
+            return 1;
+        }
     }
     
+    /**
+     * Creates a new booking with a tutor, by a student
+     * 
+     * @param tutor The tutor being booked
+     * @param student The student doing the booking
+     */
     public void createBooking(Tutor tutor, Student student){
+        // Gets necessary fields for the booking
         int bookingID = getNewBookingID();
         String tutName = tutor.getName();
         String tutEmail = tutor.getEmail();
@@ -179,7 +261,11 @@ public class BookingApplication {
         String stuName = student.getName();
         String stuEmail = student.getEmail();
         String status = "active";
+        
+        // Creates new booking object
         Booking booking = new Booking(bookingID, tutName, tutEmail, subject, stuName, stuEmail, status);
+        
+        // Makes tutor unavailable
         tutor.setStatus("unavailable");
         getBookings().addBooking(booking);
         try {
@@ -191,6 +277,11 @@ public class BookingApplication {
         }
     }
     
+    /**
+     * Cancels a booking
+     * 
+     * @param bookingId The identifier of the booking record
+     */
     public void cancelBooking(int bookingId){
         Booking booking = getBookingByID(bookingId);
         booking.setStatus("canceled");
@@ -203,11 +294,22 @@ public class BookingApplication {
         }
     }  
     
+    /**
+     * Cancels all bookings associate with an email, returning a list of the associated tutors
+     * 
+     * @param email The students email
+     * @return The tutors who need to be set to available
+     * @throws JAXBException Marshalling exception
+     * @throws IOException File not found exception
+     */
     public ArrayList<String> cancelBookingsByStudentEmail(String email) throws JAXBException, IOException{
+        // Gets necessary fields
         Bookings bookings = getBookingsByStudentEmail(email);
         ArrayList<String> cancelledTutors = new ArrayList<String>();
         Tutor tutor = null;
-        if (bookings.getList() != null) {                                                       //set tutor's booking statuses as cancelled.
+        
+        // Iterates through bookings, cancelling relevant ones
+        if (bookings.getList() != null) {
             for (Booking b : bookings.getList()) {
                 b.setStatus("cancelled");
                 cancelledTutors.add(b.getTutorEmail());
@@ -217,9 +319,16 @@ public class BookingApplication {
         return cancelledTutors;
     }
     
+    /**
+     * Cancels all bookings associated with a tutor
+     * 
+     * @param tutor The tutor whose bookings need to be cancelled
+     * @throws JAXBException Marshalling exception
+     * @throws IOException File not found exception
+     */
     public void cancelBookingsByTutor(Tutor tutor) throws JAXBException, IOException{
         Bookings bookings = getBookingsByTutorEmail(tutor.getEmail());
-        if (bookings.getList() != null) {                                                       //set tutor's booking statuses as cancelled.
+        if (bookings.getList() != null) {
             for (Booking b : bookings.getList()) {
                 b.setStatus("cancelled");
             }
@@ -227,6 +336,11 @@ public class BookingApplication {
         saveBookings();
     }
     
+    /**
+     * Completes a booking record
+     * 
+     * @param bookingId The identifier of the record being set to complete
+     */
     public void completeBooking(int bookingId){
         Booking booking = getBookingByID(bookingId);
         booking.setStatus("completed");

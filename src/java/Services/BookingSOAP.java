@@ -163,7 +163,9 @@ public class BookingSOAP {
         switch(searchBy){
             // Searching by bookingID
             case 1 : 
-                bookings = bookingApp.getBookingsByID(Integer.parseInt(searchVal));
+                Booking booking = getBookingApp().getBookingByID(Integer.parseInt(searchVal));
+                bookings = new Bookings();
+                bookings.addBooking(booking);
                 break;
                 
             // Searching by student email
@@ -209,7 +211,7 @@ public class BookingSOAP {
      */
     @WebMethod
     public Bookings getBookingsFromTutor(String tutor){
-        return getBookingApp().getBookingsByTutor(tutor);
+        return getBookingApp().getBookingsByTutorEmail(tutor);
     }
 
     /**

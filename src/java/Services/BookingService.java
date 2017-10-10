@@ -48,7 +48,10 @@ public class BookingService {
             @DefaultValue("0") @QueryParam("status") String status) throws IOException, Exception {
        
             if(bookingID!=0){
-               return getBookingApp().getBookingsByID(bookingID);
+               Booking booking = getBookingApp().getBookingByID(bookingID);
+               Bookings bookings = new Bookings();
+               bookings.addBooking(booking);
+               return bookings;
             }
             
             if(!studentEmail.equals("0")){

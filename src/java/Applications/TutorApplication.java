@@ -19,13 +19,15 @@ import javax.xml.bind.*;
 
 public class TutorApplication implements Serializable{
     
-    
+    // Fields to maintain tutor data, and retrieve it
     private String filePath;
     private Tutors tutors;
+    
+    // Fields to search for a tutor by parameters
     private String searchedBy;
     private String searchedVal;
     
-     public TutorApplication() {}
+    public TutorApplication() {}
 
     public TutorApplication(String filePath, Tutors tutors) {
         super();
@@ -33,12 +35,26 @@ public class TutorApplication implements Serializable{
         this.tutors = tutors;
     }
     
-    public void addTutor(Tutor tutor) throws Exception{
-         tutors.addUser(tutor);
-            saveTutors();
+    /**
+     * Adds a tutor to the XML data
+     * 
+     * @param tutor The tutor to be added to the XML
+     * @throws JAXBException Marshalling exception
+     * @throws IOException File not found
+     */
+    public void addTutor(Tutor tutor) throws JAXBException, IOException {
+        tutors.addUser(tutor);
+        saveTutors();
     }
     
-     public void setFilePath(String filePath) throws Exception {
+    /**
+     * Reads the XML file into the field
+     * 
+     * @param filePath The location of the XML file
+     * @throws JAXBException Marshalling exception
+     * @throws IOException File reading exception
+     */
+    public void setFilePath(String filePath) throws JAXBException, IOException {
 
         // Create the unmarshaller
         JAXBContext jc = JAXBContext.newInstance(Tutors.class);
@@ -49,25 +65,13 @@ public class TutorApplication implements Serializable{
         tutors = (Tutors) u.unmarshal(fin); 		
         fin.close();
     }
-     
-     /*
-    public void updateXML(Tutors tutors, String filePath) throws Exception {
-        this.tutors = tutors;
-        this.filePath2 = filePath;
-        JAXBContext jc = JAXBContext.newInstance(Tutors.class);
-        Marshaller m = jc.createMarshaller();
-        m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-        
-      //  File f = new File()
-        
-        FileOutputStream fout = new FileOutputStream(filePath2);
-        m.marshal(tutors, fout);
-        fout.close();
-            
-    }
-    */
     
-    // to be used from the welcome.jsp page
+    /**
+     * Saves the tutor data into the XML file
+     * 
+     * @throws JAXBException Marshalling exception
+     * @throws IOException File not found
+     */
     public void saveTutors() throws JAXBException, IOException {
         JAXBContext jc = JAXBContext.newInstance(Tutors.class);
         Marshaller m = jc.createMarshaller();
